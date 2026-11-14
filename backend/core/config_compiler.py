@@ -268,6 +268,7 @@ def compile_protocol(human_cfg: Dict[str, Any], source_hash: str) -> Dict[str, A
         "source_hash": source_hash,
         "feature_flags": human_cfg.get("feature_flags", {}),
         "external_endpoints": human_cfg.get("external_endpoints", {}),
+        "evidence_tier_policy": human_cfg.get("evidence_tier_policy", {}),
         "routing": routing,
         "gates": task_gates,
         "err_directives": err_directives,

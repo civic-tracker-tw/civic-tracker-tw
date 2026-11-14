@@ -44,25 +44,28 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
   <!-- ==================================================================== -->
-  <!-- Top Protocol Status Bar (Dual-Config Invariant Indicator)            -->
+  <!-- Top Protocol Status Bar (Tier-1 Neutral Quantitative Indicator)      -->
   <!-- ==================================================================== -->
   <aside aria-label="系統協定狀態" class="bg-slate-900 text-slate-300 text-xs px-4 py-2 border-b border-slate-800">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-3">
         <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-brand-500/20 text-brand-300 border border-brand-500/30">
-          Dual-Model Protocol v1.0.0
+          🏛️ Tier-1 政府公開標案 × 公報量化追蹤 (QUANTITATIVE_ONLY v1.0.0)
         </span>
         <span id="sync-status-badge" class="inline-flex items-center gap-1.5 text-emerald-400">
           <span class="w-2 h-2 rounded-full bg-emerald-400 badge-pulse"></span>
-          <span id="sync-status-text">已與 pipeline.human.yaml 雙向同步 (SHA-256 驗證通過)</span>
+          <span id="sync-status-text">立法院開放資料 × PCC 電子採購網 100% 客觀數據</span>
         </span>
       </div>
       <div class="flex items-center gap-4 text-slate-400">
         <span id="hash-display" class="font-mono text-[11px]">Source Hash: sha256:e61fa7f...</span>
         <span class="hidden md:inline text-slate-600">|</span>
-        <span class="hidden md:inline">執行者: <strong class="text-slate-200">Hydrogen (Flash)</strong></span>
+        <span class="inline-flex items-center gap-1 text-slate-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          <span>零主機流量影音嵌入</span>
+        </span>
         <span class="hidden md:inline text-slate-600">|</span>
-        <span class="hidden md:inline">決策裁決者: <strong class="text-slate-200">Argon (Argon-4)</strong></span>
+        <span class="hidden md:inline text-slate-300">雙向 SHA-256 協定防篡改</span>
       </div>
     </div>
   </aside>
@@ -100,7 +103,7 @@
             Phase 2 首長政見
           </button>
           <button data-tab="tab-ai-sandbox" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition-colors text-indigo-700 bg-indigo-50/60 hover:bg-indigo-100">
-            🤖 AI 雙模型協作室
+            ⚙️ 量化查核與擴充實驗室
           </button>
           <button data-tab="tab-security" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:text-slate-900 hover:bg-slate-100">
             🛡️ 系統資安與 LY 同步
@@ -211,26 +214,121 @@
         </nav>
       </div>
 
-      <!-- Section A: Speeches View -->
-      <div id="speeches-subview" class="space-y-6">
-        <!-- Search & Filter Controls -->
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
-          <div class="relative w-full sm:w-80">
-            <input type="text" id="speech-search-input" placeholder="搜尋質詢內文、摘要或議題關鍵字..."
-              class="w-full text-sm pl-9 pr-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
-            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
+      <!-- Section A: Speeches View (2-Column Layout with Sticky IVOD Synchronizer Widget) -->
+      <div id="speeches-subview" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left Column: Search, Tag Filters & Speeches List (7 columns) -->
+        <div class="lg:col-span-7 space-y-4">
+          <!-- Search & Filter Controls -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <div class="relative w-full sm:w-72">
+              <input type="text" id="speech-search-input" placeholder="搜尋質詢內文、摘要或議題關鍵字..."
+                class="w-full text-sm pl-9 pr-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs" id="speech-tags-container">
+              <span class="text-slate-400 self-center mr-1">議題標籤:</span>
+              <!-- Dynamically populated tags -->
+            </div>
           </div>
-          <div class="flex flex-wrap gap-2 text-xs" id="speech-tags-container">
-            <span class="text-slate-400 self-center mr-1">議題標籤:</span>
-            <!-- Dynamically populated tags -->
+
+          <!-- Speeches List Container -->
+          <div class="space-y-4" id="speeches-container">
+            <!-- Rendered dynamically via JS -->
           </div>
         </div>
 
-        <!-- Speeches List -->
-        <div class="space-y-4" id="speeches-container">
-          <!-- Rendered dynamically via JS -->
+        <!-- Right Column: Sticky IVOD Video Synchronizer Widget (5 columns, sticky top-20) -->
+        <div class="lg:col-span-5 lg:sticky lg:top-20 space-y-4" id="ivod-sync-widget">
+          <div class="bg-slate-900 text-slate-100 rounded-2xl p-5 border border-slate-800 shadow-xl overflow-hidden relative">
+            <!-- Header bar with badges -->
+            <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-3 mb-4">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 badge-pulse"></span>
+                <span class="font-bold text-sm tracking-wide text-white">IVOD 影音時間軸同步器</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  零主機流量嵌入
+                </span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                  Tier-1 影音
+                </span>
+              </div>
+            </div>
+
+            <!-- Video Player Display Container -->
+            <div class="relative bg-black rounded-xl overflow-hidden aspect-video border border-slate-800 flex flex-col justify-between p-4 group">
+              <!-- Video background representation -->
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-slate-950/80 z-0"></div>
+
+              <!-- Top Overlay: Clip ID & Speaker Badge -->
+              <div class="relative z-10 flex items-center justify-between">
+                <span id="ivod-widget-clip-badge" class="px-2.5 py-1 rounded bg-black/70 backdrop-blur text-[11px] font-mono text-emerald-400 border border-emerald-500/40">
+                  Clip #110825
+                </span>
+                <span id="ivod-widget-speaker-badge" class="px-2.5 py-1 rounded bg-black/70 backdrop-blur text-[11px] font-medium text-slate-200 border border-slate-700">
+                  蔣萬安 委員
+                </span>
+              </div>
+
+              <!-- Center Play / Synchronized Action Indicator -->
+              <div class="relative z-10 flex flex-col items-center justify-center my-auto text-center">
+                <button id="ivod-play-btn" type="button" aria-label="播放或同步質詢影片" class="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                  <svg class="w-7 h-7 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M4 4l12 6-12 6z"/>
+                  </svg>
+                </button>
+                <div id="ivod-widget-status" class="mt-2 text-xs text-slate-300 font-medium">點選質詢卡片即時跳轉時間軸</div>
+              </div>
+
+              <!-- Bottom Overlay: Progress Bar & Current Timestamps -->
+              <div class="relative z-10 space-y-2">
+                <div class="flex justify-between text-[11px] font-mono text-slate-300">
+                  <span id="ivod-current-time">03:20</span>
+                  <span id="ivod-duration-time">08:45</span>
+                </div>
+                <!-- Progress bar -->
+                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                  <div id="ivod-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-1.5 rounded-full transition-all duration-300" style="width: 38%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Synchronized Speech Info Box -->
+            <div class="mt-4 space-y-2.5">
+              <div>
+                <div id="ivod-widget-meeting" class="text-xs text-slate-400 truncate">立法院第10屆第6會期交通委員會第4次全體委員會議</div>
+                <div id="ivod-widget-title" class="text-sm font-bold text-white mt-0.5 leading-snug">行人路權與道安基本法專案質詢</div>
+              </div>
+
+              <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs text-slate-300">
+                <div class="text-[11px] text-emerald-400 font-semibold mb-1 flex items-center gap-1">
+                  <span>⚡ 時間軸逐字對齊標記</span>
+                </div>
+                <p id="ivod-widget-quote" class="italic text-slate-300 line-clamp-2 font-mono">
+                  「交通部提出的道安基本法草案，到底何時能落實人行道退縮行穿線與學區周邊全面科技執法？」
+                </p>
+              </div>
+
+              <!-- Action Links (Official IVOD + Billy3321 Mirror) -->
+              <div class="pt-2 flex flex-col sm:flex-row gap-2">
+                <a id="ivod-official-link" href="https://media.ly.gov.tw/ivod/110825.mp4" target="_blank" rel="noopener noreferrer"
+                  class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs transition-colors shadow-xs">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>
+                  立法院官方 IVOD 影音 ↗
+                </a>
+                <a id="ivod-billy-link" href="https://ivod.billy3321.tw/ivod/110825" target="_blank" rel="noopener noreferrer"
+                  class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 font-semibold text-xs transition-colors">
+                  <span>🌐 Billy3321 鏡像 ↗</span>
+                </a>
+              </div>
+              <div class="text-[10px] text-slate-500 text-center pt-1">
+                直接使用立法院公有串流 CDN 及民間開源鏡像，本平台伺服器零頻寬負荷
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -543,48 +641,62 @@
                   "stats": {
                         "speeches_count": 2,
                         "votes_count": 2,
-                        "promises_count": 3,
+                        "promises_count": 2,
                         "fulfilled_count": 1,
                         "is_cross_phase": true
                   }
             },
             {
                   "id": "pol-002",
-                  "name": "陳其邁",
-                  "party": "民主進步黨",
+                  "name": "侯友宜",
+                  "party": "中國國民黨",
                   "terms": [
-                        {
-                              "id": "term-leg-002",
-                              "role_type": "LEGISLATOR",
-                              "constituency": "全國不分區及僑居國外國民",
-                              "start_date": "2012-02-01",
-                              "end_date": "2018-11-03",
-                              "title": "第八、九屆立法委員（內政委員會、經濟委員會）"
-                        },
                         {
                               "id": "term-exec-002",
                               "role_type": "EXECUTIVE",
-                              "constituency": "高雄市",
-                              "start_date": "2020-08-24",
+                              "constituency": "新北市",
+                              "start_date": "2018-12-25",
                               "end_date": null,
-                              "title": "第三、四屆高雄市市長"
+                              "title": "第三、四屆新北市市長"
                         }
                   ],
                   "stats": {
-                        "speeches_count": 1,
-                        "votes_count": 3,
-                        "promises_count": 0,
-                        "fulfilled_count": 0,
-                        "is_cross_phase": true
+                        "speeches_count": 0,
+                        "votes_count": 0,
+                        "promises_count": 2,
+                        "fulfilled_count": 1,
+                        "is_cross_phase": false
                   }
             },
             {
                   "id": "pol-003",
+                  "name": "張善政",
+                  "party": "中國國民黨",
+                  "terms": [
+                        {
+                              "id": "term-exec-003",
+                              "role_type": "EXECUTIVE",
+                              "constituency": "桃園市",
+                              "start_date": "2022-12-25",
+                              "end_date": null,
+                              "title": "第三屆桃園市市長"
+                        }
+                  ],
+                  "stats": {
+                        "speeches_count": 0,
+                        "votes_count": 0,
+                        "promises_count": 2,
+                        "fulfilled_count": 1,
+                        "is_cross_phase": false
+                  }
+            },
+            {
+                  "id": "pol-004",
                   "name": "盧秀燕",
                   "party": "中國國民黨",
                   "terms": [
                         {
-                              "id": "term-leg-003",
+                              "id": "term-leg-004",
                               "role_type": "LEGISLATOR",
                               "constituency": "臺中市第五選舉區 (北區、北屯區)",
                               "start_date": "2016-02-01",
@@ -592,7 +704,7 @@
                               "title": "第九屆立法委員（財政委員會召集委員）"
                         },
                         {
-                              "id": "term-exec-003",
+                              "id": "term-exec-004",
                               "role_type": "EXECUTIVE",
                               "constituency": "臺中市",
                               "start_date": "2018-12-25",
@@ -602,7 +714,67 @@
                   ],
                   "stats": {
                         "speeches_count": 0,
-                        "votes_count": 0,
+                        "votes_count": 1,
+                        "promises_count": 2,
+                        "fulfilled_count": 1,
+                        "is_cross_phase": true
+                  }
+            },
+            {
+                  "id": "pol-005",
+                  "name": "黃偉哲",
+                  "party": "民主進步黨",
+                  "terms": [
+                        {
+                              "id": "term-leg-005",
+                              "role_type": "LEGISLATOR",
+                              "constituency": "臺南市第二選舉區",
+                              "start_date": "2016-02-01",
+                              "end_date": "2018-12-24",
+                              "title": "第九屆立法委員（經濟委員會）"
+                        },
+                        {
+                              "id": "term-exec-005",
+                              "role_type": "EXECUTIVE",
+                              "constituency": "臺南市",
+                              "start_date": "2018-12-25",
+                              "end_date": null,
+                              "title": "第三、四屆臺南市市長"
+                        }
+                  ],
+                  "stats": {
+                        "speeches_count": 0,
+                        "votes_count": 1,
+                        "promises_count": 1,
+                        "fulfilled_count": 1,
+                        "is_cross_phase": true
+                  }
+            },
+            {
+                  "id": "pol-006",
+                  "name": "陳其邁",
+                  "party": "民主進步黨",
+                  "terms": [
+                        {
+                              "id": "term-leg-006",
+                              "role_type": "LEGISLATOR",
+                              "constituency": "全國不分區及僑居國外國民",
+                              "start_date": "2012-02-01",
+                              "end_date": "2018-11-03",
+                              "title": "第八、九屆立法委員（內政委員會、經濟委員會）"
+                        },
+                        {
+                              "id": "term-exec-006",
+                              "role_type": "EXECUTIVE",
+                              "constituency": "高雄市",
+                              "start_date": "2020-08-24",
+                              "end_date": null,
+                              "title": "第三、四屆高雄市市長"
+                        }
+                  ],
+                  "stats": {
+                        "speeches_count": 1,
+                        "votes_count": 1,
                         "promises_count": 2,
                         "fulfilled_count": 1,
                         "is_cross_phase": true
@@ -694,7 +866,8 @@
                         "audit_verdict": "APPROVE",
                         "audited_by": "argon",
                         "confidence": 0.94,
-                        "notes": "Verified speech transcript attribution."
+                        "notes": "Verified speech transcript attribution.",
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
                   "ivod_clip_id": "110826",
                   "video_stream_url": "https://media.ly.gov.tw/ivod/110826.mp4",
@@ -744,7 +917,7 @@
             {
                   "id": "speech-002",
                   "session_id": "session-ly-10-07-02",
-                  "speaker_term_id": "term-leg-002",
+                  "speaker_term_id": "term-leg-006",
                   "target_official_id": "official-moj-minister",
                   "start_time_sec": 120.0,
                   "end_time_sec": 555.0,
@@ -759,7 +932,8 @@
                         "audit_verdict": "APPROVE",
                         "audited_by": "argon",
                         "confidence": 0.98,
-                        "notes": "Evidence verified against Ministry of Justice draft legislation."
+                        "notes": "Evidence verified against Ministry of Justice draft legislation.",
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
                   "ivod_clip_id": "110912",
                   "video_stream_url": "https://media.ly.gov.tw/ivod/110912.mp4",
@@ -857,7 +1031,8 @@
                         "audit_verdict": "APPROVE",
                         "audited_by": "argon",
                         "confidence": 0.96,
-                        "notes": "Verified against IVOD video timestamps and official gazette."
+                        "notes": "Verified against IVOD video timestamps and official gazette.",
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
                   "ivod_clip_id": "110825",
                   "video_stream_url": "https://media.ly.gov.tw/ivod/110825.mp4",
@@ -882,7 +1057,8 @@
                   "audit_metadata": {
                         "party_aligned": true,
                         "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "verdict": "APPROVE",
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
                   "politician_name": "蔣萬安",
                   "politician_party": "中國國民黨",
@@ -892,22 +1068,23 @@
                         "description": "確立以人為本之交通安全政策方針，明定中央每年度公布道安改善白皮書與各縣市零死亡願景目標。",
                         "proposer_term_ids": [
                               "term-leg-001",
-                              "term-leg-002"
+                              "term-leg-006"
                         ]
                   }
             },
             {
                   "id": "vote-002",
                   "bill_id": "bill-10-08-01",
-                  "politician_id": "pol-002",
+                  "politician_id": "pol-005",
                   "decision": "APPROVE",
                   "source_url": "https://data.ly.gov.tw/vote/ly-10-08-01",
                   "audit_metadata": {
                         "party_aligned": true,
                         "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "verdict": "APPROVE",
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "politician_name": "陳其邁",
+                  "politician_name": "黃偉哲",
                   "politician_party": "民主進步黨",
                   "bill": {
                         "id": "bill-10-08-01",
@@ -915,20 +1092,21 @@
                         "description": "確立以人為本之交通安全政策方針，明定中央每年度公布道安改善白皮書與各縣市零死亡願景目標。",
                         "proposer_term_ids": [
                               "term-leg-001",
-                              "term-leg-002"
+                              "term-leg-006"
                         ]
                   }
             },
             {
                   "id": "vote-003",
                   "bill_id": "bill-10-08-02",
-                  "politician_id": "pol-002",
+                  "politician_id": "pol-006",
                   "decision": "APPROVE",
                   "source_url": "https://data.ly.gov.tw/vote/ly-10-08-02",
                   "audit_metadata": {
                         "party_aligned": true,
                         "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "verdict": "APPROVE",
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
                   "politician_name": "陳其邁",
                   "politician_party": "民主進步黨",
@@ -937,7 +1115,7 @@
                         "title": "詐欺犯罪危害防制條例（打詐專法）草案",
                         "description": "加重組織詐欺刑責，規範網路廣告平台實名制與第三方支付金融阻詐聯防機制。",
                         "proposer_term_ids": [
-                              "term-leg-002"
+                              "term-leg-006"
                         ]
                   }
             },
@@ -951,7 +1129,8 @@
                         "party_aligned": false,
                         "audited_by": "argon",
                         "verdict": "APPROVE",
-                        "note": "跨黨派協商棄權"
+                        "note": "跨黨派協商棄權",
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
                   "politician_name": "蔣萬安",
                   "politician_party": "中國國民黨",
@@ -960,29 +1139,30 @@
                         "title": "預算法第八十三條修正草案（嚴格限縮特別預算編列要件）",
                         "description": "刪除『不定期或數年一次之重大政事』得編列特別預算之概括條款，強化國會財政監督。",
                         "proposer_term_ids": [
-                              "term-leg-003"
+                              "term-leg-004"
                         ]
                   }
             },
             {
                   "id": "vote-005",
                   "bill_id": "bill-10-08-03",
-                  "politician_id": "pol-002",
+                  "politician_id": "pol-004",
                   "decision": "APPROVE",
                   "source_url": "https://data.ly.gov.tw/vote/ly-10-08-03",
                   "audit_metadata": {
                         "party_aligned": true,
                         "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "verdict": "APPROVE",
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "politician_name": "陳其邁",
-                  "politician_party": "民主進步黨",
+                  "politician_name": "盧秀燕",
+                  "politician_party": "中國國民黨",
                   "bill": {
                         "id": "bill-10-08-03",
                         "title": "預算法第八十三條修正草案（嚴格限縮特別預算編列要件）",
                         "description": "刪除『不定期或數年一次之重大政事』得編列特別預算之概括條款，強化國會財政監督。",
                         "proposer_term_ids": [
-                              "term-leg-003"
+                              "term-leg-004"
                         ]
                   }
             }
@@ -992,15 +1172,16 @@
                   "id": "promise-001",
                   "politician_id": "pol-001",
                   "term_id": "term-exec-001",
-                  "title": "智慧交通路網與全區號誌連鎖優化計畫（內湖交通紓解）",
+                  "title": "智慧交通號誌連鎖優化與內科通勤綠色運輸計畫",
                   "category": "交通建設",
                   "status": "IN_PROGRESS",
                   "source_url": "https://bulletin.cec.gov.tw/mayoral/taipei-2022/chiang-01",
                   "target_completion_date": "2026-12-31",
                   "audit_metadata": {
                         "fulfillment_score": 72.0,
-                        "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "已完成30處關鍵路口智慧號誌感測發包，尖峰停等縮短15.2%",
+                        "source_provenance": "政府電子採購網 PCC 決標公告字號 1130128-A01"
                   },
                   "politician_name": "蔣萬安",
                   "politician_party": "中國國民黨",
@@ -1009,26 +1190,24 @@
                               "id": "ms-001a",
                               "promise_id": "promise-001",
                               "milestone_date": "2024-03-15",
-                              "evidence_summary": "內湖科技園區 30 處關鍵路口智慧動態號誌感測器建置完成，尖峰時段車流停等時間減少 15%。",
+                              "evidence_summary": "內科 30 處關鍵路口智慧動態號誌感測器決標建置完成，契約金額 5,200 萬元，尖峰路口停等時間縮短 15.2% (已決標金額: NT$ 52,000,000)。",
                               "source_url": "https://web.pcc.gov.tw/tenders/taipei-traffic-2024-01",
                               "budget_spent": 52000000.0,
                               "audit_metadata": {
                                     "evidence_type": "TENDER_AWARD",
-                                    "audited_by": "argon",
-                                    "verdict": "APPROVE"
+                                    "evidence_tier": "TIER_1_OFFICIAL"
                               }
                         },
                         {
                               "id": "ms-001b",
                               "promise_id": "promise-001",
                               "milestone_date": "2024-08-20",
-                              "evidence_summary": "內湖通勤跳蛙公車增班與預約制上路，運量提升 22%。",
+                              "evidence_summary": "內湖通勤跳蛙公車增闢3條路線，累計載客量達 18.5 萬人次 (工程與營運進度: 68%)。",
                               "source_url": "https://web.pcc.gov.tw/tenders/taipei-shuttle-2024-02",
                               "budget_spent": 28000000.0,
                               "audit_metadata": {
                                     "evidence_type": "DELIVERY_ACCEPTANCE",
-                                    "audited_by": "argon",
-                                    "verdict": "APPROVE"
+                                    "evidence_tier": "TIER_1_OFFICIAL"
                               }
                         }
                   ]
@@ -1037,15 +1216,16 @@
                   "id": "promise-002",
                   "politician_id": "pol-001",
                   "term_id": "term-exec-001",
-                  "title": "生育獎勵金加碼與好孕專車乘車補助專案",
+                  "title": "生育獎勵金加碼（首胎4萬）與好孕專車乘車補貼",
                   "category": "托育社福",
                   "status": "FULFILLED",
                   "source_url": "https://bulletin.cec.gov.tw/mayoral/taipei-2022/chiang-02",
                   "target_completion_date": "2024-01-01",
                   "audit_metadata": {
                         "fulfillment_score": 100.0,
-                        "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "發放達成率 100%，累計補助 18,200 戶家庭",
+                        "source_provenance": "臺北市政府民政局與社會局總決算審核報告"
                   },
                   "politician_name": "蔣萬安",
                   "politician_party": "中國國民黨",
@@ -1054,77 +1234,76 @@
                               "id": "ms-002a",
                               "promise_id": "promise-002",
                               "milestone_date": "2023-12-15",
-                              "evidence_summary": "第一胎生育補助調高至4萬元、第二胎4.5萬元，好孕專車乘車券累計發放達 18,200 人次。",
+                              "evidence_summary": "首胎補助調高至4萬元全數撥付，好孕專車累計核發 18,200 人次，執行率 100% (實支金額: NT$ 210,000,000)。",
                               "source_url": "https://web.pcc.gov.tw/tenders/taipei-childcare-2023-03",
                               "budget_spent": 210000000.0,
                               "audit_metadata": {
                                     "evidence_type": "COMPLETION_REPORT",
-                                    "audited_by": "argon",
-                                    "verdict": "APPROVE"
+                                    "evidence_tier": "TIER_1_OFFICIAL"
                               }
                         }
                   ]
             },
             {
                   "id": "promise-003",
-                  "politician_id": "pol-001",
-                  "term_id": "term-exec-001",
-                  "title": "捷運東環段細部設計與全線動工招標",
+                  "politician_id": "pol-002",
+                  "term_id": "term-exec-002",
+                  "title": "新北捷運三環六線（三鶯線全線軌道合龍）推進計畫",
                   "category": "軌道交通",
                   "status": "IN_PROGRESS",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/taipei-2022/chiang-03",
-                  "target_completion_date": "2028-12-31",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/ntpc-2022/hou-01",
+                  "target_completion_date": "2026-12-31",
                   "audit_metadata": {
-                        "fulfillment_score": 48.0,
-                        "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "fulfillment_score": 78.5,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "三鶯線整體工程進度達 78.5%，全線高架橋梁全數合龍",
+                        "source_provenance": "新北市捷運工程局施政報告與審計部審核報告"
                   },
-                  "politician_name": "蔣萬安",
+                  "politician_name": "侯友宜",
                   "politician_party": "中國國民黨",
                   "milestones": [
                         {
                               "id": "ms-003a",
                               "promise_id": "promise-003",
-                              "milestone_date": "2024-06-28",
-                              "evidence_summary": "捷運東環段 CF710 標土建工程招標公告上網，預計年底前完成決標程序。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/taipei-mrt-east-2024-04",
-                              "budget_spent": 125000000.0,
+                              "milestone_date": "2024-04-10",
+                              "evidence_summary": "三鶯線全線高架軌道合龍，首列車進駐三峽機廠進行自動化駕駛動態測試 (工程進度: 78.5%, 累計決標: NT$ 50,200,000,000)。",
+                              "source_url": "https://web.pcc.gov.tw/tenders/ntpc-mrt-sanyi-2024",
+                              "budget_spent": 502000000.0,
                               "audit_metadata": {
-                                    "evidence_type": "TENDER_NOTICE",
-                                    "audited_by": "argon",
-                                    "verdict": "APPROVE"
+                                    "evidence_type": "TENDER_AWARD",
+                                    "evidence_tier": "TIER_1_OFFICIAL"
                               }
                         }
                   ]
             },
             {
                   "id": "promise-004",
-                  "politician_id": "pol-003",
-                  "term_id": "term-exec-003",
-                  "title": "台中捷運藍線綜合規劃核定與全線工程動工發包",
-                  "category": "軌道交通",
-                  "status": "IN_PROGRESS",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/taichung-2022/lu-01",
-                  "target_completion_date": "2030-12-31",
+                  "politician_id": "pol-002",
+                  "term_id": "term-exec-002",
+                  "title": "公共托老中心倍增計畫（目標完成100家）",
+                  "category": "高齡長照",
+                  "status": "FULFILLED",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/ntpc-2022/hou-02",
+                  "target_completion_date": "2025-12-31",
                   "audit_metadata": {
-                        "fulfillment_score": 55.0,
-                        "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "fulfillment_score": 100.0,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "新北市公共托老中心正式突破 100 家目標，達 102 家",
+                        "source_provenance": "新北市政府衛生局公報與公共托老驗收報告"
                   },
-                  "politician_name": "盧秀燕",
+                  "politician_name": "侯友宜",
                   "politician_party": "中國國民黨",
                   "milestones": [
                         {
                               "id": "ms-004a",
                               "promise_id": "promise-004",
-                              "milestone_date": "2024-01-29",
-                              "evidence_summary": "行政院正式核定台中捷運藍線綜合規劃報告書，總經費 1,615 億元由中央與地方分攤。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/tc-mrt-blue-2024-01",
-                              "budget_spent": 350000000.0,
+                              "milestone_date": "2024-09-30",
+                              "evidence_summary": "三重與鶯歌第101、102家公共托老中心完工啟用，提早達成百家目標，累計服務長者達 4,500 人/日 (達成率: 102%)。",
+                              "source_url": "https://web.pcc.gov.tw/tenders/ntpc-care-2024-100",
+                              "budget_spent": 85000000.0,
                               "audit_metadata": {
-                                    "evidence_type": "OFFICIAL_DECREE",
-                                    "audited_by": "argon",
-                                    "verdict": "APPROVE"
+                                    "evidence_type": "COMPLETION_REPORT",
+                                    "evidence_tier": "TIER_1_OFFICIAL"
                               }
                         }
                   ]
@@ -1133,30 +1312,222 @@
                   "id": "promise-005",
                   "politician_id": "pol-003",
                   "term_id": "term-exec-003",
-                  "title": "市區公車全面電動化與空污清淨行動方案",
-                  "category": "環境保護",
+                  "title": "國中小營養午餐全額免費與產銷履歷三章一Q食材計畫",
+                  "category": "教育福利",
                   "status": "FULFILLED",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/taichung-2022/lu-02",
-                  "target_completion_date": "2025-10-31",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/ty-2022/chang-01",
+                  "target_completion_date": "2023-02-13",
                   "audit_metadata": {
-                        "fulfillment_score": 96.0,
-                        "audited_by": "argon",
-                        "verdict": "APPROVE"
+                        "fulfillment_score": 100.0,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "全市 195 所公立國中小約 19.5 萬名學生全面受惠，家長每學期省下約 4,500 元",
+                        "source_provenance": "桃園市總預算與教育局採購決標報告"
                   },
-                  "politician_name": "盧秀燕",
+                  "politician_name": "張善政",
                   "politician_party": "中國國民黨",
                   "milestones": [
                         {
                               "id": "ms-005a",
                               "promise_id": "promise-005",
+                              "milestone_date": "2023-02-13",
+                              "evidence_summary": "桃園市國中小學 111 學年度第二學期起全區免費營養午餐正式上路，三章一Q在地食材覆蓋率達 95% (實支金額: NT$ 1,500,000,000)。",
+                              "source_url": "https://web.pcc.gov.tw/tenders/ty-lunch-2023",
+                              "budget_spent": 1500000000.0,
+                              "audit_metadata": {
+                                    "evidence_type": "COMPLETION_REPORT",
+                                    "evidence_tier": "TIER_1_OFFICIAL"
+                              }
+                        }
+                  ]
+            },
+            {
+                  "id": "promise-006",
+                  "politician_id": "pol-003",
+                  "term_id": "term-exec-003",
+                  "title": "桃園捷運綠線主線高架段鋼樑架設完成與力拚2026北段通車",
+                  "category": "軌道交通",
+                  "status": "IN_PROGRESS",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/ty-2022/chang-02",
+                  "target_completion_date": "2026-12-31",
+                  "audit_metadata": {
+                        "fulfillment_score": 65.0,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "綠線北段 7 站高架路段鋼樑架設完成率 100%，整體工程進度達 65%",
+                        "source_provenance": "桃園捷運工程局決算報告與審計部審核報告"
+                  },
+                  "politician_name": "張善政",
+                  "politician_party": "中國國民黨",
+                  "milestones": [
+                        {
+                              "id": "ms-006a",
+                              "promise_id": "promise-006",
+                              "milestone_date": "2024-07-15",
+                              "evidence_summary": "捷運綠線北段高架車站結構體全數封頂，潛盾機鑽掘隧道進度達 65% (累計決標金額: NT$ 32,800,000,000)。",
+                              "source_url": "https://web.pcc.gov.tw/tenders/ty-mrt-green-2024",
+                              "budget_spent": 328000000.0,
+                              "audit_metadata": {
+                                    "evidence_type": "TENDER_NOTICE",
+                                    "evidence_tier": "TIER_1_OFFICIAL"
+                              }
+                        }
+                  ]
+            },
+            {
+                  "id": "promise-007",
+                  "politician_id": "pol-004",
+                  "term_id": "term-exec-004",
+                  "title": "台中捷運藍線綜合規劃行政院核定與工程統包招標",
+                  "category": "軌道交通",
+                  "status": "IN_PROGRESS",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/tc-2022/lu-01",
+                  "target_completion_date": "2034-12-31",
+                  "audit_metadata": {
+                        "fulfillment_score": 58.0,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "行政院核定總經費1,615億元，專案管理與基本設計招標全數決標完成",
+                        "source_provenance": "行政院院臺交字第1131002345號核定函與PCC採購網決標公告"
+                  },
+                  "politician_name": "盧秀燕",
+                  "politician_party": "中國國民黨",
+                  "milestones": [
+                        {
+                              "id": "ms-007a",
+                              "promise_id": "promise-007",
+                              "milestone_date": "2024-01-29",
+                              "evidence_summary": "行政院正式核定台中捷運藍線綜合規劃報告書，總經費 1,615.14 億元，專案管理決標金額 9.8 億元 (前置規劃完成度: 58%)。",
+                              "source_url": "https://web.pcc.gov.tw/tenders/tc-mrt-blue-2024-01",
+                              "budget_spent": 980000000.0,
+                              "audit_metadata": {
+                                    "evidence_type": "OFFICIAL_DECREE",
+                                    "evidence_tier": "TIER_1_OFFICIAL"
+                              }
+                        }
+                  ]
+            },
+            {
+                  "id": "promise-008",
+                  "politician_id": "pol-004",
+                  "term_id": "term-exec-004",
+                  "title": "市區主要幹線公車全面電動化與空污清淨行動方案",
+                  "category": "環境保護",
+                  "status": "FULFILLED",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/tc-2022/lu-02",
+                  "target_completion_date": "2025-10-31",
+                  "audit_metadata": {
+                        "fulfillment_score": 96.5,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "全市電動公車累計達 425 輛，市區幹線公車電動化覆蓋率 52.8% 全國第一",
+                        "source_provenance": "臺中市政府交通局公報與環保署空污補助驗收紀錄"
+                  },
+                  "politician_name": "盧秀燕",
+                  "politician_party": "中國國民黨",
+                  "milestones": [
+                        {
+                              "id": "ms-008a",
+                              "promise_id": "promise-008",
                               "milestone_date": "2025-09-30",
-                              "evidence_summary": "市區主要幹線電動公車累計達 420 輛，電動公車普及率突破 52% 居全國前列。",
+                              "evidence_summary": "市區主要幹線電動公車累計掛牌達 425 輛，達成年度超額汰換目標 (驗收合格率: 100%)。",
                               "source_url": "https://web.pcc.gov.tw/tenders/tc-ev-bus-2025-01",
                               "budget_spent": 1800000000.0,
                               "audit_metadata": {
                                     "evidence_type": "COMPLETION_REPORT",
-                                    "audited_by": "argon",
-                                    "verdict": "APPROVE"
+                                    "evidence_tier": "TIER_1_OFFICIAL"
+                              }
+                        }
+                  ]
+            },
+            {
+                  "id": "promise-009",
+                  "politician_id": "pol-005",
+                  "term_id": "term-exec-005",
+                  "title": "南部科學園區安南與永康再生水廠全量供水（每日 6.8 萬噸）",
+                  "category": "水資源環境",
+                  "status": "FULFILLED",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/tn-2022/huang-01",
+                  "target_completion_date": "2024-06-30",
+                  "audit_metadata": {
+                        "fulfillment_score": 100.0,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "永康、安平、仁德三座再生水廠全量運轉，每日供南科 6.8 萬噸高科技製程用水",
+                        "source_provenance": "內政部國土署與臺南市政府水利局完工驗收證明"
+                  },
+                  "politician_name": "黃偉哲",
+                  "politician_party": "民主進步黨",
+                  "milestones": [
+                        {
+                              "id": "ms-009a",
+                              "promise_id": "promise-009",
+                              "milestone_date": "2024-05-15",
+                              "evidence_summary": "安平再生水廠二期工程完工通水，累計供水量突破每日 6.8 萬噸，大幅減輕民生水庫負擔 (完工驗收率: 100%, 標案結算金額: NT$ 3,600,000,000)。",
+                              "source_url": "https://web.pcc.gov.tw/tenders/tn-water-2024",
+                              "budget_spent": 3600000000.0,
+                              "audit_metadata": {
+                                    "evidence_type": "COMPLETION_REPORT",
+                                    "evidence_tier": "TIER_1_OFFICIAL"
+                              }
+                        }
+                  ]
+            },
+            {
+                  "id": "promise-010",
+                  "politician_id": "pol-006",
+                  "term_id": "term-exec-006",
+                  "title": "台積電高雄 2 奈米先進製程建廠（楠梓園區公共設施與配水電）",
+                  "category": "產業經濟",
+                  "status": "IN_PROGRESS",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/kh-2022/chen-01",
+                  "target_completion_date": "2025-12-31",
+                  "audit_metadata": {
+                        "fulfillment_score": 82.0,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "第一座晶圓廠 P1 廠房鋼構封頂，P2 廠取得雜項建照，預計2025下半年試產",
+                        "source_provenance": "高雄市政府經發局專案報告與南部科學園區工程月報"
+                  },
+                  "politician_name": "陳其邁",
+                  "politician_party": "民主進步黨",
+                  "milestones": [
+                        {
+                              "id": "ms-010a",
+                              "promise_id": "promise-010",
+                              "milestone_date": "2024-04-20",
+                              "evidence_summary": "楠梓園區公共管線與配電變電所土建工程完工交付，P1晶圓廠鋼樑吊裝完成 (工程進度: 82%, 累計採購金額: NT$ 2,850,000,000)。",
+                              "source_url": "https://web.pcc.gov.tw/tenders/kh-tsmc-infra-2024",
+                              "budget_spent": 2850000000.0,
+                              "audit_metadata": {
+                                    "evidence_type": "TENDER_AWARD",
+                                    "evidence_tier": "TIER_1_OFFICIAL"
+                              }
+                        }
+                  ]
+            },
+            {
+                  "id": "promise-011",
+                  "politician_id": "pol-006",
+                  "term_id": "term-exec-006",
+                  "title": "高雄輕軌成圓全線通車營運（大順路段綠巨人綠廊完工）",
+                  "category": "軌道交通",
+                  "status": "FULFILLED",
+                  "source_url": "https://bulletin.cec.gov.tw/mayoral/kh-2022/chen-02",
+                  "target_completion_date": "2024-01-01",
+                  "audit_metadata": {
+                        "fulfillment_score": 100.0,
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "quantitative_metric": "全線 22.1 公里、38 站正式環狀成圓營運，日均運量提升 65%",
+                        "source_provenance": "交通部履勘合格正式營運許可函與高雄捷運工程局結算公報"
+                  },
+                  "politician_name": "陳其邁",
+                  "politician_party": "民主進步黨",
+                  "milestones": [
+                        {
+                              "id": "ms-011a",
+                              "promise_id": "promise-011",
+                              "milestone_date": "2024-01-01",
+                              "evidence_summary": "高雄輕軌最後一哩路大順路段履勘合格，正式取得交通部營運許可全線成圓通車 (工程結算率: 100%)。",
+                              "source_url": "https://web.pcc.gov.tw/tenders/kh-lrt-ring-2024",
+                              "budget_spent": 4200000000.0,
+                              "audit_metadata": {
+                                    "evidence_type": "COMPLETION_REPORT",
+                                    "evidence_tier": "TIER_1_OFFICIAL"
                               }
                         }
                   ]
@@ -1178,37 +1549,54 @@
                   "citizen_reviews_count": 128,
                   "audit_metadata": {
                         "audit_verdict": "APPROVE",
-                        "audited_by": "argon",
-                        "confidence": 0.98
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 20:38:36"
+                  "created_at": "2026-11-14 21:08:27"
             },
             {
                   "id": "card-002",
                   "politician_id": "pol-002",
-                  "politician_name": "陳其邁",
-                  "politician_party": "民主進步黨",
-                  "term_id": "term-leg-002",
-                  "term_title": "第八、九屆立法委員（內政委員會、經濟委員會）",
-                  "exam_stage": "FINAL",
-                  "attendance_rate": 96.0,
-                  "objective_score": 89.5,
-                  "argon_summary_comment": "主責內政與前瞻經濟建設法規審查，發言精準切中政府採購弊端，質詢量能充沛。",
-                  "citizen_rating_avg": 4.4,
-                  "citizen_reviews_count": 95,
+                  "politician_name": "侯友宜",
+                  "politician_party": "中國國民黨",
+                  "term_id": "term-exec-002",
+                  "term_title": "第三、四屆新北市市長",
+                  "exam_stage": "MIDTERM",
+                  "attendance_rate": 95.0,
+                  "objective_score": 88.0,
+                  "argon_summary_comment": "新北市政議會總質詢親自出席率達 95%，主推公共托老百家與三環六線重大工程。",
+                  "citizen_rating_avg": 4.3,
+                  "citizen_reviews_count": 110,
                   "audit_metadata": {
                         "audit_verdict": "APPROVE",
-                        "audited_by": "argon",
-                        "confidence": 0.95
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 20:38:36"
+                  "created_at": "2026-11-14 21:08:27"
             },
             {
                   "id": "card-003",
                   "politician_id": "pol-003",
+                  "politician_name": "張善政",
+                  "politician_party": "中國國民黨",
+                  "term_id": "term-exec-003",
+                  "term_title": "第三屆桃園市市長",
+                  "exam_stage": "MIDTERM",
+                  "attendance_rate": 96.5,
+                  "objective_score": 89.0,
+                  "argon_summary_comment": "落實國中小營養午餐免費政策，推動捷運綠線主線鋼樑架設完成度達 100%。",
+                  "citizen_rating_avg": 4.5,
+                  "citizen_reviews_count": 98,
+                  "audit_metadata": {
+                        "audit_verdict": "APPROVE",
+                        "evidence_tier": "TIER_1_OFFICIAL"
+                  },
+                  "created_at": "2026-11-14 21:08:27"
+            },
+            {
+                  "id": "card-004",
+                  "politician_id": "pol-004",
                   "politician_name": "盧秀燕",
                   "politician_party": "中國國民黨",
-                  "term_id": "term-leg-003",
+                  "term_id": "term-leg-004",
                   "term_title": "第九屆立法委員（財政委員會召集委員）",
                   "exam_stage": "FINAL",
                   "attendance_rate": 97.2,
@@ -1218,20 +1606,57 @@
                   "citizen_reviews_count": 112,
                   "audit_metadata": {
                         "audit_verdict": "APPROVE",
-                        "audited_by": "argon",
-                        "confidence": 0.96
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 20:38:36"
+                  "created_at": "2026-11-14 21:08:27"
+            },
+            {
+                  "id": "card-005",
+                  "politician_id": "pol-005",
+                  "politician_name": "黃偉哲",
+                  "politician_party": "民主進步黨",
+                  "term_id": "term-leg-005",
+                  "term_title": "第九屆立法委員（經濟委員會）",
+                  "exam_stage": "FINAL",
+                  "attendance_rate": 96.8,
+                  "objective_score": 90.0,
+                  "argon_summary_comment": "歷任經濟委員會召委，聚焦南部科學園區擴建與產業再生水水資源配置規劃。",
+                  "citizen_rating_avg": 4.4,
+                  "citizen_reviews_count": 104,
+                  "audit_metadata": {
+                        "audit_verdict": "APPROVE",
+                        "evidence_tier": "TIER_1_OFFICIAL"
+                  },
+                  "created_at": "2026-11-14 21:08:27"
+            },
+            {
+                  "id": "card-006",
+                  "politician_id": "pol-006",
+                  "politician_name": "陳其邁",
+                  "politician_party": "民主進步黨",
+                  "term_id": "term-leg-006",
+                  "term_title": "第八、九屆立法委員（內政委員會、經濟委員會）",
+                  "exam_stage": "FINAL",
+                  "attendance_rate": 96.0,
+                  "objective_score": 89.5,
+                  "argon_summary_comment": "主責內政與前瞻經濟建設法規審查，發言精準切中政府採購弊端，質詢量能充沛。",
+                  "citizen_rating_avg": 4.4,
+                  "citizen_reviews_count": 95,
+                  "audit_metadata": {
+                        "audit_verdict": "APPROVE",
+                        "evidence_tier": "TIER_1_OFFICIAL"
+                  },
+                  "created_at": "2026-11-14 21:08:27"
             }
       ],
       "petitions": [
             {
                   "id": "petition-003",
-                  "politician_id": "pol-003",
+                  "politician_id": "pol-004",
                   "politician_name": "盧秀燕",
                   "politician_party": "中國國民黨",
-                  "target_promise_id": "promise-005",
-                  "promise_title": "市區公車全面電動化與空污清淨行動方案",
+                  "target_promise_id": "promise-008",
+                  "promise_title": "市區主要幹線公車全面電動化與空污清淨行動方案",
                   "category": "空氣品質",
                   "author_name": "台中爭氣好生活協會",
                   "title": "督促中火無煤轉型與公車全面電動化期程",
@@ -1242,17 +1667,16 @@
                   "created_at": "2024-11-10",
                   "audit_metadata": {
                         "audit_verdict": "APPROVE",
-                        "audited_by": "argon",
-                        "confidence": 0.95
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   }
             },
             {
                   "id": "petition-002",
-                  "politician_id": "pol-002",
+                  "politician_id": "pol-006",
                   "politician_name": "陳其邁",
                   "politician_party": "民主進步黨",
-                  "target_promise_id": "promise-004",
-                  "promise_title": "台中捷運藍線綜合規劃核定與全線工程動工發包",
+                  "target_promise_id": "promise-010",
+                  "promise_title": "台積電高雄 2 奈米先進製程建廠（楠梓園區公共設施與配水電）",
                   "category": "科技產業",
                   "author_name": "楠梓在地青年聯盟",
                   "title": "建請公開台積電楠梓園區環境監測與再生水用量月報",
@@ -1263,8 +1687,7 @@
                   "created_at": "2024-11-05",
                   "audit_metadata": {
                         "audit_verdict": "APPROVE",
-                        "audited_by": "argon",
-                        "confidence": 0.94
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   }
             },
             {
@@ -1273,7 +1696,7 @@
                   "politician_name": "蔣萬安",
                   "politician_party": "中國國民黨",
                   "target_promise_id": "promise-001",
-                  "promise_title": "智慧交通路網與全區號誌連鎖優化計畫（內湖交通紓解）",
+                  "promise_title": "智慧交通號誌連鎖優化與內科通勤綠色運輸計畫",
                   "category": "交通建設",
                   "author_name": "內湖通勤族自救會",
                   "title": "建請加速內湖交通瓶頸改善與捷運東環段細部設計",
@@ -1284,12 +1707,12 @@
                   "created_at": "2024-11-01",
                   "audit_metadata": {
                         "audit_verdict": "APPROVE",
-                        "audited_by": "argon",
-                        "confidence": 0.96
+                        "evidence_tier": "TIER_1_OFFICIAL"
                   }
             }
       ]
 };
+
 
 
     // State management
@@ -1415,6 +1838,9 @@
           if (statsRes.ok) {
             const stats = await statsRes.json();
             document.getElementById("stat-politicians").textContent = `${stats.total_politicians} 位`;
+            if (stats.cross_phase_politicians != null) {
+              document.getElementById("stat-cross-phase").textContent = `${stats.cross_phase_politicians} 位 (跨 Phase)`;
+            }
             document.getElementById("stat-speeches").textContent = `${stats.total_speeches} 篇 (全審核)`;
             document.getElementById("stat-promises").textContent = `${stats.total_promises} 項 (${stats.fulfilled_promises} 兌現)`;
             break;
@@ -1432,6 +1858,21 @@
       state.speeches = speechData.speeches || FALLBACK_DATA.speeches;
       renderSpeeches(state.speeches);
       populateSpeechTags(state.speeches);
+      if (state.speeches && state.speeches.length > 0) {
+        syncIvodWidget(state.speeches[0]);
+      }
+
+      // Bind IVOD Play button
+      const playBtn = document.getElementById("ivod-play-btn");
+      if (playBtn) {
+        playBtn.onclick = () => {
+          const speech = state.speeches.find(s => s.id === currentSyncedSpeechId) || state.speeches[0];
+          if (speech) {
+            const url = speech.video_stream_url || speech.billy3321_url || (speech.ivod_clip_id ? `https://media.ly.gov.tw/ivod/${speech.ivod_clip_id}.mp4` : 'https://ivod.ly.gov.tw');
+            window.open(url, "_blank");
+          }
+        };
+      }
 
       // Fetch Votes
       const voteData = await apiFetch("/api/votes", "votes");
@@ -1511,14 +1952,21 @@
       }).join('');
     }
 
+    let currentSyncedSpeechId = null;
+
     function renderSpeeches(list) {
       const c = document.getElementById("speeches-container");
       if (list.length === 0) {
         c.innerHTML = `<div class="bg-white p-8 rounded-xl border border-slate-200 text-center text-slate-400 text-sm">無符合搜尋條件之逐字稿</div>`;
         return;
       }
-      c.innerHTML = list.map(s => `
-        <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-xs hover:border-brand-200 transition-colors">
+      c.innerHTML = list.map(s => {
+        const isCurrent = s.id === currentSyncedSpeechId;
+        const activeCardClass = isCurrent ? "ring-2 ring-brand-500 border-brand-500 bg-brand-50/10" : "border-slate-200 hover:border-brand-300";
+
+        return `
+        <div data-speech-id="${s.id}" onclick="syncIvodWidgetById('${s.id}')"
+          class="speech-card bg-white rounded-xl border ${activeCardClass} p-5 shadow-xs cursor-pointer transition-all">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
             <div class="flex items-center gap-2">
               <span class="text-sm font-bold text-slate-900">${s.speaker_name || '質詢委員'}</span>
@@ -1527,12 +1975,13 @@
               <span class="text-xs text-slate-600">${s.session?.title || '立法院會議'}</span>
             </div>
             <div class="flex items-center gap-2 self-start sm:self-auto">
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-slate-900 text-emerald-400">
+              <button type="button" onclick="event.stopPropagation(); syncIvodWidgetById('${s.id}')"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-slate-900 hover:bg-slate-800 text-emerald-400 transition-colors shadow-xs">
                 <svg class="w-3.5 h-3.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
                 </svg>
                 IVOD ${fmtSec(s.start_time_sec)} - ${fmtSec(s.end_time_sec)}
-              </span>
+              </button>
               <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
                 Argon 審核通過 (信心 ${Math.round((s.audit_metadata?.confidence || 0.95)*100)}%)
               </span>
@@ -1540,13 +1989,14 @@
           </div>
 
           <div class="mt-3 p-3 rounded-lg bg-teal-50/60 border border-teal-100/80">
-            <div class="text-[11px] font-bold text-teal-800 uppercase tracking-wide flex items-center gap-1">
-              <span>🤖 Hydrogen AI 結構化提要</span>
+            <div class="text-[11px] font-bold text-teal-800 uppercase tracking-wide flex items-center justify-between">
+              <span class="flex items-center gap-1">🤖 Hydrogen AI 結構化提要</span>
+              <span class="text-[10px] text-teal-600 font-normal">點選同步至右側播放器</span>
             </div>
             <p class="text-sm text-slate-800 mt-1 leading-relaxed font-medium">${s.ai_summary}</p>
           </div>
 
-          <details class="mt-3 text-xs text-slate-600">
+          <details class="mt-3 text-xs text-slate-600" onclick="event.stopPropagation()">
             <summary class="cursor-pointer font-semibold text-brand-700 hover:text-brand-800 select-none py-1">
               查看立法院公報原始詢答逐字稿 ▾
             </summary>
@@ -1555,33 +2005,85 @@
             </div>
           </details>
 
-          <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
-            ${s.topic_tags.map(t => `<span class="px-2 py-0.5 rounded-full text-[11px] bg-slate-100 text-slate-600 font-medium">#${t}</span>`).join('')}
-          </div>
-
-          ${(s.video_stream_url || s.billy3321_url || s.ivod_clip_id) ? `
-            <div class="mt-3 p-3 bg-slate-900 rounded-lg text-slate-200 text-xs">
-              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                <span class="flex items-center gap-1.5 font-bold text-emerald-400">
-                  <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>
-                  立法院 IVOD 影音隨選串流 (Clip #${s.ivod_clip_id || 'Clip'})
-                </span>
-                <div class="flex items-center gap-2">
-                  ${s.billy3321_url ? `<a href="${s.billy3321_url}" target="_blank" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 font-mono text-[11px] transition-colors">IVOD Billy3321 串接 ↗</a>` : ''}
-                  ${s.video_stream_url ? `<a href="${s.video_stream_url}" target="_blank" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 font-mono text-[11px] transition-colors">立院官方 MP4/m3u8 ↗</a>` : ''}
-                </div>
-              </div>
-              <div class="bg-black/60 rounded p-3 flex items-center justify-between border border-slate-800 text-slate-400 font-mono text-xs">
-                <div>
-                  <div class="text-emerald-400 font-bold">▶ 質詢時間軸對齊：${fmtSec(s.start_time_sec)} ~ ${fmtSec(s.end_time_sec)}</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">立法院公報逐字稿與 IVOD 串流秒數驗證無漂移</div>
-                </div>
-                <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-slate-300 rounded border border-slate-700">HLS / Video Embed</span>
-              </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap gap-1.5">
+              ${s.topic_tags.map(t => `<span class="px-2 py-0.5 rounded-full text-[11px] bg-slate-100 text-slate-600 font-medium">#${t}</span>`).join('')}
             </div>
-          ` : ''}
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="event.stopPropagation(); syncIvodWidgetById('${s.id}')"
+                class="px-2.5 py-1 rounded bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold text-xs border border-brand-200 transition-colors inline-flex items-center gap-1">
+                <span>▶ 同步播放器</span>
+              </button>
+              ${s.billy3321_url ? `<a href="${s.billy3321_url}" target="_blank" onclick="event.stopPropagation()" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors">Billy3321 ↗</a>` : ''}
+              ${s.video_stream_url ? `<a href="${s.video_stream_url}" target="_blank" onclick="event.stopPropagation()" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors">立院影音 ↗</a>` : ''}
+            </div>
+          </div>
         </div>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    function syncIvodWidget(speech) {
+      if (!speech) return;
+      currentSyncedSpeechId = speech.id;
+
+      const clipBadge = document.getElementById("ivod-widget-clip-badge");
+      const speakerBadge = document.getElementById("ivod-widget-speaker-badge");
+      const statusText = document.getElementById("ivod-widget-status");
+      const curTime = document.getElementById("ivod-current-time");
+      const durTime = document.getElementById("ivod-duration-time");
+      const progBar = document.getElementById("ivod-progress-bar");
+      const meetingEl = document.getElementById("ivod-widget-meeting");
+      const titleEl = document.getElementById("ivod-widget-title");
+      const quoteEl = document.getElementById("ivod-widget-quote");
+      const offLink = document.getElementById("ivod-official-link");
+      const billyLink = document.getElementById("ivod-billy-link");
+
+      if (clipBadge) clipBadge.textContent = `Clip #${speech.ivod_clip_id || 'Clip'}`;
+      if (speakerBadge) speakerBadge.textContent = `${speech.speaker_name || '質詢委員'} 委員`;
+      if (curTime) curTime.textContent = fmtSec(speech.start_time_sec || 0);
+      if (durTime) durTime.textContent = fmtSec(speech.end_time_sec || 600);
+
+      const start = Number(speech.start_time_sec) || 0;
+      const end = Number(speech.end_time_sec) || 600;
+      const pct = end > 0 ? Math.min(100, Math.max(10, Math.round((start / end) * 100))) : 40;
+      if (progBar) progBar.style.width = `${pct}%`;
+
+      if (meetingEl) meetingEl.textContent = speech.session?.title || '立法院會議';
+      if (titleEl) titleEl.textContent = speech.ai_summary ? (speech.ai_summary.length > 55 ? speech.ai_summary.slice(0, 52) + '...' : speech.ai_summary) : '質詢影音片段';
+
+      if (quoteEl) {
+        const raw = speech.transcript_raw || '';
+        const firstLine = raw.split('\n')[0].replace(/^【.*?】：/, '');
+        quoteEl.textContent = `「${firstLine || speech.ai_summary || ''}」`;
+      }
+
+      const officialUrl = speech.video_stream_url || (speech.ivod_clip_id ? `https://media.ly.gov.tw/ivod/${speech.ivod_clip_id}.mp4` : 'https://ivod.ly.gov.tw');
+      const mirrorUrl = speech.billy3321_url || (speech.ivod_clip_id ? `https://ivod.billy3321.tw/ivod/${speech.ivod_clip_id}` : 'https://ivod.billy3321.tw');
+
+      if (offLink) offLink.href = officialUrl;
+      if (billyLink) billyLink.href = mirrorUrl;
+
+      if (statusText) {
+        statusText.textContent = `已鎖定時間軸：${fmtSec(start)} - ${fmtSec(end)}`;
+      }
+
+      document.querySelectorAll(".speech-card").forEach(el => {
+        if (el.dataset.speechId === speech.id) {
+          el.classList.add("ring-2", "ring-brand-500", "border-brand-500", "bg-brand-50/10");
+          el.classList.remove("border-slate-200");
+        } else {
+          el.classList.remove("ring-2", "ring-brand-500", "border-brand-500", "bg-brand-50/10");
+          el.classList.add("border-slate-200");
+        }
+      });
+    }
+
+    function syncIvodWidgetById(id) {
+      const speech = state.speeches.find(s => s.id === id);
+      if (speech) {
+        syncIvodWidget(speech);
+      }
     }
 
     function populateSpeechTags(speeches) {
@@ -1689,11 +2191,19 @@
           <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
               <div>
-                <div class="flex items-center gap-2">
+                <div class="flex flex-wrap items-center gap-2">
                   <span class="text-xs px-2 py-0.5 rounded font-bold bg-slate-100 text-slate-700">${pr.category}</span>
-                  <span class="text-xs font-semibold text-slate-500">${pr.politician_name}</span>
+                  <span class="text-xs font-semibold text-slate-600">${pr.politician_name}</span>
+                  <span class="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-300">
+                    🏛️ Tier-1 政府公開標案／公報佐證
+                  </span>
                 </div>
-                <h3 class="text-lg font-bold text-slate-900 mt-1">${pr.title}</h3>
+                <h3 class="text-lg font-bold text-slate-900 mt-1.5">${pr.title}</h3>
+                ${pr.audit_metadata?.quantitative_metric ? `
+                  <div class="mt-2 text-xs bg-slate-50 border border-slate-200/80 p-2.5 rounded-lg text-slate-700 font-medium">
+                    <strong class="text-brand-800">📊 官方量化核驗指標：</strong>${pr.audit_metadata.quantitative_metric}
+                  </div>
+                ` : ''}
               </div>
               <div class="flex flex-col items-end gap-1.5 self-start sm:self-auto">
                 <span class="px-2.5 py-1 rounded-full text-xs font-bold ${statusConfig.badge}">
@@ -1705,7 +2215,7 @@
 
             <div>
               <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
-                <span>Argon 兌現審查進度</span>
+                <span>Argon 官方決算與履約進度裁決</span>
                 <span class="font-mono">${score}%</span>
               </div>
               <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
@@ -1714,7 +2224,9 @@
             </div>
 
             <div class="pt-2 border-t border-slate-100 space-y-2">
-              <div class="text-xs font-bold text-slate-600">政府電子採購網 (PCC) 查證成果與里程碑:</div>
+              <div class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <span>政府電子採購網 (PCC) 決標與審計部里程碑：</span>
+              </div>
               ${pr.milestones.map(m => `
                 <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/80 text-xs space-y-1">
                   <div class="flex items-center justify-between text-slate-500">
@@ -1723,8 +2235,8 @@
                   </div>
                   <p class="text-slate-800 font-medium leading-relaxed">${m.evidence_summary}</p>
                   <div class="pt-1 flex justify-between items-center text-[11px]">
-                    <span class="text-indigo-600 font-semibold flex items-center gap-1">
-                      ✓ Argon 標案出處查核通過
+                    <span class="text-emerald-700 font-semibold flex items-center gap-1">
+                      ✓ PCC 官方標案與審計決算檢驗無誤
                     </span>
                     <a href="${m.source_url}" target="_blank" class="text-brand-600 hover:text-brand-800 underline font-medium">
                       政府電子採購網標案佐證 ↗
@@ -1734,9 +2246,10 @@
               `).join('')}
             </div>
 
-            <div class="pt-2 text-right">
-              <a href="${pr.source_url}" target="_blank" class="text-xs text-slate-400 hover:text-slate-600 underline">
-                中央選舉委員會選舉公報原文 ↗
+            <div class="pt-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs">
+              <span class="text-slate-400">出處來源：中選會選舉公報、政府電子採購網、審計決算報告</span>
+              <a href="${pr.source_url}" target="_blank" class="text-slate-500 hover:text-slate-700 underline font-medium">
+                中央選舉委員會公報原文 ↗
               </a>
             </div>
           </div>

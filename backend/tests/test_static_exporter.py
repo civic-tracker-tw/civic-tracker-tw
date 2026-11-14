@@ -68,7 +68,7 @@ class TestStaticExporter(unittest.TestCase):
         self.assertIn("陳昭姿", names)
 
         # Verify cross-phase politician
-        target = next((p for p in pols if p["name"] in ("蔣萬安", "林宏遠")), None)
+        target = next((p for p in pols if p["name"] == "蔣萬安"), None)
         self.assertIsNotNone(target)
         self.assertTrue(target["stats"]["is_cross_phase"])
         self.assertEqual(len(target["terms"]), 2)
@@ -93,11 +93,14 @@ class TestStaticExporter(unittest.TestCase):
 
         # Check that index.html contains branding and embedded dataset
         self.assertIn("CivicTracker TW", html)
-        self.assertIn("Dual-Model Protocol", html)
+        self.assertIn("QUANTITATIVE_ONLY", html)
+        self.assertIn("ivod-sync-widget", html)
         self.assertIn("洪申翰", html)
         self.assertIn("李彥秀", html)
         self.assertIn("陳昭姿", html)
-        self.assertTrue("蔣萬安" in html or "林宏遠" in html)
+        self.assertIn("蔣萬安", html)
+        self.assertIn("侯友宜", html)
+        self.assertIn("盧秀燕", html)
         self.assertIn("sim-run-btn", html)
         self.assertIn("E02_SPEAKER_SWAP", html)
 

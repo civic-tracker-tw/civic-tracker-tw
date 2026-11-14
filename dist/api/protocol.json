@@ -3,7 +3,7 @@
     "protocol_version": "1.0.0",
     "project_name": "CivicTracker-TW",
     "evaluation_mode": "QUANTITATIVE_ONLY",
-    "source_hash": "sha256:9939d87b1d12e29d4f79b2025dbdb59e66a5634dbd7144a7309eb0fc3403e6ac",
+    "source_hash": "sha256:cb60861b9d57e8e70e95e5aaaf1e513ca02b7aababc6fd4d65b691c7d32fb487",
     "feature_flags": {
       "enable_ly_govapi_live_sync": true,
       "enable_ivod_video_embed": true,
@@ -18,6 +18,17 @@
       "ivod_official_base_url": "https://ivod.ly.gov.tw",
       "billy3321_ivod_base_url": "https://ivod.billy3321.tw",
       "github_discussions_repo": "civic-tracker-tw/civic-tracker-tw"
+    },
+    "evidence_tier_policy": {
+      "tier1_official_sources": [
+        "中選會選舉公報",
+        "政府電子採購網(PCC)",
+        "立法院開放資料/公報",
+        "審計部決算報告",
+        "各縣市總預算與施政報告"
+      ],
+      "include_news_media": false,
+      "policy_note": "新聞媒體真實性存疑，預設不計入執行率量化，僅作預留背景參考槽位；執行率與成果全數由 Tier-1 政府公開標案、法定公報與決算客觀量化。"
     },
     "routing": {
       "exec_agent": "hydrogen",

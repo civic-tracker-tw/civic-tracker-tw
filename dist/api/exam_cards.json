@@ -15,37 +15,54 @@
       "citizen_reviews_count": 128,
       "audit_metadata": {
         "audit_verdict": "APPROVE",
-        "audited_by": "argon",
-        "confidence": 0.98
+        "evidence_tier": "TIER_1_OFFICIAL"
       },
-      "created_at": "2026-11-14 20:38:36"
+      "created_at": "2026-11-14 21:08:27"
     },
     {
       "id": "card-002",
       "politician_id": "pol-002",
-      "politician_name": "陳其邁",
-      "politician_party": "民主進步黨",
-      "term_id": "term-leg-002",
-      "term_title": "第八、九屆立法委員（內政委員會、經濟委員會）",
-      "exam_stage": "FINAL",
-      "attendance_rate": 96.0,
-      "objective_score": 89.5,
-      "argon_summary_comment": "主責內政與前瞻經濟建設法規審查，發言精準切中政府採購弊端，質詢量能充沛。",
-      "citizen_rating_avg": 4.4,
-      "citizen_reviews_count": 95,
+      "politician_name": "侯友宜",
+      "politician_party": "中國國民黨",
+      "term_id": "term-exec-002",
+      "term_title": "第三、四屆新北市市長",
+      "exam_stage": "MIDTERM",
+      "attendance_rate": 95.0,
+      "objective_score": 88.0,
+      "argon_summary_comment": "新北市政議會總質詢親自出席率達 95%，主推公共托老百家與三環六線重大工程。",
+      "citizen_rating_avg": 4.3,
+      "citizen_reviews_count": 110,
       "audit_metadata": {
         "audit_verdict": "APPROVE",
-        "audited_by": "argon",
-        "confidence": 0.95
+        "evidence_tier": "TIER_1_OFFICIAL"
       },
-      "created_at": "2026-11-14 20:38:36"
+      "created_at": "2026-11-14 21:08:27"
     },
     {
       "id": "card-003",
       "politician_id": "pol-003",
+      "politician_name": "張善政",
+      "politician_party": "中國國民黨",
+      "term_id": "term-exec-003",
+      "term_title": "第三屆桃園市市長",
+      "exam_stage": "MIDTERM",
+      "attendance_rate": 96.5,
+      "objective_score": 89.0,
+      "argon_summary_comment": "落實國中小營養午餐免費政策，推動捷運綠線主線鋼樑架設完成度達 100%。",
+      "citizen_rating_avg": 4.5,
+      "citizen_reviews_count": 98,
+      "audit_metadata": {
+        "audit_verdict": "APPROVE",
+        "evidence_tier": "TIER_1_OFFICIAL"
+      },
+      "created_at": "2026-11-14 21:08:27"
+    },
+    {
+      "id": "card-004",
+      "politician_id": "pol-004",
       "politician_name": "盧秀燕",
       "politician_party": "中國國民黨",
-      "term_id": "term-leg-003",
+      "term_id": "term-leg-004",
       "term_title": "第九屆立法委員（財政委員會召集委員）",
       "exam_stage": "FINAL",
       "attendance_rate": 97.2,
@@ -55,11 +72,48 @@
       "citizen_reviews_count": 112,
       "audit_metadata": {
         "audit_verdict": "APPROVE",
-        "audited_by": "argon",
-        "confidence": 0.96
+        "evidence_tier": "TIER_1_OFFICIAL"
       },
-      "created_at": "2026-11-14 20:38:36"
+      "created_at": "2026-11-14 21:08:27"
+    },
+    {
+      "id": "card-005",
+      "politician_id": "pol-005",
+      "politician_name": "黃偉哲",
+      "politician_party": "民主進步黨",
+      "term_id": "term-leg-005",
+      "term_title": "第九屆立法委員（經濟委員會）",
+      "exam_stage": "FINAL",
+      "attendance_rate": 96.8,
+      "objective_score": 90.0,
+      "argon_summary_comment": "歷任經濟委員會召委，聚焦南部科學園區擴建與產業再生水水資源配置規劃。",
+      "citizen_rating_avg": 4.4,
+      "citizen_reviews_count": 104,
+      "audit_metadata": {
+        "audit_verdict": "APPROVE",
+        "evidence_tier": "TIER_1_OFFICIAL"
+      },
+      "created_at": "2026-11-14 21:08:27"
+    },
+    {
+      "id": "card-006",
+      "politician_id": "pol-006",
+      "politician_name": "陳其邁",
+      "politician_party": "民主進步黨",
+      "term_id": "term-leg-006",
+      "term_title": "第八、九屆立法委員（內政委員會、經濟委員會）",
+      "exam_stage": "FINAL",
+      "attendance_rate": 96.0,
+      "objective_score": 89.5,
+      "argon_summary_comment": "主責內政與前瞻經濟建設法規審查，發言精準切中政府採購弊端，質詢量能充沛。",
+      "citizen_rating_avg": 4.4,
+      "citizen_reviews_count": 95,
+      "audit_metadata": {
+        "audit_verdict": "APPROVE",
+        "evidence_tier": "TIER_1_OFFICIAL"
+      },
+      "created_at": "2026-11-14 21:08:27"
     }
   ],
-  "total": 3
+  "total": 6
 }

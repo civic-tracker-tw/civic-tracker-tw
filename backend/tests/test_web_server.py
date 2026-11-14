@@ -61,7 +61,8 @@ class TestWebServerHandlers(unittest.TestCase):
         self.assertIn("text/html", handler.response_headers.get("content-type", ""))
         html = handler.get_text_response()
         self.assertIn("CivicTracker TW", html)
-        self.assertIn("Dual-Model Protocol", html)
+        self.assertIn("QUANTITATIVE_ONLY", html)
+        self.assertIn("ivod-sync-widget", html)
 
     def test_options_cors_headers(self):
         handler = MockHttpHandler("OPTIONS", "/api/protocol")
@@ -99,7 +100,7 @@ class TestWebServerHandlers(unittest.TestCase):
         self.assertGreaterEqual(len(pols), 3)
 
         # Cross-role verification (Legislator -> Mayor)
-        target = next((p for p in pols if p["name"] in ("蔣萬安", "林宏遠")), None)
+        target = next((p for p in pols if p["name"] == "蔣萬安"), None)
         self.assertIsNotNone(target)
         self.assertTrue(target["stats"]["is_cross_phase"])
         self.assertEqual(len(target["terms"]), 2)
@@ -126,7 +127,7 @@ class TestWebServerHandlers(unittest.TestCase):
         self.assertEqual(handler_q.response_status, HTTPStatus.OK)
         res_q = handler_q.get_json_response()
         self.assertEqual(res_q["total"], 1)
-        self.assertIn(res_q["speeches"][0]["speaker_name"], ("陳其邁", "張靜雅"))
+        self.assertEqual(res_q["speeches"][0]["speaker_name"], "陳其邁")
 
     def test_get_exam_cards(self):
         handler = MockHttpHandler("GET", "/api/exam-cards")
@@ -161,14 +162,14 @@ class TestWebServerHandlers(unittest.TestCase):
         handler.do_GET()
         self.assertEqual(handler.response_status, HTTPStatus.OK)
         res = handler.get_json_response()
-        self.assertEqual(res["total"], 5)
+        self.assertEqual(res["total"], 11)
 
         # Filter FULFILLED
         handler_f = MockHttpHandler("GET", "/api/promises?status=FULFILLED")
         handler_f.do_GET()
         self.assertEqual(handler_f.response_status, HTTPStatus.OK)
         res_f = handler_f.get_json_response()
-        self.assertEqual(res_f["total"], 2)
+        self.assertEqual(res_f["total"], 6)
         for pr in res_f["promises"]:
             self.assertEqual(pr["status"], "FULFILLED")
 

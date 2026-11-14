@@ -1,11 +1,11 @@
 {
-  "total_politicians": 6,
-  "cross_phase_politicians": 3,
+  "total_politicians": 9,
+  "cross_phase_politicians": 4,
   "total_speeches": 6,
   "total_bills": 3,
   "total_votes": 5,
-  "total_promises": 5,
-  "fulfilled_promises": 2,
-  "total_exam_cards": 3,
+  "total_promises": 11,
+  "fulfilled_promises": 6,
+  "total_exam_cards": 6,
   "total_petitions": 3
 }

@@ -30,7 +30,7 @@
         "argon_audited_count": 3,
         "pipeline_status": "ALL_GATES_PASSED"
       },
-      "created_at": "2026-11-14 20:44:51"
+      "created_at": "2026-11-14 21:13:19"
     },
     {
       "id": 5,
@@ -45,7 +45,7 @@
         "argon_audited_count": 3,
         "pipeline_status": "ALL_GATES_PASSED"
       },
-      "created_at": "2026-11-14 20:44:50"
+      "created_at": "2026-11-14 21:11:44"
     },
     {
       "id": 4,
@@ -60,7 +60,7 @@
         "argon_audited_count": 3,
         "pipeline_status": "ALL_GATES_PASSED"
       },
-      "created_at": "2026-11-14 20:44:42"
+      "created_at": "2026-11-14 21:09:02"
     },
     {
       "id": 3,
@@ -75,7 +75,7 @@
         "argon_audited_count": 3,
         "pipeline_status": "ALL_GATES_PASSED"
       },
-      "created_at": "2026-11-14 20:44:16"
+      "created_at": "2026-11-14 21:08:33"
     },
     {
       "id": 2,
@@ -90,22 +90,17 @@
         "argon_audited_count": 3,
         "pipeline_status": "ALL_GATES_PASSED"
       },
-      "created_at": "2026-11-14 20:43:39"
+      "created_at": "2026-11-14 21:08:27"
     },
     {
       "id": 1,
-      "source": "ly_open_data_sync",
+      "source": "system_bootstrap_seed",
       "status": "SUCCESS",
-      "items_synced": 6,
+      "items_synced": 9,
       "details": {
-        "legislators_source": "OFFICIAL_FIXTURE",
-        "interpellations_source": "OFFICIAL_FIXTURE",
-        "legislators_synced": 3,
-        "speeches_synced": 3,
-        "argon_audited_count": 3,
-        "pipeline_status": "ALL_GATES_PASSED"
+        "description": "Initial repository seed dataset loaded successfully"
       },
-      "created_at": "2026-11-14 20:38:36"
+      "created_at": "2026-11-14 21:08:27"
     }
   ]
 }

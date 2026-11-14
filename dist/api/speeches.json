@@ -18,7 +18,8 @@
         "audit_verdict": "APPROVE",
         "audited_by": "argon",
         "confidence": 0.94,
-        "notes": "Verified speech transcript attribution."
+        "notes": "Verified speech transcript attribution.",
+        "evidence_tier": "TIER_1_OFFICIAL"
       },
       "ivod_clip_id": "110826",
       "video_stream_url": "https://media.ly.gov.tw/ivod/110826.mp4",
@@ -68,7 +69,7 @@
     {
       "id": "speech-002",
       "session_id": "session-ly-10-07-02",
-      "speaker_term_id": "term-leg-002",
+      "speaker_term_id": "term-leg-006",
       "target_official_id": "official-moj-minister",
       "start_time_sec": 120.0,
       "end_time_sec": 555.0,
@@ -83,7 +84,8 @@
         "audit_verdict": "APPROVE",
         "audited_by": "argon",
         "confidence": 0.98,
-        "notes": "Evidence verified against Ministry of Justice draft legislation."
+        "notes": "Evidence verified against Ministry of Justice draft legislation.",
+        "evidence_tier": "TIER_1_OFFICIAL"
       },
       "ivod_clip_id": "110912",
       "video_stream_url": "https://media.ly.gov.tw/ivod/110912.mp4",
@@ -181,7 +183,8 @@
         "audit_verdict": "APPROVE",
         "audited_by": "argon",
         "confidence": 0.96,
-        "notes": "Verified against IVOD video timestamps and official gazette."
+        "notes": "Verified against IVOD video timestamps and official gazette.",
+        "evidence_tier": "TIER_1_OFFICIAL"
       },
       "ivod_clip_id": "110825",
       "video_stream_url": "https://media.ly.gov.tw/ivod/110825.mp4",

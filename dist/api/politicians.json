@@ -25,48 +25,62 @@
       "stats": {
         "speeches_count": 2,
         "votes_count": 2,
-        "promises_count": 3,
+        "promises_count": 2,
         "fulfilled_count": 1,
         "is_cross_phase": true
       }
     },
     {
       "id": "pol-002",
-      "name": "陳其邁",
-      "party": "民主進步黨",
+      "name": "侯友宜",
+      "party": "中國國民黨",
       "terms": [
-        {
-          "id": "term-leg-002",
-          "role_type": "LEGISLATOR",
-          "constituency": "全國不分區及僑居國外國民",
-          "start_date": "2012-02-01",
-          "end_date": "2018-11-03",
-          "title": "第八、九屆立法委員（內政委員會、經濟委員會）"
-        },
         {
           "id": "term-exec-002",
           "role_type": "EXECUTIVE",
-          "constituency": "高雄市",
-          "start_date": "2020-08-24",
+          "constituency": "新北市",
+          "start_date": "2018-12-25",
           "end_date": null,
-          "title": "第三、四屆高雄市市長"
+          "title": "第三、四屆新北市市長"
         }
       ],
       "stats": {
-        "speeches_count": 1,
-        "votes_count": 3,
-        "promises_count": 0,
-        "fulfilled_count": 0,
-        "is_cross_phase": true
+        "speeches_count": 0,
+        "votes_count": 0,
+        "promises_count": 2,
+        "fulfilled_count": 1,
+        "is_cross_phase": false
       }
     },
     {
       "id": "pol-003",
+      "name": "張善政",
+      "party": "中國國民黨",
+      "terms": [
+        {
+          "id": "term-exec-003",
+          "role_type": "EXECUTIVE",
+          "constituency": "桃園市",
+          "start_date": "2022-12-25",
+          "end_date": null,
+          "title": "第三屆桃園市市長"
+        }
+      ],
+      "stats": {
+        "speeches_count": 0,
+        "votes_count": 0,
+        "promises_count": 2,
+        "fulfilled_count": 1,
+        "is_cross_phase": false
+      }
+    },
+    {
+      "id": "pol-004",
       "name": "盧秀燕",
       "party": "中國國民黨",
       "terms": [
         {
-          "id": "term-leg-003",
+          "id": "term-leg-004",
           "role_type": "LEGISLATOR",
           "constituency": "臺中市第五選舉區 (北區、北屯區)",
           "start_date": "2016-02-01",
@@ -74,7 +88,7 @@
           "title": "第九屆立法委員（財政委員會召集委員）"
         },
         {
-          "id": "term-exec-003",
+          "id": "term-exec-004",
           "role_type": "EXECUTIVE",
           "constituency": "臺中市",
           "start_date": "2018-12-25",
@@ -84,7 +98,67 @@
       ],
       "stats": {
         "speeches_count": 0,
-        "votes_count": 0,
+        "votes_count": 1,
+        "promises_count": 2,
+        "fulfilled_count": 1,
+        "is_cross_phase": true
+      }
+    },
+    {
+      "id": "pol-005",
+      "name": "黃偉哲",
+      "party": "民主進步黨",
+      "terms": [
+        {
+          "id": "term-leg-005",
+          "role_type": "LEGISLATOR",
+          "constituency": "臺南市第二選舉區",
+          "start_date": "2016-02-01",
+          "end_date": "2018-12-24",
+          "title": "第九屆立法委員（經濟委員會）"
+        },
+        {
+          "id": "term-exec-005",
+          "role_type": "EXECUTIVE",
+          "constituency": "臺南市",
+          "start_date": "2018-12-25",
+          "end_date": null,
+          "title": "第三、四屆臺南市市長"
+        }
+      ],
+      "stats": {
+        "speeches_count": 0,
+        "votes_count": 1,
+        "promises_count": 1,
+        "fulfilled_count": 1,
+        "is_cross_phase": true
+      }
+    },
+    {
+      "id": "pol-006",
+      "name": "陳其邁",
+      "party": "民主進步黨",
+      "terms": [
+        {
+          "id": "term-leg-006",
+          "role_type": "LEGISLATOR",
+          "constituency": "全國不分區及僑居國外國民",
+          "start_date": "2012-02-01",
+          "end_date": "2018-11-03",
+          "title": "第八、九屆立法委員（內政委員會、經濟委員會）"
+        },
+        {
+          "id": "term-exec-006",
+          "role_type": "EXECUTIVE",
+          "constituency": "高雄市",
+          "start_date": "2020-08-24",
+          "end_date": null,
+          "title": "第三、四屆高雄市市長"
+        }
+      ],
+      "stats": {
+        "speeches_count": 1,
+        "votes_count": 1,
         "promises_count": 2,
         "fulfilled_count": 1,
         "is_cross_phase": true
