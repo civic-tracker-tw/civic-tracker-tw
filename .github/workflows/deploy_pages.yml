@@ -1,0 +1,74 @@
+# ==============================================================================
+# CivicTracker TW — GitHub Actions 免費自動中轉審查與 GitHub Pages 發布管線
+# ------------------------------------------------------------------------------
+# 運作原理（$0 免錢 + 跑完即焚最高資安中轉）：
+# 1. 每天定時（或手動觸發 / 推送程式碼時）啟動一台 GitHub 免費臨時虛擬機。
+# 2. 自動連線立法院開放資料平臺 (https://data.ly.gov.tw) 抓取最新委員與質詢紀錄。
+# 3. 經過 Hydrogen 結構化抽取與 Argon 嚴格查核 (DualModelPipeline) 後寫入中轉 SQLite。
+# 4. 執行全套 41 項資安與資料完整性測試（若測試未過，自動中止發布，保護線上網站）。
+# 5. 將通過 Argon 查核的資料打包成純靜態快照 (`dist/`) 並發布至免費的 GitHub Pages！
+# ==============================================================================
+
+name: CivicTracker Relay & Deploy GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  schedule:
+    # 每天台灣時間凌晨 04:00 (UTC 20:00) 自動抓取立法院最新資料並中轉更新網站
+    - cron: "0 20 * * *"
+  workflow_dispatch: # 支援在 GitHub 網頁上一鍵手動觸發更新
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  relay_audit_and_build:
+    name: "① 立法院爬蟲中轉 × Argon 查核 × 靜態打包"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile Human YAML Config to Agent Protocol JSON
+        run: python -m backend.core.config_compiler
+
+      - name: Sync Taiwan Legislative Yuan Open Data (data.ly.gov.tw -> Argon Audit -> SQLite Relay)
+        run: python -m backend.core.ly_crawler --live
+
+      - name: Run 41 Automated Security & Pipeline Integrity Tests
+        run: python -m unittest discover -s backend/tests -v
+
+      - name: Export Verified Snapshot to Zero-Cost Static Site (dist/)
+        run: python -m backend.core.static_exporter
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Static Site Artifact (dist/)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+
+  deploy_public_site:
+    name: "② 發布至 GitHub Pages 公開免錢網站"
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: relay_audit_and_build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
