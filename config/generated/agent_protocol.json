@@ -1,0 +1,184 @@
+{
+  "protocol_version": "1.0.0",
+  "project_name": "CivicTracker-TW",
+  "source_hash": "sha256:e61fa7fedd14496acb745987a2d4b96e52413193031428d8e2d9564eaf85f651",
+  "routing": {
+    "exec_agent": "hydrogen",
+    "exec_model": "gemini-2.5-flash",
+    "eval_agent": "argon",
+    "eval_model": "gemini-4-argon",
+    "max_retries": 2,
+    "strict_evidence_check": true
+  },
+  "gates": {
+    "TASK_SPEECH_PARSE": {
+      "min_executor_confidence": 0.85,
+      "sample_audit_rate": 0.2,
+      "always_require_argon_verdict": false,
+      "require_timestamp_bounds": true,
+      "check_speaker_attribution": true
+    },
+    "TASK_VOTE_ANALYZE": {
+      "min_executor_confidence": 0.9,
+      "sample_audit_rate": 0.15,
+      "always_require_argon_verdict": false,
+      "allowed_vote_decisions": [
+        "APPROVE",
+        "REJECT",
+        "ABSTAIN",
+        "ABSENT"
+      ]
+    },
+    "TASK_POLICY_EVAL": {
+      "min_executor_confidence": 0.95,
+      "sample_audit_rate": 0.0,
+      "always_require_argon_verdict": true,
+      "require_verifiable_citation": true,
+      "allowed_fulfillment_statuses": [
+        "NOT_STARTED",
+        "IN_PLANNING",
+        "IN_PROGRESS",
+        "FULFILLED",
+        "STALLED",
+        "BROKEN"
+      ]
+    }
+  },
+  "err_directives": {
+    "E01_HALLUCINATION": {
+      "severity": "CRITICAL",
+      "model_directive": "Output contains claims not grounded in raw transcript or official document. Strip unsupported claims."
+    },
+    "E02_SPEAKER_SWAP": {
+      "severity": "CRITICAL",
+      "model_directive": "Confused statements made by the questioning legislator with responses from the executive official. Re-attribute speaker turns."
+    },
+    "E03_MISSING_CITATION": {
+      "severity": "HIGH",
+      "model_directive": "Policy milestone or vote record lacks a valid source_url or gazette reference. Attach exact provenance."
+    },
+    "E04_TIMESTAMP_DRIFT": {
+      "severity": "MEDIUM",
+      "model_directive": "Video start_time_sec/end_time_sec is inverted or out of session bounds. Recalculate timestamps."
+    },
+    "E05_SCHEMA_VIOLATION": {
+      "severity": "HIGH",
+      "model_directive": "Payload violates enum constraints or required fields in agent_protocol.json. Conform strictly to schema."
+    }
+  },
+  "wire_schemas": {
+    "HydrogenSubmissionEnvelope": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "HydrogenSubmissionEnvelope",
+      "type": "object",
+      "required": [
+        "task_code",
+        "submission_id",
+        "confidence",
+        "payload",
+        "attempt"
+      ],
+      "properties": {
+        "task_code": {
+          "type": "string",
+          "enum": [
+            "TASK_SPEECH_PARSE",
+            "TASK_VOTE_ANALYZE",
+            "TASK_POLICY_EVAL"
+          ]
+        },
+        "submission_id": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "payload": {
+          "type": "object"
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "previous_error": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "E01_HALLUCINATION",
+            "E02_SPEAKER_SWAP",
+            "E03_MISSING_CITATION",
+            "E04_TIMESTAMP_DRIFT",
+            "E05_SCHEMA_VIOLATION",
+            null
+          ]
+        }
+      }
+    },
+    "ArgonVerdictEnvelope": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "ArgonVerdictEnvelope",
+      "type": "object",
+      "required": [
+        "verdict",
+        "task_code",
+        "submission_id",
+        "confidence"
+      ],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "APPROVE",
+            "REJECT"
+          ]
+        },
+        "task_code": {
+          "type": "string",
+          "enum": [
+            "TASK_SPEECH_PARSE",
+            "TASK_VOTE_ANALYZE",
+            "TASK_POLICY_EVAL"
+          ]
+        },
+        "submission_id": {
+          "type": "string"
+        },
+        "error_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "E01_HALLUCINATION",
+            "E02_SPEAKER_SWAP",
+            "E03_MISSING_CITATION",
+            "E04_TIMESTAMP_DRIFT",
+            "E05_SCHEMA_VIOLATION",
+            null
+          ]
+        },
+        "model_directive": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evaluator_notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    }
+  }
+}
