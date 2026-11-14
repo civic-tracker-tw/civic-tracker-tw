@@ -279,8 +279,11 @@ class DualModelPipeline:
         human_config_path: Union[str, Path] = "config/pipeline.human.yaml",
         verify_drift: bool = True,
     ):
-        self.proto_path = Path(protocol_path).resolve()
-        self.human_path = Path(human_config_path).resolve()
+        base_root = Path(__file__).resolve().parent.parent.parent
+        p_path = Path(protocol_path)
+        h_path = Path(human_config_path)
+        self.proto_path = (p_path if p_path.is_absolute() else (base_root / p_path)).resolve()
+        self.human_path = (h_path if h_path.is_absolute() else (base_root / h_path)).resolve()
 
         if not self.proto_path.is_file():
             raise FileNotFoundError(f"Protocol file not found: {self.proto_path}")
