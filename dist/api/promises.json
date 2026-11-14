@@ -1,0 +1,179 @@
+{
+  "promises": [
+    {
+      "id": "promise-huang-01",
+      "politician_id": "pol-huang-03",
+      "term_id": "term-huang-exec-04",
+      "title": "台中捷運藍線綜合規劃核定與全線工程動工發包",
+      "category": "軌道交通",
+      "status": "IN_PROGRESS",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/taichung-2022/huang-01",
+      "target_completion_date": "2030-12-31",
+      "audit_metadata": {
+        "fulfillment_score": 52.0,
+        "audited_by": "argon",
+        "verdict": "APPROVE"
+      },
+      "politician_name": "黃紹華",
+      "politician_party": "繁榮公民黨",
+      "milestones": [
+        {
+          "id": "ms-huang-1a",
+          "promise_id": "promise-huang-01",
+          "milestone_date": "2024-01-29",
+          "evidence_summary": "行政院核定台中捷運藍線綜合規劃報告書，總經費 1,615 億元由中央與地方分攤。",
+          "source_url": "https://web.pcc.gov.tw/tenders/tc-mrt-blue-2024-01",
+          "budget_spent": 350000000.0,
+          "audit_metadata": {
+            "evidence_type": "OFFICIAL_DECREE",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "promise-huang-02",
+      "politician_id": "pol-huang-03",
+      "term_id": "term-huang-exec-04",
+      "title": "市區公車全面電動化與空污清淨行動方案",
+      "category": "環境保護",
+      "status": "FULFILLED",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/taichung-2022/huang-02",
+      "target_completion_date": "2025-10-31",
+      "audit_metadata": {
+        "fulfillment_score": 96.0,
+        "audited_by": "argon",
+        "verdict": "APPROVE"
+      },
+      "politician_name": "黃紹華",
+      "politician_party": "繁榮公民黨",
+      "milestones": [
+        {
+          "id": "ms-huang-2a",
+          "promise_id": "promise-huang-02",
+          "milestone_date": "2025-09-30",
+          "evidence_summary": "市區主要幹線電動公車累計達 420 輛，電動公車普及率突破 52% 居全國前列。",
+          "source_url": "https://web.pcc.gov.tw/tenders/tc-ev-bus-2025-01",
+          "budget_spent": 1800000000.0,
+          "audit_metadata": {
+            "evidence_type": "COMPLETION_REPORT",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "promise-lin-01",
+      "politician_id": "pol-lin-01",
+      "term_id": "term-lin-exec-11",
+      "title": "智慧交通路網與全區號誌連鎖優化計畫",
+      "category": "交通建設",
+      "status": "IN_PROGRESS",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/hsinchu-2024/lin-01",
+      "target_completion_date": "2026-12-31",
+      "audit_metadata": {
+        "fulfillment_score": 68.5,
+        "audited_by": "argon",
+        "verdict": "APPROVE"
+      },
+      "politician_name": "林宏遠",
+      "politician_party": "台灣進步陣線",
+      "milestones": [
+        {
+          "id": "ms-lin-1a",
+          "promise_id": "promise-lin-01",
+          "milestone_date": "2025-03-15",
+          "evidence_summary": "慈雲路與光復路 25 處關鍵路口智慧動態號誌感測器發包完成，預估尖峰時段車流停等時間減少 18%。",
+          "source_url": "https://web.pcc.gov.tw/tenders/hsinchu-traffic-2025-01",
+          "budget_spent": 45000000.0,
+          "audit_metadata": {
+            "evidence_type": "TENDER_AWARD",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        },
+        {
+          "id": "ms-lin-1b",
+          "promise_id": "promise-lin-01",
+          "milestone_date": "2025-08-20",
+          "evidence_summary": "竹科通勤專車全電動化第一期（共 15 輛低底盤電動公車）正式上路營運。",
+          "source_url": "https://web.pcc.gov.tw/tenders/hsinchu-shuttle-2025-02",
+          "budget_spent": 32000000.0,
+          "audit_metadata": {
+            "evidence_type": "DELIVERY_ACCEPTANCE",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "promise-lin-02",
+      "politician_id": "pol-lin-01",
+      "term_id": "term-lin-exec-11",
+      "title": "0至6歲公立托育設施倍增與第二胎育兒津貼加碼",
+      "category": "托育社福",
+      "status": "FULFILLED",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/hsinchu-2024/lin-02",
+      "target_completion_date": "2025-09-01",
+      "audit_metadata": {
+        "fulfillment_score": 100.0,
+        "audited_by": "argon",
+        "verdict": "APPROVE"
+      },
+      "politician_name": "林宏遠",
+      "politician_party": "台灣進步陣線",
+      "milestones": [
+        {
+          "id": "ms-lin-2a",
+          "promise_id": "promise-lin-02",
+          "milestone_date": "2025-08-10",
+          "evidence_summary": "新設東區與北區 12 處社區公共托育家園驗收完畢，第二胎加碼補助全面撥款發放達 3,850 戶。",
+          "source_url": "https://web.pcc.gov.tw/tenders/hsinchu-childcare-2025-03",
+          "budget_spent": 88000000.0,
+          "audit_metadata": {
+            "evidence_type": "COMPLETION_REPORT",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "promise-lin-03",
+      "politician_id": "pol-lin-01",
+      "term_id": "term-lin-exec-11",
+      "title": "竹科新創產學孵化專區二期擴建案",
+      "category": "產業經濟",
+      "status": "STALLED",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/hsinchu-2024/lin-03",
+      "target_completion_date": "2027-06-30",
+      "audit_metadata": {
+        "fulfillment_score": 15.0,
+        "audited_by": "argon",
+        "verdict": "APPROVE",
+        "delay_reason": "土地徵收公聽會地主爭議暫緩"
+      },
+      "politician_name": "林宏遠",
+      "politician_party": "台灣進步陣線",
+      "milestones": [
+        {
+          "id": "ms-lin-3a",
+          "promise_id": "promise-lin-03",
+          "milestone_date": "2025-05-18",
+          "evidence_summary": "可行性評估案完成，但都市計畫土地變更作業因周邊農地業主陳情，市府議會審查暫予保留。",
+          "source_url": "https://web.pcc.gov.tw/tenders/hsinchu-incubator-2025-04",
+          "budget_spent": 15000000.0,
+          "audit_metadata": {
+            "evidence_type": "AUDIT_WARNING",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        }
+      ]
+    }
+  ],
+  "total": 5
+}
