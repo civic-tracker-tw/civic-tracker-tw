@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SKIP_DIRS = {"__pycache__", ".git", ".pytest_cache", "data"}
+SKIP_DIRS = {"__pycache__", ".git", ".pytest_cache"}
 SKIP_SUFFIXES = {".pyc", ".pyo", ".db", ".db-shm", ".db-wal"}
 
 
@@ -65,6 +65,7 @@ def publish_to_github(
     repo_name: str = "civic-tracker-tw",
     org_name: Optional[str] = None,
     private: bool = False,
+    only_files: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """
     1. Verifies authenticated GitHub user (or target Organization)
@@ -102,6 +103,9 @@ def publish_to_github(
 
     # Upload files via Contents API
     files = collect_project_files(BASE_DIR)
+    if only_files:
+        only_set = set(only_files)
+        files = [f for f in files if f.relative_to(BASE_DIR).as_posix() in only_set]
     uploaded_count = 0
     for fpath in files:
         rel_posix = fpath.relative_to(BASE_DIR).as_posix()
@@ -154,6 +158,7 @@ if __name__ == "__main__":
     parser.add_argument("--repo", default="civic-tracker-tw", help="Target GitHub repository name")
     parser.add_argument("--org", default=os.environ.get("GITHUB_ORG", ""), help="Optional GitHub Organization name")
     parser.add_argument("--token", default=os.environ.get("GITHUB_TOKEN", ""), help="GitHub Personal Access Token")
+    parser.add_argument("--files", nargs="*", default=None, help="Optional relative file paths to upload")
     args = parser.parse_args()
 
     if not args.token:
@@ -163,7 +168,7 @@ if __name__ == "__main__":
         )
         sys.exit(1)
 
-    res = publish_to_github(token=args.token, repo_name=args.repo, org_name=args.org)
+    res = publish_to_github(token=args.token, repo_name=args.repo, org_name=args.org, only_files=args.files)
     print("\n============================================================")
     print(f"GitHub Repository: {res['repo_url']}")
     print(f"GitHub Pages URL:  {res['pages_url']}")
