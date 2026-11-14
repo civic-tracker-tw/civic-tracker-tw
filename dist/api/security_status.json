@@ -1,0 +1,106 @@
+{
+  "security_protections": {
+    "sqlite_wal_journal_mode": true,
+    "foreign_keys_enforced": true,
+    "parameterized_queries": true,
+    "owasp_headers_enforced": true,
+    "rate_limiter_active": true,
+    "rate_limit_policy": "120 requests / 60 seconds per IP",
+    "max_post_body_bytes": 65536,
+    "timing_safe_admin_auth": true
+  },
+  "database_metadata": {
+    "engine": "sqlite3",
+    "journal_mode": "WAL",
+    "foreign_keys_enabled": true,
+    "parameterized_queries": true,
+    "database_path": "C:\\Users\\user\\.gemini\\antigravity\\scratch\\civic-tracker\\data\\civic_tracker.db"
+  },
+  "latest_sync_logs": [
+    {
+      "id": 6,
+      "source": "ly_open_data_sync",
+      "status": "SUCCESS",
+      "items_synced": 6,
+      "details": {
+        "legislators_source": "OFFICIAL_FIXTURE",
+        "interpellations_source": "OFFICIAL_FIXTURE",
+        "legislators_synced": 3,
+        "speeches_synced": 3,
+        "argon_audited_count": 3,
+        "pipeline_status": "ALL_GATES_PASSED"
+      },
+      "created_at": "2026-11-14 19:17:16"
+    },
+    {
+      "id": 5,
+      "source": "ly_open_data_sync",
+      "status": "SUCCESS",
+      "items_synced": 6,
+      "details": {
+        "legislators_source": "OFFICIAL_FIXTURE",
+        "interpellations_source": "OFFICIAL_FIXTURE",
+        "legislators_synced": 3,
+        "speeches_synced": 3,
+        "argon_audited_count": 3,
+        "pipeline_status": "ALL_GATES_PASSED"
+      },
+      "created_at": "2026-11-14 19:16:48"
+    },
+    {
+      "id": 4,
+      "source": "ly_open_data_sync",
+      "status": "SUCCESS",
+      "items_synced": 6,
+      "details": {
+        "legislators_source": "OFFICIAL_FIXTURE",
+        "interpellations_source": "OFFICIAL_FIXTURE",
+        "legislators_synced": 3,
+        "speeches_synced": 3,
+        "argon_audited_count": 3,
+        "pipeline_status": "ALL_GATES_PASSED"
+      },
+      "created_at": "2026-11-14 19:16:35"
+    },
+    {
+      "id": 3,
+      "source": "ly_open_data_sync",
+      "status": "SUCCESS",
+      "items_synced": 6,
+      "details": {
+        "legislators_source": "OFFICIAL_FIXTURE",
+        "interpellations_source": "OFFICIAL_FIXTURE",
+        "legislators_synced": 3,
+        "speeches_synced": 3,
+        "argon_audited_count": 3,
+        "pipeline_status": "ALL_GATES_PASSED"
+      },
+      "created_at": "2026-11-14 19:12:47"
+    },
+    {
+      "id": 2,
+      "source": "ly_open_data_sync",
+      "status": "SUCCESS",
+      "items_synced": 6,
+      "details": {
+        "legislators_source": "OFFICIAL_FIXTURE",
+        "interpellations_source": "OFFICIAL_FIXTURE",
+        "legislators_synced": 3,
+        "speeches_synced": 3,
+        "argon_audited_count": 3,
+        "pipeline_status": "ALL_GATES_PASSED"
+      },
+      "created_at": "2026-11-14 19:10:38"
+    },
+    {
+      "id": 1,
+      "source": "seed_data_bootstrap",
+      "status": "SUCCESS",
+      "items_synced": 11,
+      "details": {
+        "message": "Bootstrap completed from in-memory seed dataset"
+      },
+      "created_at": "2026-11-14 19:10:38"
+    }
+  ]
+}
