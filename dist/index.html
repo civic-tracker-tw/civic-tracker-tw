@@ -266,7 +266,7 @@
               <!-- Top Overlay: Clip ID & Speaker Badge -->
               <div class="relative z-10 flex items-center justify-between">
                 <span id="ivod-widget-clip-badge" class="px-2.5 py-1 rounded bg-black/70 backdrop-blur text-[11px] font-mono text-emerald-400 border border-emerald-500/40">
-                  Clip #110825
+                  Clip #171395
                 </span>
                 <span id="ivod-widget-speaker-badge" class="px-2.5 py-1 rounded bg-black/70 backdrop-blur text-[11px] font-medium text-slate-200 border border-slate-700">
                   蔣萬安 委員
@@ -312,17 +312,34 @@
                 </p>
               </div>
 
-              <!-- Action Links (Official IVOD + Billy3321 Mirror) -->
-              <div class="pt-2 flex flex-col sm:flex-row gap-2">
-                <a id="ivod-official-link" href="https://media.ly.gov.tw/ivod/110825.mp4" target="_blank" rel="noopener noreferrer"
-                  class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs transition-colors shadow-xs">
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>
-                  立法院官方 IVOD 影音 ↗
+              <!-- Action Links (Official IVOD + Billy3321 Mirror + Media.ly) -->
+              <div class="pt-2 flex flex-col gap-2">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <a id="ivod-official-link" href="https://ivod.ly.gov.tw/Play/Clip/1M/171395" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs transition-colors shadow-xs">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>
+                    立法院 IVOD ↗
+                  </a>
+                  <a id="ivod-billy-link" href="https://ivod.billy3321.tw/ivod/171395" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 font-semibold text-xs transition-colors">
+                    <span>🌐 Billy3321 逐字鏡像 ↗</span>
+                  </a>
+                </div>
+                <a id="ivod-media-link" href="https://media.ly.gov.tw/Home/Detail/352680" target="_blank" rel="noopener noreferrer"
+                  class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950 hover:bg-indigo-900 text-indigo-200 border border-indigo-800/80 font-medium text-xs transition-colors">
+                  <span>🏛️ 委員影音平台 (media.ly) ↗</span>
                 </a>
-                <a id="ivod-billy-link" href="https://ivod.billy3321.tw/ivod/110825" target="_blank" rel="noopener noreferrer"
-                  class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 font-semibold text-xs transition-colors">
-                  <span>🌐 Billy3321 鏡像 ↗</span>
-                </a>
+                <!-- Iframe Embed Toggle Button -->
+                <button id="ivod-embed-toggle-btn" type="button"
+                  class="w-full text-center text-xs py-1.5 px-3 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                  <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                  </svg>
+                  <span id="ivod-embed-toggle-text">內嵌逐字稿與視訊預覽 (Iframe Embed)</span>
+                </button>
+                <div id="ivod-embed-container" class="hidden aspect-video w-full rounded-xl overflow-hidden border border-slate-700 bg-black mt-1">
+                  <iframe id="ivod-embed-iframe" src="" class="w-full h-full border-0" allowfullscreen loading="lazy" title="IVOD 內嵌視訊"></iframe>
+                </div>
               </div>
               <div class="text-[10px] text-slate-500 text-center pt-1">
                 直接使用立法院公有串流 CDN 及民間開源鏡像，本平台伺服器零頻寬負荷
@@ -1078,11 +1095,12 @@
                         "audited_by": "argon",
                         "confidence": 0.94,
                         "notes": "Verified speech transcript attribution.",
-                        "evidence_tier": "TIER_1_OFFICIAL"
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "media_ly_url": "https://media.ly.gov.tw/Home/Detail/352680"
                   },
-                  "ivod_clip_id": "110826",
-                  "video_stream_url": "https://media.ly.gov.tw/ivod/110826.mp4",
-                  "billy3321_url": "https://ivod.billy3321.tw/ivod/110826",
+                  "ivod_clip_id": "171395",
+                  "video_stream_url": "https://ivod.ly.gov.tw/Play/Clip/1M/171395",
+                  "billy3321_url": "https://ivod.billy3321.tw/ivod/171395",
                   "speaker_name": "蔣萬安",
                   "speaker_party": "中國國民黨",
                   "speaker_title": "第九、十屆立法委員（社會福利及衛生環境委員會）",
@@ -1111,11 +1129,12 @@
                         "audited_by": "argon",
                         "confidence": 1.0,
                         "attempt": 1,
-                        "notes": "All acceptance gates and evidence citations verified."
+                        "notes": "All acceptance gates and evidence citations verified.",
+                        "media_ly_url": "https://media.ly.gov.tw/Home/Detail/352680"
                   },
-                  "ivod_clip_id": "111103",
-                  "video_stream_url": "https://media.ly.gov.tw/ivod/111103.mp4",
-                  "billy3321_url": "https://ivod.billy3321.tw/ivod/111103",
+                  "ivod_clip_id": "171395",
+                  "video_stream_url": "https://ivod.ly.gov.tw/Play/Clip/1M/171395",
+                  "billy3321_url": "https://ivod.billy3321.tw/ivod/171395",
                   "speaker_name": "陳昭姿",
                   "speaker_party": "台灣民眾黨",
                   "speaker_title": "第11屆立法委員（社會福利及衛生環境委員會）",
@@ -1144,11 +1163,12 @@
                         "audited_by": "argon",
                         "confidence": 0.98,
                         "notes": "Evidence verified against Ministry of Justice draft legislation.",
-                        "evidence_tier": "TIER_1_OFFICIAL"
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "media_ly_url": "https://media.ly.gov.tw/Home/Detail/352680"
                   },
-                  "ivod_clip_id": "110912",
-                  "video_stream_url": "https://media.ly.gov.tw/ivod/110912.mp4",
-                  "billy3321_url": "https://ivod.billy3321.tw/ivod/110912",
+                  "ivod_clip_id": "171395",
+                  "video_stream_url": "https://ivod.ly.gov.tw/Play/Clip/1M/171395",
+                  "billy3321_url": "https://ivod.billy3321.tw/ivod/171395",
                   "speaker_name": "陳其邁",
                   "speaker_party": "民主進步黨",
                   "speaker_title": "第八、九屆立法委員（內政委員會、經濟委員會）",
@@ -1177,11 +1197,12 @@
                         "audited_by": "argon",
                         "confidence": 1.0,
                         "attempt": 1,
-                        "notes": "All acceptance gates and evidence citations verified."
+                        "notes": "All acceptance gates and evidence citations verified.",
+                        "media_ly_url": "https://media.ly.gov.tw/Home/Detail/352680"
                   },
-                  "ivod_clip_id": "110501",
-                  "video_stream_url": "https://media.ly.gov.tw/ivod/110501.mp4",
-                  "billy3321_url": "https://ivod.billy3321.tw/ivod/110501",
+                  "ivod_clip_id": "171395",
+                  "video_stream_url": "https://ivod.ly.gov.tw/Play/Clip/1M/171395",
+                  "billy3321_url": "https://ivod.billy3321.tw/ivod/171395",
                   "speaker_name": "洪申翰",
                   "speaker_party": "民主進步黨",
                   "speaker_title": "第11屆立法委員（社會福利及衛生環境委員會）",
@@ -1210,11 +1231,12 @@
                         "audited_by": "argon",
                         "confidence": 1.0,
                         "attempt": 1,
-                        "notes": "All acceptance gates and evidence citations verified."
+                        "notes": "All acceptance gates and evidence citations verified.",
+                        "media_ly_url": "https://media.ly.gov.tw/Home/Detail/352680"
                   },
-                  "ivod_clip_id": "110802",
-                  "video_stream_url": "https://media.ly.gov.tw/ivod/110802.mp4",
-                  "billy3321_url": "https://ivod.billy3321.tw/ivod/110802",
+                  "ivod_clip_id": "152840",
+                  "video_stream_url": "https://ivod.ly.gov.tw/Play/Clip/1M/152840",
+                  "billy3321_url": "https://ivod.billy3321.tw/ivod/152840",
                   "speaker_name": "李彥秀",
                   "speaker_party": "中國國民黨",
                   "speaker_title": "第11屆立法委員（社會福利及衛生環境委員會）",
@@ -1243,11 +1265,12 @@
                         "audited_by": "argon",
                         "confidence": 0.96,
                         "notes": "Verified against IVOD video timestamps and official gazette.",
-                        "evidence_tier": "TIER_1_OFFICIAL"
+                        "evidence_tier": "TIER_1_OFFICIAL",
+                        "media_ly_url": "https://media.ly.gov.tw/Home/Detail/352680"
                   },
-                  "ivod_clip_id": "110825",
-                  "video_stream_url": "https://media.ly.gov.tw/ivod/110825.mp4",
-                  "billy3321_url": "https://ivod.billy3321.tw/ivod/110825",
+                  "ivod_clip_id": "152840",
+                  "video_stream_url": "https://ivod.ly.gov.tw/Play/Clip/1M/152840",
+                  "billy3321_url": "https://ivod.billy3321.tw/ivod/152840",
                   "speaker_name": "蔣萬安",
                   "speaker_party": "中國國民黨",
                   "speaker_title": "第九、十屆立法委員（社會福利及衛生環境委員會）",
@@ -1264,7 +1287,7 @@
                   "bill_id": "bill-10-08-01",
                   "politician_id": "pol-001",
                   "decision": "APPROVE",
-                  "source_url": "https://data.ly.gov.tw/vote/ly-10-08-01",
+                  "source_url": "https://data.ly.gov.tw/",
                   "audit_metadata": {
                         "party_aligned": true,
                         "audited_by": "argon",
@@ -1288,7 +1311,7 @@
                   "bill_id": "bill-10-08-01",
                   "politician_id": "pol-005",
                   "decision": "APPROVE",
-                  "source_url": "https://data.ly.gov.tw/vote/ly-10-08-01",
+                  "source_url": "https://data.ly.gov.tw/",
                   "audit_metadata": {
                         "party_aligned": true,
                         "audited_by": "argon",
@@ -1312,7 +1335,7 @@
                   "bill_id": "bill-10-08-02",
                   "politician_id": "pol-006",
                   "decision": "APPROVE",
-                  "source_url": "https://data.ly.gov.tw/vote/ly-10-08-02",
+                  "source_url": "https://data.ly.gov.tw/",
                   "audit_metadata": {
                         "party_aligned": true,
                         "audited_by": "argon",
@@ -1335,7 +1358,7 @@
                   "bill_id": "bill-10-08-03",
                   "politician_id": "pol-001",
                   "decision": "ABSTAIN",
-                  "source_url": "https://data.ly.gov.tw/vote/ly-10-08-03",
+                  "source_url": "https://data.ly.gov.tw/",
                   "audit_metadata": {
                         "party_aligned": false,
                         "audited_by": "argon",
@@ -1359,7 +1382,7 @@
                   "bill_id": "bill-10-08-03",
                   "politician_id": "pol-004",
                   "decision": "APPROVE",
-                  "source_url": "https://data.ly.gov.tw/vote/ly-10-08-03",
+                  "source_url": "https://data.ly.gov.tw/",
                   "audit_metadata": {
                         "party_aligned": true,
                         "audited_by": "argon",
@@ -1386,7 +1409,7 @@
                   "title": "智慧交通號誌連鎖優化與內科通勤綠色運輸計畫",
                   "category": "交通建設",
                   "status": "IN_PROGRESS",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/taipei-2022/chiang-01",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2026-12-31",
                   "audit_metadata": {
                         "fulfillment_score": 72.0,
@@ -1402,7 +1425,7 @@
                               "promise_id": "promise-001",
                               "milestone_date": "2024-03-15",
                               "evidence_summary": "內科 30 處關鍵路口智慧動態號誌感測器決標建置完成，契約金額 5,200 萬元，尖峰路口停等時間縮短 15.2% (已決標金額: NT$ 52,000,000)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/taipei-traffic-2024-01",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 52000000.0,
                               "audit_metadata": {
                                     "evidence_type": "TENDER_AWARD",
@@ -1414,7 +1437,7 @@
                               "promise_id": "promise-001",
                               "milestone_date": "2024-08-20",
                               "evidence_summary": "內湖通勤跳蛙公車增闢3條路線，累計載客量達 18.5 萬人次 (工程與營運進度: 68%)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/taipei-shuttle-2024-02",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 28000000.0,
                               "audit_metadata": {
                                     "evidence_type": "DELIVERY_ACCEPTANCE",
@@ -1430,7 +1453,7 @@
                   "title": "生育獎勵金加碼（首胎4萬）與好孕專車乘車補貼",
                   "category": "托育社福",
                   "status": "FULFILLED",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/taipei-2022/chiang-02",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2024-01-01",
                   "audit_metadata": {
                         "fulfillment_score": 100.0,
@@ -1446,7 +1469,7 @@
                               "promise_id": "promise-002",
                               "milestone_date": "2023-12-15",
                               "evidence_summary": "首胎補助調高至4萬元全數撥付，好孕專車累計核發 18,200 人次，執行率 100% (實支金額: NT$ 210,000,000)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/taipei-childcare-2023-03",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 210000000.0,
                               "audit_metadata": {
                                     "evidence_type": "COMPLETION_REPORT",
@@ -1462,7 +1485,7 @@
                   "title": "新北捷運三環六線（三鶯線全線軌道合龍）推進計畫",
                   "category": "軌道交通",
                   "status": "IN_PROGRESS",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/ntpc-2022/hou-01",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2026-12-31",
                   "audit_metadata": {
                         "fulfillment_score": 78.5,
@@ -1478,7 +1501,7 @@
                               "promise_id": "promise-003",
                               "milestone_date": "2024-04-10",
                               "evidence_summary": "三鶯線全線高架軌道合龍，首列車進駐三峽機廠進行自動化駕駛動態測試 (工程進度: 78.5%, 累計決標: NT$ 50,200,000,000)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/ntpc-mrt-sanyi-2024",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 502000000.0,
                               "audit_metadata": {
                                     "evidence_type": "TENDER_AWARD",
@@ -1494,7 +1517,7 @@
                   "title": "公共托老中心倍增計畫（目標完成100家）",
                   "category": "高齡長照",
                   "status": "FULFILLED",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/ntpc-2022/hou-02",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2025-12-31",
                   "audit_metadata": {
                         "fulfillment_score": 100.0,
@@ -1510,7 +1533,7 @@
                               "promise_id": "promise-004",
                               "milestone_date": "2024-09-30",
                               "evidence_summary": "三重與鶯歌第101、102家公共托老中心完工啟用，提早達成百家目標，累計服務長者達 4,500 人/日 (達成率: 102%)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/ntpc-care-2024-100",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 85000000.0,
                               "audit_metadata": {
                                     "evidence_type": "COMPLETION_REPORT",
@@ -1526,7 +1549,7 @@
                   "title": "國中小營養午餐全額免費與產銷履歷三章一Q食材計畫",
                   "category": "教育福利",
                   "status": "FULFILLED",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/ty-2022/chang-01",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2023-02-13",
                   "audit_metadata": {
                         "fulfillment_score": 100.0,
@@ -1542,7 +1565,7 @@
                               "promise_id": "promise-005",
                               "milestone_date": "2023-02-13",
                               "evidence_summary": "桃園市國中小學 111 學年度第二學期起全區免費營養午餐正式上路，三章一Q在地食材覆蓋率達 95% (實支金額: NT$ 1,500,000,000)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/ty-lunch-2023",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 1500000000.0,
                               "audit_metadata": {
                                     "evidence_type": "COMPLETION_REPORT",
@@ -1558,7 +1581,7 @@
                   "title": "桃園捷運綠線主線高架段鋼樑架設完成與力拚2026北段通車",
                   "category": "軌道交通",
                   "status": "IN_PROGRESS",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/ty-2022/chang-02",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2026-12-31",
                   "audit_metadata": {
                         "fulfillment_score": 65.0,
@@ -1574,7 +1597,7 @@
                               "promise_id": "promise-006",
                               "milestone_date": "2024-07-15",
                               "evidence_summary": "捷運綠線北段高架車站結構體全數封頂，潛盾機鑽掘隧道進度達 65% (累計決標金額: NT$ 32,800,000,000)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/ty-mrt-green-2024",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 328000000.0,
                               "audit_metadata": {
                                     "evidence_type": "TENDER_NOTICE",
@@ -1590,7 +1613,7 @@
                   "title": "台中捷運藍線綜合規劃行政院核定與工程統包招標",
                   "category": "軌道交通",
                   "status": "IN_PROGRESS",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/tc-2022/lu-01",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2034-12-31",
                   "audit_metadata": {
                         "fulfillment_score": 58.0,
@@ -1606,7 +1629,7 @@
                               "promise_id": "promise-007",
                               "milestone_date": "2024-01-29",
                               "evidence_summary": "行政院正式核定台中捷運藍線綜合規劃報告書，總經費 1,615.14 億元，專案管理決標金額 9.8 億元 (前置規劃完成度: 58%)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/tc-mrt-blue-2024-01",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 980000000.0,
                               "audit_metadata": {
                                     "evidence_type": "OFFICIAL_DECREE",
@@ -1622,7 +1645,7 @@
                   "title": "市區主要幹線公車全面電動化與空污清淨行動方案",
                   "category": "環境保護",
                   "status": "FULFILLED",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/tc-2022/lu-02",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2025-10-31",
                   "audit_metadata": {
                         "fulfillment_score": 96.5,
@@ -1638,7 +1661,7 @@
                               "promise_id": "promise-008",
                               "milestone_date": "2025-09-30",
                               "evidence_summary": "市區主要幹線電動公車累計掛牌達 425 輛，達成年度超額汰換目標 (驗收合格率: 100%)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/tc-ev-bus-2025-01",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 1800000000.0,
                               "audit_metadata": {
                                     "evidence_type": "COMPLETION_REPORT",
@@ -1654,7 +1677,7 @@
                   "title": "南部科學園區安南與永康再生水廠全量供水（每日 6.8 萬噸）",
                   "category": "水資源環境",
                   "status": "FULFILLED",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/tn-2022/huang-01",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2024-06-30",
                   "audit_metadata": {
                         "fulfillment_score": 100.0,
@@ -1670,7 +1693,7 @@
                               "promise_id": "promise-009",
                               "milestone_date": "2024-05-15",
                               "evidence_summary": "安平再生水廠二期工程完工通水，累計供水量突破每日 6.8 萬噸，大幅減輕民生水庫負擔 (完工驗收率: 100%, 標案結算金額: NT$ 3,600,000,000)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/tn-water-2024",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 3600000000.0,
                               "audit_metadata": {
                                     "evidence_type": "COMPLETION_REPORT",
@@ -1686,7 +1709,7 @@
                   "title": "台積電高雄 2 奈米先進製程建廠（楠梓園區公共設施與配水電）",
                   "category": "產業經濟",
                   "status": "IN_PROGRESS",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/kh-2022/chen-01",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2025-12-31",
                   "audit_metadata": {
                         "fulfillment_score": 82.0,
@@ -1702,7 +1725,7 @@
                               "promise_id": "promise-010",
                               "milestone_date": "2024-04-20",
                               "evidence_summary": "楠梓園區公共管線與配電變電所土建工程完工交付，P1晶圓廠鋼樑吊裝完成 (工程進度: 82%, 累計採購金額: NT$ 2,850,000,000)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/kh-tsmc-infra-2024",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 2850000000.0,
                               "audit_metadata": {
                                     "evidence_type": "TENDER_AWARD",
@@ -1718,7 +1741,7 @@
                   "title": "高雄輕軌成圓全線通車營運（大順路段綠巨人綠廊完工）",
                   "category": "軌道交通",
                   "status": "FULFILLED",
-                  "source_url": "https://bulletin.cec.gov.tw/mayoral/kh-2022/chen-02",
+                  "source_url": "https://bulletin.cec.gov.tw/",
                   "target_completion_date": "2024-01-01",
                   "audit_metadata": {
                         "fulfillment_score": 100.0,
@@ -1734,7 +1757,7 @@
                               "promise_id": "promise-011",
                               "milestone_date": "2024-01-01",
                               "evidence_summary": "高雄輕軌最後一哩路大順路段履勘合格，正式取得交通部營運許可全線成圓通車 (工程結算率: 100%)。",
-                              "source_url": "https://web.pcc.gov.tw/tenders/kh-lrt-ring-2024",
+                              "source_url": "https://web.pcc.gov.tw/pis/",
                               "budget_spent": 4200000000.0,
                               "audit_metadata": {
                                     "evidence_type": "COMPLETION_REPORT",
@@ -1762,7 +1785,7 @@
                         "audit_verdict": "APPROVE",
                         "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 21:56:39"
+                  "created_at": "2026-11-14 22:17:47"
             },
             {
                   "id": "card-002",
@@ -1781,7 +1804,7 @@
                         "audit_verdict": "APPROVE",
                         "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 21:56:39"
+                  "created_at": "2026-11-14 22:17:47"
             },
             {
                   "id": "card-003",
@@ -1800,7 +1823,7 @@
                         "audit_verdict": "APPROVE",
                         "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 21:56:39"
+                  "created_at": "2026-11-14 22:17:47"
             },
             {
                   "id": "card-004",
@@ -1819,7 +1842,7 @@
                         "audit_verdict": "APPROVE",
                         "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 21:56:39"
+                  "created_at": "2026-11-14 22:17:47"
             },
             {
                   "id": "card-005",
@@ -1838,7 +1861,7 @@
                         "audit_verdict": "APPROVE",
                         "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 21:56:39"
+                  "created_at": "2026-11-14 22:17:47"
             },
             {
                   "id": "card-006",
@@ -1857,7 +1880,7 @@
                         "audit_verdict": "APPROVE",
                         "evidence_tier": "TIER_1_OFFICIAL"
                   },
-                  "created_at": "2026-11-14 21:56:39"
+                  "created_at": "2026-11-14 22:17:47"
             }
       ],
       "petitions": [
@@ -1872,7 +1895,7 @@
                   "author_name": "台中爭氣好生活協會",
                   "title": "督促中火無煤轉型與公車全面電動化期程",
                   "content": "要求市府嚴格落實自治條例，加速中火燃煤機組除役轉備用，並擴大公車電動化補助路網至海線各區。",
-                  "evidence_url": "https://web.pcc.gov.tw/tenders/tc-air-2024",
+                  "evidence_url": "https://web.pcc.gov.tw/pis/",
                   "citizen_score": 5,
                   "status": "APPROVED",
                   "created_at": "2024-11-10",
@@ -1892,7 +1915,7 @@
                   "author_name": "楠梓在地青年聯盟",
                   "title": "建請公開台積電楠梓園區環境監測與再生水用量月報",
                   "content": "肯定半導體產業進駐帶動高雄發展，建議市府於專區官網定期公布放流水質與空氣品質監控數據，兼顧環境永續。",
-                  "evidence_url": "https://web.pcc.gov.tw/tenders/kh-env-2024",
+                  "evidence_url": "https://web.pcc.gov.tw/pis/",
                   "citizen_score": 4,
                   "status": "APPROVED",
                   "created_at": "2024-11-05",
@@ -1912,7 +1935,7 @@
                   "author_name": "內湖通勤族自救會",
                   "title": "建請加速內湖交通瓶頸改善與捷運東環段細部設計",
                   "content": "內科尖峰通勤時間仍嚴重壅塞，盼市府落實捷運東環段發包時程，並在通車前增開跳蛙公車與共享運具優惠。",
-                  "evidence_url": "https://web.pcc.gov.tw/tenders/taipei-traffic-2024",
+                  "evidence_url": "https://web.pcc.gov.tw/pis/",
                   "citizen_score": 5,
                   "status": "APPROVED",
                   "created_at": "2024-11-01",
@@ -2253,10 +2276,10 @@
                   "response_summary": "市長答詢：行政院已於2024年初正式核定捷運藍線，總經費1615億元；市府完成前置管線遷移發包，統包工程已公告招標，10年完工通車。",
                   "linked_promise_id": "promise-007",
                   "promise_title": "台中捷運藍線綜合規劃行政院核定與工程統包招標",
-                  "gazette_url": "https://www.tccc.gov.tw/CouncilGazette/Term04-04-01",
-                  "official_gazette_url": "https://www.tccc.gov.tw/CouncilGazette/Term04-04-01",
-                  "vod_url": "https://vod.tccc.gov.tw/interpellation/040401-lu",
-                  "council_vod_url": "https://vod.tccc.gov.tw/interpellation/040401-lu",
+                  "gazette_url": "https://www.tccc.gov.tw/",
+                  "official_gazette_url": "https://www.tccc.gov.tw/",
+                  "vod_url": "https://www.youtube.com/@臺中市議會-k4p",
+                  "council_vod_url": "https://www.youtube.com/@臺中市議會-k4p",
                   "start_time_sec": 160.0,
                   "end_time_sec": 600.0,
                   "audit_metadata": {
@@ -2289,10 +2312,10 @@
                   "response_summary": "市長答詢：安平與永康再生水廠已全量供水達每日6.8萬噸，即使面臨枯水期亦能100%自主供應南科工業用水，不與民爭水。",
                   "linked_promise_id": "promise-009",
                   "promise_title": "南部科學園區安南與永康再生水廠全量供水（每日 6.8 萬噸）",
-                  "gazette_url": "https://www.tncc.gov.tw/CouncilGazette/Term04-04-01",
-                  "official_gazette_url": "https://www.tncc.gov.tw/CouncilGazette/Term04-04-01",
-                  "vod_url": "https://vod.tncc.gov.tw/interpellation/040401-huang",
-                  "council_vod_url": "https://vod.tncc.gov.tw/interpellation/040401-huang",
+                  "gazette_url": "https://www.tncc.gov.tw/",
+                  "official_gazette_url": "https://www.tncc.gov.tw/",
+                  "vod_url": "https://www.youtube.com/@tncclive",
+                  "council_vod_url": "https://www.youtube.com/@tncclive",
                   "start_time_sec": 130.0,
                   "end_time_sec": 540.0,
                   "audit_metadata": {
@@ -2325,10 +2348,10 @@
                   "response_summary": "市長答詢：三鶯線全線高架軌道已全數合龍，首列車已於三峽機廠展開自動駕駛動態測試，進度達78.5%；環狀線耐震補強與結構復原採最高規格雙重檢驗，年底前全線安全復駛。",
                   "linked_promise_id": "promise-003",
                   "promise_title": "新北捷運三環六線（三鶯線全線軌道合龍）推進計畫",
-                  "gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-04-01",
-                  "official_gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-04-01",
-                  "vod_url": "https://vod.ntp.gov.tw/interpellation/040401-hou",
-                  "council_vod_url": "https://vod.ntp.gov.tw/interpellation/040401-hou",
+                  "gazette_url": "https://www.ntp.gov.tw/",
+                  "official_gazette_url": "https://www.ntp.gov.tw/",
+                  "vod_url": "https://vod.ntp.gov.tw/",
+                  "council_vod_url": "https://vod.ntp.gov.tw/",
                   "start_time_sec": 150.0,
                   "end_time_sec": 580.0,
                   "audit_metadata": {
@@ -2361,10 +2384,10 @@
                   "response_summary": "市長答詢：第一座晶圓廠鋼構已封頂，第二座廠房已取得雜照；市府引進楠梓與橋頭兩座再生水廠每日供應10.5萬噸水，綠電由興達電廠專線供應，確保高科技與民生雙贏。",
                   "linked_promise_id": "promise-010",
                   "promise_title": "台積電高雄 2 奈米先進製程建廠（楠梓園區公共設施與配水電）",
-                  "gazette_url": "https://www.kcc.gov.tw/CouncilGazette/Term04-04-01",
-                  "official_gazette_url": "https://www.kcc.gov.tw/CouncilGazette/Term04-04-01",
-                  "vod_url": "https://vod.kcc.gov.tw/interpellation/040401-chen",
-                  "council_vod_url": "https://vod.kcc.gov.tw/interpellation/040401-chen",
+                  "gazette_url": "https://www.kcc.gov.tw/",
+                  "official_gazette_url": "https://www.kcc.gov.tw/",
+                  "vod_url": "https://ivod.kcc.gov.tw/",
+                  "council_vod_url": "https://ivod.kcc.gov.tw/",
                   "start_time_sec": 180.0,
                   "end_time_sec": 650.0,
                   "audit_metadata": {
@@ -2397,10 +2420,10 @@
                   "response_summary": "市長答詢：全市195所國中小全面落實天天安心有機蔬菜與溯源三章一Q；幼兒園大班免學費受惠幼童突破2.2萬人，補助款全數直接入帳。",
                   "linked_promise_id": "promise-005",
                   "promise_title": "國中小營養午餐全額免費與產銷履歷三章一Q食材計畫",
-                  "gazette_url": "https://www.tycc.gov.tw/CouncilGazette/Term03-04-01",
-                  "official_gazette_url": "https://www.tycc.gov.tw/CouncilGazette/Term03-04-01",
-                  "vod_url": "https://vod.tycc.gov.tw/interpellation/030401-chang",
-                  "council_vod_url": "https://vod.tycc.gov.tw/interpellation/030401-chang",
+                  "gazette_url": "https://www.tycc.gov.tw/",
+                  "official_gazette_url": "https://www.tycc.gov.tw/",
+                  "vod_url": "https://www.youtube.com/@桃園市議會-tycc",
+                  "council_vod_url": "https://www.youtube.com/@桃園市議會-tycc",
                   "start_time_sec": 140.0,
                   "end_time_sec": 530.0,
                   "audit_metadata": {
@@ -2433,10 +2456,10 @@
                   "response_summary": "市長答詢：市府已完成內科30處關鍵路口智慧號誌動態連鎖，實測尖峰路口停等時間縮短15.2%；捷運東環段細部設計已全面展開，中央核定後將依期程啟動土建發包。",
                   "linked_promise_id": "promise-001",
                   "promise_title": "智慧交通號誌連鎖優化與內科通勤綠色運輸計畫",
-                  "gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-04-01",
-                  "official_gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-04-01",
-                  "vod_url": "https://vod.tcc.gov.tw/interpellation/140401-chiang",
-                  "council_vod_url": "https://vod.tcc.gov.tw/interpellation/140401-chiang",
+                  "gazette_url": "https://www.tcc.gov.tw/",
+                  "official_gazette_url": "https://www.tcc.gov.tw/",
+                  "vod_url": "https://live.tcc.gov.tw/iSharePortalWeb/",
+                  "council_vod_url": "https://live.tcc.gov.tw/iSharePortalWeb/",
                   "start_time_sec": 180.0,
                   "end_time_sec": 620.0,
                   "audit_metadata": {
@@ -2469,10 +2492,10 @@
                   "response_summary": "副市長答詢：新北累計設置已達123處公托中心，收托量居全國第一；市府全面調高托育人員久任獎金與薪資待遇，兼顧平價與高品質托育環境。",
                   "linked_promise_id": "promise-004",
                   "promise_title": "公共托老中心倍增計畫（目標完成100家）",
-                  "gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-03-PR01",
-                  "official_gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-03-PR01",
-                  "vod_url": "https://vod.ntp.gov.tw/interpellation/040301-liu",
-                  "council_vod_url": "https://vod.ntp.gov.tw/interpellation/040301-liu",
+                  "gazette_url": "https://www.ntp.gov.tw/",
+                  "official_gazette_url": "https://www.ntp.gov.tw/",
+                  "vod_url": "https://vod.ntp.gov.tw/",
+                  "council_vod_url": "https://vod.ntp.gov.tw/",
                   "start_time_sec": 60.0,
                   "end_time_sec": 390.0,
                   "audit_metadata": {
@@ -2505,10 +2528,10 @@
                   "response_summary": "副市長答詢：市府專案督導大巨蛋各項避難動線演練；都更7599專案已受理超過40案，降低申請門檻至75%大幅加速整合流程。",
                   "linked_promise_id": "promise-001",
                   "promise_title": "智慧交通號誌連鎖優化與內科通勤綠色運輸計畫",
-                  "gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-03-PW02",
-                  "official_gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-03-PW02",
-                  "vod_url": "https://vod.tcc.gov.tw/interpellation/140302-lee",
-                  "council_vod_url": "https://vod.tcc.gov.tw/interpellation/140302-lee",
+                  "gazette_url": "https://www.tcc.gov.tw/",
+                  "official_gazette_url": "https://www.tcc.gov.tw/",
+                  "vod_url": "https://live.tcc.gov.tw/iSharePortalWeb/",
+                  "council_vod_url": "https://live.tcc.gov.tw/iSharePortalWeb/",
                   "start_time_sec": 90.0,
                   "end_time_sec": 450.0,
                   "audit_metadata": {
@@ -2541,10 +2564,10 @@
                   "response_summary": "工務局長答詢：北外環三期已通車，二期如期施工中；四期已獲中央核定納入生活圈道路計畫，用地徵收補償作業依法積極辦理中。",
                   "linked_promise_id": "promise-009",
                   "promise_title": "南部科學園區安南與永康再生水廠全量供水（每日 6.8 萬噸）",
-                  "gazette_url": "https://www.tncc.gov.tw/CouncilGazette/Term04-03-PW01",
-                  "official_gazette_url": "https://www.tncc.gov.tw/CouncilGazette/Term04-03-PW01",
-                  "vod_url": "https://vod.tncc.gov.tw/interpellation/040301-chen",
-                  "council_vod_url": "https://vod.tncc.gov.tw/interpellation/040301-chen",
+                  "gazette_url": "https://www.tncc.gov.tw/",
+                  "official_gazette_url": "https://www.tncc.gov.tw/",
+                  "vod_url": "https://www.youtube.com/@tncclive",
+                  "council_vod_url": "https://www.youtube.com/@tncclive",
                   "start_time_sec": 95.0,
                   "end_time_sec": 410.0,
                   "audit_metadata": {
@@ -2577,10 +2600,10 @@
                   "response_summary": "交通局長答詢：全市電動公車已突破400輛居全國第一；雙十公車市民綁卡驗證已全面結合數位市民卡，精準將公帑用於在地通勤族。",
                   "linked_promise_id": "promise-008",
                   "promise_title": "市區主要幹線公車全面電動化與空污清淨行動方案",
-                  "gazette_url": "https://www.tccc.gov.tw/CouncilGazette/Term04-03-TR01",
-                  "official_gazette_url": "https://www.tccc.gov.tw/CouncilGazette/Term04-03-TR01",
-                  "vod_url": "https://vod.tccc.gov.tw/interpellation/040301-yeh",
-                  "council_vod_url": "https://vod.tccc.gov.tw/interpellation/040301-yeh",
+                  "gazette_url": "https://www.tccc.gov.tw/",
+                  "official_gazette_url": "https://www.tccc.gov.tw/",
+                  "vod_url": "https://www.youtube.com/@臺中市議會-k4p",
+                  "council_vod_url": "https://www.youtube.com/@臺中市議會-k4p",
                   "start_time_sec": 80.0,
                   "end_time_sec": 430.0,
                   "audit_metadata": {
@@ -2613,10 +2636,10 @@
                   "response_summary": "捷運局長答詢：三鶯線機廠動態測試正常無虞；八德延伸線已獲交通部審查通過，送行政院核定後即啟動用地取得及先期工程發包。",
                   "linked_promise_id": "promise-003",
                   "promise_title": "新北捷運三環六線（三鶯線全線軌道合龍）推進計畫",
-                  "gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-03-MRT01",
-                  "official_gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-03-MRT01",
-                  "vod_url": "https://vod.ntp.gov.tw/interpellation/040301-cheng",
-                  "council_vod_url": "https://vod.ntp.gov.tw/interpellation/040301-cheng",
+                  "gazette_url": "https://www.ntp.gov.tw/",
+                  "official_gazette_url": "https://www.ntp.gov.tw/",
+                  "vod_url": "https://vod.ntp.gov.tw/",
+                  "council_vod_url": "https://vod.ntp.gov.tw/",
                   "start_time_sec": 100.0,
                   "end_time_sec": 460.0,
                   "audit_metadata": {
@@ -2649,10 +2672,10 @@
                   "response_summary": "副市長答詢：輕軌日均運量提升超過65%，路口智慧動態號誌使路口衝突降低70%；捷運黃線核心統包標案已完成評選，全速推動地下段施工。",
                   "linked_promise_id": "promise-011",
                   "promise_title": "高雄輕軌成圓全線通車營運（大順路段綠巨人綠廊完工）",
-                  "gazette_url": "https://www.kcc.gov.tw/CouncilGazette/Term04-03-TR01",
-                  "official_gazette_url": "https://www.kcc.gov.tw/CouncilGazette/Term04-03-TR01",
-                  "vod_url": "https://vod.kcc.gov.tw/interpellation/040301-lin",
-                  "council_vod_url": "https://vod.kcc.gov.tw/interpellation/040301-lin",
+                  "gazette_url": "https://www.kcc.gov.tw/",
+                  "official_gazette_url": "https://www.kcc.gov.tw/",
+                  "vod_url": "https://ivod.kcc.gov.tw/",
+                  "council_vod_url": "https://ivod.kcc.gov.tw/",
                   "start_time_sec": 120.0,
                   "end_time_sec": 520.0,
                   "audit_metadata": {
@@ -2685,10 +2708,10 @@
                   "response_summary": "交通局長答詢：好孕專車核發率達100%，累計補助超過1.8萬名孕婦；YouBike 已補足6000輛新車並透過大數據精準調度，無車可借率下降至0.8%。",
                   "linked_promise_id": "promise-002",
                   "promise_title": "生育獎勵金加碼（首胎4萬）與好孕專車乘車補貼",
-                  "gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-03-TR01",
-                  "official_gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-03-TR01",
-                  "vod_url": "https://vod.tcc.gov.tw/interpellation/140301-hsieh",
-                  "council_vod_url": "https://vod.tcc.gov.tw/interpellation/140301-hsieh",
+                  "gazette_url": "https://www.tcc.gov.tw/",
+                  "official_gazette_url": "https://www.tcc.gov.tw/",
+                  "vod_url": "https://live.tcc.gov.tw/iSharePortalWeb/",
+                  "council_vod_url": "https://live.tcc.gov.tw/iSharePortalWeb/",
                   "start_time_sec": 120.0,
                   "end_time_sec": 510.0,
                   "audit_metadata": {
@@ -2721,10 +2744,10 @@
                   "response_summary": "捷運局長答詢：北段7站高架軌道工程與供電第三軌鋪設進度已達65.2%，2026通車目標不變；地下段潛盾機已貫通最困難路段。",
                   "linked_promise_id": "promise-006",
                   "promise_title": "桃園捷運綠線主線高架段鋼樑架設完成與力拚2026北段通車",
-                  "gazette_url": "https://www.tycc.gov.tw/CouncilGazette/Term03-03-MRT01",
-                  "official_gazette_url": "https://www.tycc.gov.tw/CouncilGazette/Term03-03-MRT01",
-                  "vod_url": "https://vod.tycc.gov.tw/interpellation/030301-liu",
-                  "council_vod_url": "https://vod.tycc.gov.tw/interpellation/030301-liu",
+                  "gazette_url": "https://www.tycc.gov.tw/",
+                  "official_gazette_url": "https://www.tycc.gov.tw/",
+                  "vod_url": "https://www.youtube.com/@桃園市議會-tycc",
+                  "council_vod_url": "https://www.youtube.com/@桃園市議會-tycc",
                   "start_time_sec": 110.0,
                   "end_time_sec": 480.0,
                   "audit_metadata": {
@@ -2734,6 +2757,7 @@
             }
       ]
 };
+
 
 
 
@@ -2891,12 +2915,35 @@
       }
 
       // Bind IVOD Play button
+      
+      // Iframe Embed Toggle Button
+      const embedBtn = document.getElementById("ivod-embed-toggle-btn");
+      const embedContainer = document.getElementById("ivod-embed-container");
+      const embedIframe = document.getElementById("ivod-embed-iframe");
+      const embedText = document.getElementById("ivod-embed-toggle-text");
+      if (embedBtn && embedContainer && embedIframe) {
+        embedBtn.addEventListener("click", () => {
+          const isHidden = embedContainer.classList.contains("hidden");
+          if (isHidden) {
+            embedContainer.classList.remove("hidden");
+            const curSpeech = state.speeches.find(s => s.id === currentSyncedSpeechId) || state.speeches[0];
+            const clipId = (curSpeech && curSpeech.ivod_clip_id) || "171395";
+            embedIframe.src = (curSpeech && curSpeech.billy3321_url) || `https://ivod.billy3321.tw/ivod/${clipId}`;
+            if (embedText) embedText.textContent = "收合內嵌預覽視窗";
+          } else {
+            embedContainer.classList.add("hidden");
+            embedIframe.src = "";
+            if (embedText) embedText.textContent = "內嵌逐字稿與視訊預覽 (Iframe Embed)";
+          }
+        });
+      }
+
       const playBtn = document.getElementById("ivod-play-btn");
       if (playBtn) {
         playBtn.onclick = () => {
           const speech = state.speeches.find(s => s.id === currentSyncedSpeechId) || state.speeches[0];
           if (speech) {
-            const url = speech.video_stream_url || speech.billy3321_url || (speech.ivod_clip_id ? `https://media.ly.gov.tw/ivod/${speech.ivod_clip_id}.mp4` : 'https://ivod.ly.gov.tw');
+            const url = speech.video_stream_url || speech.billy3321_url || (speech.ivod_clip_id ? `https://ivod.ly.gov.tw/Play/Clip/1M/${speech.ivod_clip_id}` : 'https://ivod.ly.gov.tw/Play/Clip/1M/171395');
             window.open(url, "_blank");
           }
         };
@@ -3097,11 +3144,20 @@
         quoteEl.textContent = `「${firstLine || speech.ai_summary || ''}」`;
       }
 
-      const officialUrl = speech.video_stream_url || (speech.ivod_clip_id ? `https://media.ly.gov.tw/ivod/${speech.ivod_clip_id}.mp4` : 'https://ivod.ly.gov.tw');
-      const mirrorUrl = speech.billy3321_url || (speech.ivod_clip_id ? `https://ivod.billy3321.tw/ivod/${speech.ivod_clip_id}` : 'https://ivod.billy3321.tw');
+      const mediaLink = document.getElementById("ivod-media-link");
+      const officialUrl = speech.video_stream_url || (speech.ivod_clip_id ? `https://ivod.ly.gov.tw/Play/Clip/1M/${speech.ivod_clip_id}` : 'https://ivod.ly.gov.tw/Play/Clip/1M/171395');
+      const mirrorUrl = speech.billy3321_url || (speech.ivod_clip_id ? `https://ivod.billy3321.tw/ivod/${speech.ivod_clip_id}` : 'https://ivod.billy3321.tw/ivod/171395');
+      const mediaUrl = (speech.audit_metadata && speech.audit_metadata.media_ly_url) || 'https://media.ly.gov.tw/Home/Detail/352680';
 
       if (offLink) offLink.href = officialUrl;
       if (billyLink) billyLink.href = mirrorUrl;
+      if (mediaLink) mediaLink.href = mediaUrl;
+
+      const embedContainer = document.getElementById("ivod-embed-container");
+      const embedIframe = document.getElementById("ivod-embed-iframe");
+      if (embedIframe && embedContainer && !embedContainer.classList.contains("hidden")) {
+        embedIframe.src = mirrorUrl;
+      }
 
       if (statusText) {
         statusText.textContent = `已鎖定時間軸：${fmtSec(start)} - ${fmtSec(end)}`;

@@ -5,7 +5,7 @@
       "bill_id": "bill-10-08-01",
       "politician_id": "pol-001",
       "decision": "APPROVE",
-      "source_url": "https://data.ly.gov.tw/vote/ly-10-08-01",
+      "source_url": "https://data.ly.gov.tw/",
       "audit_metadata": {
         "party_aligned": true,
         "audited_by": "argon",
@@ -29,7 +29,7 @@
       "bill_id": "bill-10-08-01",
       "politician_id": "pol-005",
       "decision": "APPROVE",
-      "source_url": "https://data.ly.gov.tw/vote/ly-10-08-01",
+      "source_url": "https://data.ly.gov.tw/",
       "audit_metadata": {
         "party_aligned": true,
         "audited_by": "argon",
@@ -53,7 +53,7 @@
       "bill_id": "bill-10-08-02",
       "politician_id": "pol-006",
       "decision": "APPROVE",
-      "source_url": "https://data.ly.gov.tw/vote/ly-10-08-02",
+      "source_url": "https://data.ly.gov.tw/",
       "audit_metadata": {
         "party_aligned": true,
         "audited_by": "argon",
@@ -76,7 +76,7 @@
       "bill_id": "bill-10-08-03",
       "politician_id": "pol-001",
       "decision": "ABSTAIN",
-      "source_url": "https://data.ly.gov.tw/vote/ly-10-08-03",
+      "source_url": "https://data.ly.gov.tw/",
       "audit_metadata": {
         "party_aligned": false,
         "audited_by": "argon",
@@ -100,7 +100,7 @@
       "bill_id": "bill-10-08-03",
       "politician_id": "pol-004",
       "decision": "APPROVE",
-      "source_url": "https://data.ly.gov.tw/vote/ly-10-08-03",
+      "source_url": "https://data.ly.gov.tw/",
       "audit_metadata": {
         "party_aligned": true,
         "audited_by": "argon",
