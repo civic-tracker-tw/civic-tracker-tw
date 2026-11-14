@@ -64,6 +64,8 @@ def export_static_site(
     promises_data = engine.get_promises()
     exam_cards_data = engine.get_exam_cards()
     petitions_data = engine.get_petitions()
+    officials_data = engine.list_subordinate_officials()
+    interpellations_data = engine.list_council_interpellations()
     stats_data = engine.get_overview_stats()
     sec_meta = engine.get_security_metadata()
     sync_logs = engine.get_sync_logs(limit=10)
@@ -102,6 +104,12 @@ def export_static_site(
         "promises.json": {"promises": promises_data, "total": len(promises_data)},
         "exam_cards.json": {"exam_cards": exam_cards_data, "total": len(exam_cards_data)},
         "petitions.json": {"petitions": petitions_data, "total": len(petitions_data)},
+        "council_interpellations.json": {
+            "officials": officials_data,
+            "interpellations": interpellations_data,
+            "total_officials": len(officials_data),
+            "total_interpellations": len(interpellations_data),
+        },
         "security_status.json": security_export,
     }
 
@@ -121,6 +129,8 @@ def export_static_site(
         "promises": promises_data,
         "exam_cards": exam_cards_data,
         "petitions": petitions_data,
+        "subordinate_officials": officials_data,
+        "council_interpellations": interpellations_data,
     }
 
     embedded_json_str = json.dumps(embedded_fallback, ensure_ascii=False, indent=6)
@@ -179,6 +189,7 @@ def export_static_site(
             "api/promises.json",
             "api/exam_cards.json",
             "api/petitions.json",
+            "api/council_interpellations.json",
             "api/security_status.json",
         ],
         "dataset_metrics": {
@@ -188,6 +199,8 @@ def export_static_site(
             "promises_count": len(promises_data),
             "exam_cards_count": len(exam_cards_data),
             "petitions_count": len(petitions_data),
+            "subordinate_officials_count": len(officials_data),
+            "council_interpellations_count": len(interpellations_data),
         },
     }
     return manifest

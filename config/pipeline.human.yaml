@@ -23,6 +23,7 @@ feature_flags:
   enable_billy3321_integration: true
   enable_exam_report_cards: true
   enable_citizen_petitions: true
+  enable_council_interpellations: true
   enable_llm_deep_evaluation: false   # 預設關閉外部大模型推論(0 Token 消耗)，未來量能充足再改為 true
 
 # ------------------------------------------------------------------------------

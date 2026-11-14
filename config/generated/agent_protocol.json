@@ -2,13 +2,14 @@
   "protocol_version": "1.0.0",
   "project_name": "CivicTracker-TW",
   "evaluation_mode": "QUANTITATIVE_ONLY",
-  "source_hash": "sha256:cb60861b9d57e8e70e95e5aaaf1e513ca02b7aababc6fd4d65b691c7d32fb487",
+  "source_hash": "sha256:b7b6418fdd13919fb13635d1816cfdf383d0dea130a66d92a2ac044a7499b5dd",
   "feature_flags": {
     "enable_ly_govapi_live_sync": true,
     "enable_ivod_video_embed": true,
     "enable_billy3321_integration": true,
     "enable_exam_report_cards": true,
     "enable_citizen_petitions": true,
+    "enable_council_interpellations": true,
     "enable_llm_deep_evaluation": false
   },
   "external_endpoints": {

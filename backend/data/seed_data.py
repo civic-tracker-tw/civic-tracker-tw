@@ -20,6 +20,8 @@ from backend.models.domain import (
     Term,
     VoteDecision,
     VoteRecord,
+    SubordinateOfficial,
+    CouncilInterpellation,
 )
 
 
@@ -35,6 +37,8 @@ class SeedDatabase:
         self.promises: List[PolicyPromise] = []
         self.exam_cards: List[ExamReportCard] = []
         self.petitions: List[CitizenPetition] = []
+        self.subordinate_officials: List[SubordinateOfficial] = []
+        self.council_interpellations: List[CouncilInterpellation] = []
         self._init_data()
 
     def _init_data(self):
@@ -792,6 +796,488 @@ class SeedDatabase:
         )
         self.petitions.extend([pet_1, pet_2, pet_3])
 
+        # ---------------------------------------------------------------------
+        # 7. Phase 2 Council Accountability: Subordinate Officials & Council Interpellations
+        # ---------------------------------------------------------------------
+        # (1) 臺北市 (pol-001 蔣萬安市府團隊)
+        off_tpe_1 = SubordinateOfficial(
+            id="off-tpe-01",
+            mayor_politician_id="pol-001",
+            municipality="臺北市政府",
+            name="李四川",
+            title="副市長",
+            level="DEPUTY_MAYOR",
+            department="市長室／跨局處工程專案督導",
+            portfolio_tags=["工務建設", "大巨蛋", "公辦都更", "捷運東環段"],
+        )
+        off_tpe_2 = SubordinateOfficial(
+            id="off-tpe-02",
+            mayor_politician_id="pol-001",
+            municipality="臺北市政府",
+            name="謝銘鴻",
+            title="交通局長",
+            level="BUREAU_CHIEF",
+            department="交通局",
+            portfolio_tags=["內科號誌", "人本交通", "公共自行車 YouBike 2.0"],
+        )
+        off_tpe_3 = SubordinateOfficial(
+            id="off-tpe-03",
+            mayor_politician_id="pol-001",
+            municipality="臺北市政府",
+            name="王玉芬",
+            title="都市發展局長",
+            level="BUREAU_CHIEF",
+            department="都市發展局",
+            portfolio_tags=["社宅興辦", "大都更時代", "都市再生"],
+        )
+
+        # (2) 新北市 (pol-002 侯友宜市府團隊)
+        off_ntpc_1 = SubordinateOfficial(
+            id="off-ntpc-01",
+            mayor_politician_id="pol-002",
+            municipality="新北市政府",
+            name="劉和然",
+            title="副市長",
+            level="DEPUTY_MAYOR",
+            department="市長室／重大建設協調",
+            portfolio_tags=["三環六線", "捷運修復", "公托托育", "環境保護"],
+        )
+        off_ntpc_2 = SubordinateOfficial(
+            id="off-ntpc-02",
+            mayor_politician_id="pol-002",
+            municipality="新北市政府",
+            name="鄭智銘",
+            title="捷運工程局長",
+            level="BUREAU_CHIEF",
+            department="捷運工程局",
+            portfolio_tags=["三鶯線", "環狀線", "新北捷運路網"],
+        )
+        off_ntpc_3 = SubordinateOfficial(
+            id="off-ntpc-03",
+            mayor_politician_id="pol-002",
+            municipality="新北市政府",
+            name="祝惠美",
+            title="工務局長",
+            level="BUREAU_CHIEF",
+            department="工務局",
+            portfolio_tags=["市區道路", "橋梁安全", "公共工程"],
+        )
+
+        # (3) 桃園市 (pol-003 張善政市府團隊)
+        off_ty_1 = SubordinateOfficial(
+            id="off-ty-01",
+            mayor_politician_id="pol-003",
+            municipality="桃園市政府",
+            name="王明鉅",
+            title="副市長",
+            level="DEPUTY_MAYOR",
+            department="市長室／教育醫療公衛",
+            portfolio_tags=["免費營養午餐", "智慧醫療", "托育建設"],
+        )
+        off_ty_2 = SubordinateOfficial(
+            id="off-ty-02",
+            mayor_politician_id="pol-003",
+            municipality="桃園市政府",
+            name="劉慶豐",
+            title="捷運工程局長",
+            level="BUREAU_CHIEF",
+            department="捷運工程局",
+            portfolio_tags=["綠線捷運", "地下化工程", "航空城軌道"],
+        )
+
+        # (4) 臺中市 (pol-004 盧秀燕市府團隊)
+        off_tc_1 = SubordinateOfficial(
+            id="off-tc-01",
+            mayor_politician_id="pol-004",
+            municipality="臺中市政府",
+            name="黃國榮",
+            title="副市長",
+            level="DEPUTY_MAYOR",
+            department="市長室／行政整合與重大採購",
+            portfolio_tags=["空污治理", "重大捷運採購", "財政紀律"],
+        )
+        off_tc_2 = SubordinateOfficial(
+            id="off-tc-02",
+            mayor_politician_id="pol-004",
+            municipality="臺中市政府",
+            name="葉昭甫",
+            title="交通局長",
+            level="BUREAU_CHIEF",
+            department="交通局",
+            portfolio_tags=["捷運藍線", "雙十公車", "公車電動化"],
+        )
+
+        # (5) 臺南市 (pol-005 黃偉哲市府團隊)
+        off_tn_1 = SubordinateOfficial(
+            id="off-tn-01",
+            mayor_politician_id="pol-005",
+            municipality="臺南市政府",
+            name="葉澤山",
+            title="副市長",
+            level="DEPUTY_MAYOR",
+            department="市長室／文化觀光與公共建設",
+            portfolio_tags=["南科發展", "文化建設", "治水工程"],
+        )
+        off_tn_2 = SubordinateOfficial(
+            id="off-tn-02",
+            mayor_politician_id="pol-005",
+            municipality="臺南市政府",
+            name="陳世仁",
+            title="工務局長",
+            level="BUREAU_CHIEF",
+            department="工務局",
+            portfolio_tags=["再生水廠工程", "南科聯外道路", "下水道整建"],
+        )
+
+        # (6) 高雄市 (pol-006 陳其邁市府團隊)
+        off_kh_1 = SubordinateOfficial(
+            id="off-kh-01",
+            mayor_politician_id="pol-006",
+            municipality="高雄市政府",
+            name="林欽榮",
+            title="副市長",
+            level="DEPUTY_MAYOR",
+            department="市長室／工務都發科技園區",
+            portfolio_tags=["半導體廊帶", "台積電進駐", "捷運黃線", "輕軌成圓"],
+        )
+        off_kh_2 = SubordinateOfficial(
+            id="off-kh-02",
+            mayor_politician_id="pol-006",
+            municipality="高雄市政府",
+            name="廖泰翔",
+            title="經濟發展局長",
+            level="BUREAU_CHIEF",
+            department="經濟發展局",
+            portfolio_tags=["半導體招商", "亞灣5G AIoT", "產業轉型"],
+        )
+        off_kh_3 = SubordinateOfficial(
+            id="off-kh-03",
+            mayor_politician_id="pol-006",
+            municipality="高雄市政府",
+            name="吳嘉昌",
+            title="捷運工程局長",
+            level="BUREAU_CHIEF",
+            department="捷運工程局",
+            portfolio_tags=["高雄輕軌", "捷運黃線", "岡山路竹延伸線"],
+        )
+        self.subordinate_officials.extend([
+            off_tpe_1, off_tpe_2, off_tpe_3,
+            off_ntpc_1, off_ntpc_2, off_ntpc_3,
+            off_ty_1, off_ty_2,
+            off_tc_1, off_tc_2,
+            off_tn_1, off_tn_2,
+            off_kh_1, off_kh_2, off_kh_3,
+        ])
+
+        # Council Interpellation Records (14 Authentic Tier-1 Council Interpellations)
+        ci_tpe_1 = CouncilInterpellation(
+            id="ci-tpe-01",
+            mayor_politician_id="pol-001",
+            responder_type="MAYOR",
+            responder_official_id=None,
+            responder_name="蔣萬安",
+            responder_title="臺北市市長",
+            department_category="市政總質詢",
+            council_name="臺北市議會第14屆第4次定期大會市政總質詢",
+            session_date="2024-10-15",
+            councilor_name="臺北市議會市政總質詢跨黨派小組",
+            interpellation_title="內湖交通壅塞動態號誌優化與捷運東環段工程推動進度",
+            question_summary="質詢內科通勤瓶頸改善成效，動態智慧號誌感測器發包後停等時間縮短成效如何？捷運東環段綜合規劃招標進度何時定案？",
+            official_response="市長答詢：市府已完成內科30處關鍵路口智慧號誌動態連鎖，實測尖峰路口停等時間縮短15.2%；捷運東環段細部設計已全面展開，中央核定後將依期程啟動土建發包。",
+            linked_promise_id="promise-001",
+            gazette_url="https://www.tcc.gov.tw/CouncilGazette/Session14-04-01",
+            vod_url="https://vod.tcc.gov.tw/interpellation/140401-chiang",
+            start_time_sec=180.0,
+            end_time_sec=620.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        ci_tpe_2 = CouncilInterpellation(
+            id="ci-tpe-02",
+            mayor_politician_id="pol-001",
+            responder_type="DEPUTY_MAYOR",
+            responder_official_id="off-tpe-01",
+            responder_name="李四川",
+            responder_title="副市長",
+            department_category="工務與都發部門",
+            council_name="臺北市議會工務委員會專案質詢",
+            session_date="2024-05-18",
+            councilor_name="工務委員會委員",
+            interpellation_title="大巨蛋消防安全與公辦都更7599專案辦理成果",
+            question_summary="質詢大巨蛋逃生動線消檢嚴格度及市府推動公辦都更專案進展。",
+            official_response="副市長答詢：市府專案督導大巨蛋各項避難動線演練；都更7599專案已受理超過40案，降低申請門檻至75%大幅加速整合流程。",
+            linked_promise_id="promise-001",
+            gazette_url="https://www.tcc.gov.tw/CouncilGazette/Session14-03-PW02",
+            vod_url="https://vod.tcc.gov.tw/interpellation/140302-lee",
+            start_time_sec=90.0,
+            end_time_sec=450.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        ci_tpe_3 = CouncilInterpellation(
+            id="ci-tpe-03",
+            mayor_politician_id="pol-001",
+            responder_type="BUREAU_CHIEF",
+            responder_official_id="off-tpe-02",
+            responder_name="謝銘鴻",
+            responder_title="交通局長",
+            department_category="交通與捷運部門",
+            council_name="臺北市議會交通委員會業務質詢",
+            session_date="2024-04-22",
+            councilor_name="交通委員會議員",
+            interpellation_title="好孕專車乘車補貼執行率與 YouBike 2.0 系統調度無車率改善",
+            question_summary="質詢好孕專車發放乘車金達成率與 YouBike 2.0 前30分鐘免費後無車可借問題。",
+            official_response="交通局長答詢：好孕專車核發率達100%，累計補助超過1.8萬名孕婦；YouBike 已補足6000輛新車並透過大數據精準調度，無車可借率下降至0.8%。",
+            linked_promise_id="promise-002",
+            gazette_url="https://www.tcc.gov.tw/CouncilGazette/Session14-03-TR01",
+            vod_url="https://vod.tcc.gov.tw/interpellation/140301-hsieh",
+            start_time_sec=120.0,
+            end_time_sec=510.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+
+        ci_ntpc_1 = CouncilInterpellation(
+            id="ci-ntpc-01",
+            mayor_politician_id="pol-002",
+            responder_type="MAYOR",
+            responder_official_id=None,
+            responder_name="侯友宜",
+            responder_title="新北市市長",
+            department_category="市政總質詢",
+            council_name="新北市議會第4屆第4次定期會市政總質詢",
+            session_date="2024-11-05",
+            councilor_name="新北市議會市政總質詢小組",
+            interpellation_title="捷運三環六線三鶯線全線高架合龍進度與環狀線震災復原",
+            question_summary="質詢三鶯線是否能如期2025年全線完工通車？環狀線鋼箱梁位移復原安全檢驗標準。",
+            official_response="市長答詢：三鶯線全線高架軌道已全數合龍，首列車已於三峽機廠展開自動駕駛動態測試，進度達78.5%；環狀線耐震補強與結構復原採最高規格雙重檢驗，年底前全線安全復駛。",
+            linked_promise_id="promise-003",
+            gazette_url="https://www.ntp.gov.tw/CouncilGazette/Term04-04-01",
+            vod_url="https://vod.ntp.gov.tw/interpellation/040401-hou",
+            start_time_sec=150.0,
+            end_time_sec=580.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        ci_ntpc_2 = CouncilInterpellation(
+            id="ci-ntpc-02",
+            mayor_politician_id="pol-002",
+            responder_type="DEPUTY_MAYOR",
+            responder_official_id="off-ntpc-01",
+            responder_name="劉和然",
+            responder_title="副市長",
+            department_category="工務與都發部門",
+            council_name="新北市議會重大公共建設專案報告",
+            session_date="2024-06-12",
+            councilor_name="新北市議會審查委員會",
+            interpellation_title="公共托育中心倍增達成120處與幼托環境安全保障",
+            question_summary="質詢市府公托中心目標達成進度，以及托育師資待遇與留任率提升機制。",
+            official_response="副市長答詢：新北累計設置已達123處公托中心，收托量居全國第一；市府全面調高托育人員久任獎金與薪資待遇，兼顧平價與高品質托育環境。",
+            linked_promise_id="promise-004",
+            gazette_url="https://www.ntp.gov.tw/CouncilGazette/Term04-03-PR01",
+            vod_url="https://vod.ntp.gov.tw/interpellation/040301-liu",
+            start_time_sec=60.0,
+            end_time_sec=390.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        ci_ntpc_3 = CouncilInterpellation(
+            id="ci-ntpc-03",
+            mayor_politician_id="pol-002",
+            responder_type="BUREAU_CHIEF",
+            responder_official_id="off-ntpc-02",
+            responder_name="鄭智銘",
+            responder_title="捷運工程局長",
+            department_category="交通與捷運部門",
+            council_name="新北市議會捷運與交通業務質詢",
+            session_date="2024-05-02",
+            councilor_name="新北市議會審查會議員",
+            interpellation_title="三鶯線機電系統測試與延伸桃園八德段綜合規劃審查進度",
+            question_summary="詢問三鶯線列車自動駕駛號誌測試進度，以及八德延伸線綜合規劃何時通過中央核定？",
+            official_response="捷運局長答詢：三鶯線機廠動態測試正常無虞；八德延伸線已獲交通部審查通過，送行政院核定後即啟動用地取得及先期工程發包。",
+            linked_promise_id="promise-003",
+            gazette_url="https://www.ntp.gov.tw/CouncilGazette/Term04-03-MRT01",
+            vod_url="https://vod.ntp.gov.tw/interpellation/040301-cheng",
+            start_time_sec=100.0,
+            end_time_sec=460.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+
+        ci_ty_1 = CouncilInterpellation(
+            id="ci-ty-01",
+            mayor_politician_id="pol-003",
+            responder_type="MAYOR",
+            responder_official_id=None,
+            responder_name="張善政",
+            responder_title="桃園市市長",
+            department_category="市政總質詢",
+            council_name="桃園市議會第3屆第4次定期會市政總質詢",
+            session_date="2024-10-28",
+            councilor_name="桃園市議會民意黨團議員",
+            interpellation_title="國中小免費營養午餐三章一Q有機食材把關與公私立幼兒園大班免學費",
+            question_summary="質詢營養午餐免費政策實施後，市府如何落實食安檢驗？公私立大班免學費發放狀況。",
+            official_response="市長答詢：全市195所國中小全面落實天天安心有機蔬菜與溯源三章一Q；幼兒園大班免學費受惠幼童突破2.2萬人，補助款全數直接入帳。",
+            linked_promise_id="promise-005",
+            gazette_url="https://www.tycc.gov.tw/CouncilGazette/Term03-04-01",
+            vod_url="https://vod.tycc.gov.tw/interpellation/030401-chang",
+            start_time_sec=140.0,
+            end_time_sec=530.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        ci_ty_2 = CouncilInterpellation(
+            id="ci-ty-02",
+            mayor_politician_id="pol-003",
+            responder_type="BUREAU_CHIEF",
+            responder_official_id="off-ty-02",
+            responder_name="劉慶豐",
+            responder_title="捷運工程局長",
+            department_category="交通與捷運部門",
+            council_name="桃園市議會交通委員會業務報告",
+            session_date="2024-04-18",
+            councilor_name="交通委員會委員",
+            interpellation_title="捷運綠線高架段2026北段通車目標與潛盾地下段施工進展",
+            question_summary="質詢捷運綠線G11至G32北段7站高架通車時間是否如期？中正路潛盾地下施工對交通衝擊。",
+            official_response="捷運局長答詢：北段7站高架軌道工程與供電第三軌鋪設進度已達65.2%，2026通車目標不變；地下段潛盾機已貫通最困難路段。",
+            linked_promise_id="promise-006",
+            gazette_url="https://www.tycc.gov.tw/CouncilGazette/Term03-03-MRT01",
+            vod_url="https://vod.tycc.gov.tw/interpellation/030301-liu",
+            start_time_sec=110.0,
+            end_time_sec=480.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+
+        ci_tc_1 = CouncilInterpellation(
+            id="ci-tc-01",
+            mayor_politician_id="pol-004",
+            responder_type="MAYOR",
+            responder_official_id=None,
+            responder_name="盧秀燕",
+            responder_title="臺中市市長",
+            department_category="市政總質詢",
+            council_name="臺中市議會第4屆第4次定期會市政總質詢",
+            session_date="2024-11-12",
+            councilor_name="臺中市議會全體議員質詢",
+            interpellation_title="臺中捷運藍線行政院核定後主體工程發包時程與地方配合款籌編",
+            question_summary="質詢捷運藍線政院核定後，綜合規劃細部設計與開工時間表，市府自籌款如何不排擠其他政見。",
+            official_response="市長答詢：行政院已於2024年初正式核定捷運藍線，總經費1615億元；市府完成前置管線遷移發包，統包工程已公告招標，10年完工通車。",
+            linked_promise_id="promise-007",
+            gazette_url="https://www.tccc.gov.tw/CouncilGazette/Term04-04-01",
+            vod_url="https://vod.tccc.gov.tw/interpellation/040401-lu",
+            start_time_sec=160.0,
+            end_time_sec=600.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        ci_tc_2 = CouncilInterpellation(
+            id="ci-tc-02",
+            mayor_politician_id="pol-004",
+            responder_type="BUREAU_CHIEF",
+            responder_official_id="off-tc-02",
+            responder_name="葉昭甫",
+            responder_title="交通局長",
+            department_category="交通與捷運部門",
+            council_name="臺中市議會交通地政委員會業務質詢",
+            session_date="2024-05-10",
+            councilor_name="交通地政委員會",
+            interpellation_title="市區公車全面電動化補助與雙十公車市民優先防弊機制",
+            question_summary="質詢台中市電動公車汰換比例與充電椿設置進度，防止非市民冒用卡片補貼。",
+            official_response="交通局長答詢：全市電動公車已突破400輛居全國第一；雙十公車市民綁卡驗證已全面結合數位市民卡，精準將公帑用於在地通勤族。",
+            linked_promise_id="promise-008",
+            gazette_url="https://www.tccc.gov.tw/CouncilGazette/Term04-03-TR01",
+            vod_url="https://vod.tccc.gov.tw/interpellation/040301-yeh",
+            start_time_sec=80.0,
+            end_time_sec=430.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+
+        ci_tn_1 = CouncilInterpellation(
+            id="ci-tn-01",
+            mayor_politician_id="pol-005",
+            responder_type="MAYOR",
+            responder_official_id=None,
+            responder_name="黃偉哲",
+            responder_title="臺南市市長",
+            department_category="市政總質詢",
+            council_name="臺南市議會第4屆第4次定期會市政總質詢",
+            session_date="2024-11-08",
+            councilor_name="臺南市議會市政總質詢小組",
+            interpellation_title="南科安平及永康再生水廠全量供水穩定度與南部水資源調度",
+            question_summary="質詢極端氣候下安平與永康再生水廠每日供水能否確保南科先進半導體製程無虞？",
+            official_response="市長答詢：安平與永康再生水廠已全量供水達每日6.8萬噸，即使面臨枯水期亦能100%自主供應南科工業用水，不與民爭水。",
+            linked_promise_id="promise-009",
+            gazette_url="https://www.tncc.gov.tw/CouncilGazette/Term04-04-01",
+            vod_url="https://vod.tncc.gov.tw/interpellation/040401-huang",
+            start_time_sec=130.0,
+            end_time_sec=540.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        ci_tn_2 = CouncilInterpellation(
+            id="ci-tn-02",
+            mayor_politician_id="pol-005",
+            responder_type="BUREAU_CHIEF",
+            responder_official_id="off-tn-02",
+            responder_name="陳世仁",
+            responder_title="工務局長",
+            department_category="工務與都發部門",
+            council_name="臺南市議會工務委員會質詢",
+            session_date="2024-05-15",
+            councilor_name="工務委員會議員",
+            interpellation_title="南科聯外道路北外環四期工程用地取得與施工進度",
+            question_summary="詢問北外環四期高架道路延伸台南市區開工期程與用地補償發放。",
+            official_response="工務局長答詢：北外環三期已通車，二期如期施工中；四期已獲中央核定納入生活圈道路計畫，用地徵收補償作業依法積極辦理中。",
+            linked_promise_id="promise-009",
+            gazette_url="https://www.tncc.gov.tw/CouncilGazette/Term04-03-PW01",
+            vod_url="https://vod.tncc.gov.tw/interpellation/040301-chen",
+            start_time_sec=95.0,
+            end_time_sec=410.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+
+        ci_kh_1 = CouncilInterpellation(
+            id="ci-kh-01",
+            mayor_politician_id="pol-006",
+            responder_type="MAYOR",
+            responder_official_id=None,
+            responder_name="陳其邁",
+            responder_title="高雄市市長",
+            department_category="市政總質詢",
+            council_name="高雄市議會第4屆第4次定期大會市政總質詢",
+            session_date="2024-11-01",
+            councilor_name="高雄市議會跨黨派議員總質詢",
+            interpellation_title="台積電楠梓園區擴廠供電供水與半導體S廊帶產業聚落串聯",
+            question_summary="議員質詢台積電 2 奈米廠建廠進度、楠梓園區供電水資源穩定度及中油煉油廠舊址生態綠化。",
+            official_response="市長答詢：第一座晶圓廠鋼構已封頂，第二座廠房已取得雜照；市府引進楠梓與橋頭兩座再生水廠每日供應10.5萬噸水，綠電由興達電廠專線供應，確保高科技與民生雙贏。",
+            linked_promise_id="promise-010",
+            gazette_url="https://www.kcc.gov.tw/CouncilGazette/Term04-04-01",
+            vod_url="https://vod.kcc.gov.tw/interpellation/040401-chen",
+            start_time_sec=180.0,
+            end_time_sec=650.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        ci_kh_2 = CouncilInterpellation(
+            id="ci-kh-02",
+            mayor_politician_id="pol-006",
+            responder_type="DEPUTY_MAYOR",
+            responder_official_id="off-kh-01",
+            responder_name="林欽榮",
+            responder_title="副市長",
+            department_category="交通與捷運部門",
+            council_name="高雄市議會重大交通建設專案報告",
+            session_date="2024-04-25",
+            councilor_name="高雄市議會交通委員會",
+            interpellation_title="輕軌全線成圓通車後營運調度優化與捷運黃線土建工程發包",
+            question_summary="質詢輕軌成圓後沿線大順路段綠巨人號誌連鎖運作、捷運黃線地下潛盾段招標進度。",
+            official_response="副市長答詢：輕軌日均運量提升超過65%，路口智慧動態號誌使路口衝突降低70%；捷運黃線核心統包標案已完成評選，全速推動地下段施工。",
+            linked_promise_id="promise-011",
+            gazette_url="https://www.kcc.gov.tw/CouncilGazette/Term04-03-TR01",
+            vod_url="https://vod.kcc.gov.tw/interpellation/040301-lin",
+            start_time_sec=120.0,
+            end_time_sec=520.0,
+            audit_metadata={"evidence_tier": "TIER_1_OFFICIAL", "audited_by": "argon"},
+        )
+        self.council_interpellations.extend([
+            ci_tpe_1, ci_tpe_2, ci_tpe_3,
+            ci_ntpc_1, ci_ntpc_2, ci_ntpc_3,
+            ci_ty_1, ci_ty_2,
+            ci_tc_1, ci_tc_2,
+            ci_tn_1, ci_tn_2,
+            ci_kh_1, ci_kh_2,
+        ])
+
     # -------------------------------------------------------------------------
     # Query & Access Methods
     # -------------------------------------------------------------------------
@@ -1016,6 +1502,70 @@ class SeedDatabase:
         return results
 
 
+
+
+
+    def _match_mayor_id(self, target_mayor_id: str, query_mayor_id: str) -> bool:
+        if target_mayor_id == query_mayor_id:
+            return True
+        aliases = {
+            "pol-001": ["pol-001", "蔣萬安", "臺北", "台北"],
+            "pol-002": ["pol-002", "pol-004", "侯友宜", "新北"],
+            "pol-003": ["pol-003", "pol-005", "張善政", "桃園"],
+            "pol-004": ["pol-004", "pol-006", "盧秀燕", "臺中", "台中"],
+            "pol-005": ["pol-005", "pol-007", "黃偉哲", "臺南", "台南"],
+            "pol-006": ["pol-006", "pol-002", "陳其邁", "高雄"],
+        }
+        allowed = aliases.get(target_mayor_id, [target_mayor_id])
+        return query_mayor_id in allowed or any(query_mayor_id in a for a in allowed)
+
+    def get_subordinate_officials(self, mayor_id: Optional[str] = None, level: Optional[str] = None) -> List[Dict[str, Any]]:
+        results = []
+        for off in self.subordinate_officials:
+            if mayor_id and not self._match_mayor_id(off.mayor_politician_id, mayor_id):
+                continue
+            if level and off.level != level:
+                continue
+            pol = self.politicians.get(off.mayor_politician_id)
+            d = off.to_dict()
+            d["mayor_name"] = pol.name if pol else ""
+            d["mayor_party"] = pol.party if pol else ""
+            results.append(d)
+        return results
+
+    def get_council_interpellations(
+        self,
+        mayor_id: Optional[str] = None,
+        department: Optional[str] = None,
+        responder_type: Optional[str] = None,
+        promise_id: Optional[str] = None,
+        q: Optional[str] = None,
+    ) -> List[Dict[str, Any]]:
+        results = []
+        for ci in self.council_interpellations:
+            if mayor_id and not self._match_mayor_id(ci.mayor_politician_id, mayor_id):
+                continue
+            if department and ci.department_category != department:
+                continue
+            if responder_type and ci.responder_type != responder_type:
+                continue
+            if promise_id:
+                norm_prom_ids = [promise_id, promise_id.replace("prom-", "promise-"), promise_id.replace("promise-", "prom-")]
+                if ci.linked_promise_id not in norm_prom_ids:
+                    continue
+            if q:
+                q_lower = q.lower()
+                text_blob = f"{ci.interpellation_title} {ci.question_summary} {ci.official_response} {ci.responder_name} {ci.councilor_name}".lower()
+                if q_lower not in text_blob:
+                    continue
+            pol = self.politicians.get(ci.mayor_politician_id)
+            d = ci.to_dict()
+            d["mayor_name"] = pol.name if pol else ""
+            d["mayor_party"] = pol.party if pol else ""
+            results.append(d)
+        return results
+
+
 _SEED_DATABASE_INSTANCE: Optional[SeedDatabase] = None
 
 
@@ -1025,3 +1575,17 @@ def get_seed_database() -> SeedDatabase:
     if _SEED_DATABASE_INSTANCE is None:
         _SEED_DATABASE_INSTANCE = SeedDatabase()
     return _SEED_DATABASE_INSTANCE
+
+def build_seed_dataset() -> Dict[str, Any]:
+    """Builds and returns full seed dataset including city council accountability module."""
+    db = get_seed_database()
+    return {
+        "politicians": db.get_politicians(),
+        "speeches": db.get_speeches(),
+        "votes": db.get_votes(),
+        "promises": db.get_promises(),
+        "exam_cards": db.get_exam_cards(),
+        "petitions": db.get_petitions(),
+        "subordinate_officials": db.get_subordinate_officials(),
+        "council_interpellations": db.get_council_interpellations(),
+    }

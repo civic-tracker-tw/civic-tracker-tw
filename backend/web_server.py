@@ -231,6 +231,31 @@ class CivicTrackerApiHandler(BaseHTTPRequestHandler):
             self._send_json_response({"petitions": petitions, "total": len(petitions)}, remaining_limit=remaining)
             return
 
+        elif path == "/api/council-interpellations":
+            mayor_id = InputSanitizer.sanitize_query_string(query.get("mayor_id", [None])[0])
+            dept = InputSanitizer.sanitize_query_string(query.get("department", [None])[0])
+            resp_type = InputSanitizer.sanitize_query_string(query.get("responder_type", [None])[0])
+            prom_id = InputSanitizer.sanitize_query_string(query.get("promise_id", [None])[0])
+            q = InputSanitizer.sanitize_query_string(query.get("q", [None])[0])
+            officials = db.list_subordinate_officials(mayor_id=mayor_id or None)
+            interpellations = db.list_council_interpellations(
+                mayor_id=mayor_id or None,
+                department=dept or None,
+                responder_type=resp_type or None,
+                promise_id=prom_id or None,
+                q=q or None,
+            )
+            self._send_json_response(
+                {
+                    "officials": officials,
+                    "interpellations": interpellations,
+                    "total_officials": len(officials),
+                    "total_interpellations": len(interpellations),
+                },
+                remaining_limit=remaining,
+            )
+            return
+
         else:
             self._send_error_json(f"API endpoint '{path}' not found", status=HTTPStatus.NOT_FOUND)
 

@@ -22,6 +22,8 @@ from backend.models.domain import (
     RoleType,
     Term,
     VoteRecord,
+    SubordinateOfficial,
+    CouncilInterpellation,
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -206,6 +208,54 @@ class DatabaseEngine:
             );
         """)
 
+        # 6. Subordinate Officials & Council Interpellations (Phase 2 Council Accountability)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS subordinate_officials (
+                id TEXT PRIMARY KEY,
+                mayor_politician_id TEXT NOT NULL,
+                municipality TEXT NOT NULL,
+                name TEXT NOT NULL,
+                title TEXT NOT NULL,
+                level TEXT NOT NULL,
+                department TEXT NOT NULL,
+                portfolio_tags_json TEXT DEFAULT '[]',
+                FOREIGN KEY (mayor_politician_id) REFERENCES politicians(id) ON DELETE CASCADE
+            );
+        """)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS council_interpellations (
+                id TEXT PRIMARY KEY,
+                mayor_politician_id TEXT NOT NULL,
+                responder_type TEXT NOT NULL,
+                responder_official_id TEXT,
+                responder_name TEXT NOT NULL,
+                responder_title TEXT NOT NULL,
+                department_category TEXT NOT NULL,
+                council_name TEXT NOT NULL,
+                session_date TEXT NOT NULL,
+                councilor_name TEXT NOT NULL,
+                interpellation_title TEXT NOT NULL,
+                question_summary TEXT NOT NULL,
+                official_response TEXT NOT NULL,
+                linked_promise_id TEXT,
+                gazette_url TEXT NOT NULL,
+                vod_url TEXT NOT NULL,
+                start_time_sec REAL DEFAULT 0.0,
+                end_time_sec REAL DEFAULT 300.0,
+                audit_metadata_json TEXT DEFAULT '{}',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (mayor_politician_id) REFERENCES politicians(id) ON DELETE CASCADE,
+                FOREIGN KEY (responder_official_id) REFERENCES subordinate_officials(id) ON DELETE SET NULL,
+                FOREIGN KEY (linked_promise_id) REFERENCES promises(id) ON DELETE SET NULL
+            );
+        """)
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_sub_officials_mayor ON subordinate_officials(mayor_politician_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_sub_officials_level ON subordinate_officials(level);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_council_interp_mayor ON council_interpellations(mayor_politician_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_council_interp_resp_type ON council_interpellations(responder_type);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_council_interp_dept ON council_interpellations(department_category);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_council_interp_promise ON council_interpellations(linked_promise_id);")
+
         # 5. Data Sync Logs
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS sync_logs (
@@ -230,6 +280,19 @@ class DatabaseEngine:
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_petitions_status ON citizen_petitions(status);")
 
         self._conn.commit()
+
+        # Auto-seed officials and council interpellations if table is empty AND politicians exist
+        cursor.execute("SELECT COUNT(*) FROM politicians;")
+        if cursor.fetchone()[0] > 0:
+            cursor.execute("SELECT COUNT(*) FROM subordinate_officials;")
+            if cursor.fetchone()[0] == 0:
+                seed_db = get_seed_database()
+                if hasattr(seed_db, "subordinate_officials"):
+                    for off in seed_db.subordinate_officials:
+                        self.upsert_subordinate_official(off)
+                if hasattr(seed_db, "council_interpellations"):
+                    for interp in seed_db.council_interpellations:
+                        self.upsert_council_interpellation(interp)
 
     def _is_empty(self) -> bool:
         cursor = self._conn.cursor()
@@ -295,6 +358,14 @@ class DatabaseEngine:
         if hasattr(seed_db, "petitions"):
             for pet in seed_db.petitions:
                 self.upsert_petition(pet)
+
+        # Seed Subordinate Officials & Council Interpellations
+        if hasattr(seed_db, "subordinate_officials"):
+            for off in seed_db.subordinate_officials:
+                self.upsert_subordinate_official(off)
+        if hasattr(seed_db, "council_interpellations"):
+            for interp in seed_db.council_interpellations:
+                self.upsert_council_interpellation(interp)
 
         # Record bootstrap sync log
         self.record_sync_log(
@@ -891,6 +962,241 @@ class DatabaseEngine:
             })
         return results
 
+    def upsert_subordinate_official(self, off: SubordinateOfficial) -> None:
+        cursor = self._conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO subordinate_officials (
+                id, mayor_politician_id, municipality, name, title, level, department, portfolio_tags_json
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                mayor_politician_id=excluded.mayor_politician_id,
+                municipality=excluded.municipality,
+                name=excluded.name,
+                title=excluded.title,
+                level=excluded.level,
+                department=excluded.department,
+                portfolio_tags_json=excluded.portfolio_tags_json;
+            """,
+            (
+                off.id,
+                off.mayor_politician_id,
+                off.municipality,
+                off.name,
+                off.title,
+                off.level,
+                off.department,
+                json.dumps(off.portfolio_tags, ensure_ascii=False),
+            ),
+        )
+        self._conn.commit()
+
+    def upsert_council_interpellation(self, ci: CouncilInterpellation) -> None:
+        cursor = self._conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO council_interpellations (
+                id, mayor_politician_id, responder_type, responder_official_id,
+                responder_name, responder_title, department_category, council_name,
+                session_date, councilor_name, interpellation_title, question_summary,
+                official_response, linked_promise_id, gazette_url, vod_url,
+                start_time_sec, end_time_sec, audit_metadata_json
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                mayor_politician_id=excluded.mayor_politician_id,
+                responder_type=excluded.responder_type,
+                responder_official_id=excluded.responder_official_id,
+                responder_name=excluded.responder_name,
+                responder_title=excluded.responder_title,
+                department_category=excluded.department_category,
+                council_name=excluded.council_name,
+                session_date=excluded.session_date,
+                councilor_name=excluded.councilor_name,
+                interpellation_title=excluded.interpellation_title,
+                question_summary=excluded.question_summary,
+                official_response=excluded.official_response,
+                linked_promise_id=excluded.linked_promise_id,
+                gazette_url=excluded.gazette_url,
+                vod_url=excluded.vod_url,
+                start_time_sec=excluded.start_time_sec,
+                end_time_sec=excluded.end_time_sec,
+                audit_metadata_json=excluded.audit_metadata_json;
+            """,
+            (
+                ci.id,
+                ci.mayor_politician_id,
+                ci.responder_type,
+                ci.responder_official_id,
+                ci.responder_name,
+                ci.responder_title,
+                ci.department_category,
+                ci.council_name,
+                ci.session_date,
+                ci.councilor_name,
+                ci.interpellation_title,
+                ci.question_summary,
+                ci.official_response,
+                ci.linked_promise_id,
+                ci.gazette_url,
+                ci.vod_url,
+                float(ci.start_time_sec),
+                float(ci.end_time_sec),
+                json.dumps(ci.audit_metadata, ensure_ascii=False),
+            ),
+        )
+        self._conn.commit()
+
+    def _match_mayor_ids(self, query_id: str) -> List[str]:
+        aliases = {
+            "pol-001": ["pol-001"],
+            "pol-002": ["pol-002", "pol-004"],
+            "pol-003": ["pol-003", "pol-005"],
+            "pol-004": ["pol-004", "pol-006", "pol-002"],
+            "pol-005": ["pol-005", "pol-007"],
+            "pol-006": ["pol-006", "pol-002"],
+            "蔣萬安": ["pol-001"],
+            "侯友宜": ["pol-002"],
+            "張善政": ["pol-003"],
+            "盧秀燕": ["pol-004"],
+            "黃偉哲": ["pol-005"],
+            "陳其邁": ["pol-006"],
+        }
+        return aliases.get(query_id, [query_id])
+
+    def list_subordinate_officials(
+        self,
+        mayor_id: Optional[str] = None,
+        level: Optional[str] = None,
+    ) -> List[Dict[str, Any]]:
+        cursor = self._conn.cursor()
+        sql = """
+            SELECT o.*, p.name as mayor_name, p.party as mayor_party
+            FROM subordinate_officials o
+            LEFT JOIN politicians p ON o.mayor_politician_id = p.id
+            WHERE 1=1
+        """
+        params = []
+        if mayor_id:
+            target_ids = self._match_mayor_ids(mayor_id)
+            placeholders = ",".join(["?"] * len(target_ids))
+            sql += f" AND (o.mayor_politician_id IN ({placeholders}) OR o.municipality LIKE ? OR p.name LIKE ?)"
+            params.extend(target_ids)
+            params.append(f"%{mayor_id}%")
+            params.append(f"%{mayor_id}%")
+        if level:
+            sql += " AND o.level = ?"
+            params.append(level)
+        sql += " ORDER BY o.id ASC;"
+        cursor.execute(sql, tuple(params))
+        results = []
+        for r in cursor.fetchall():
+            tags = []
+            if r["portfolio_tags_json"]:
+                try:
+                    tags = json.loads(r["portfolio_tags_json"])
+                except Exception:
+                    tags = []
+            results.append({
+                "id": r["id"],
+                "mayor_id": r["mayor_politician_id"],
+                "mayor_politician_id": r["mayor_politician_id"],
+                "mayor_name": r["mayor_name"] or "",
+                "mayor_party": r["mayor_party"] or "",
+                "municipality": r["municipality"],
+                "name": r["name"],
+                "title": r["title"],
+                "level": r["level"],
+                "role_level": r["level"],
+                "department": r["department"],
+                "portfolio_tags": tags,
+                "start_date": "2022-12-25",
+                "responsibilities": ", ".join(tags) if tags else r["department"],
+            })
+        return results
+
+    def list_council_interpellations(
+        self,
+        mayor_id: Optional[str] = None,
+        department: Optional[str] = None,
+        responder_type: Optional[str] = None,
+        promise_id: Optional[str] = None,
+        q: Optional[str] = None,
+    ) -> List[Dict[str, Any]]:
+        cursor = self._conn.cursor()
+        sql = """
+            SELECT ci.*, p.name as mayor_name, p.party as mayor_party, pr.title as promise_title
+            FROM council_interpellations ci
+            LEFT JOIN politicians p ON ci.mayor_politician_id = p.id
+            LEFT JOIN promises pr ON ci.linked_promise_id = pr.id
+            WHERE 1=1
+        """
+        params = []
+        if mayor_id:
+            target_ids = self._match_mayor_ids(mayor_id)
+            placeholders = ",".join(["?"] * len(target_ids))
+            sql += f" AND (ci.mayor_politician_id IN ({placeholders}) OR p.name LIKE ?)"
+            params.extend(target_ids)
+            params.append(f"%{mayor_id}%")
+        if department:
+            sql += " AND ci.department_category = ?"
+            params.append(department)
+        if responder_type:
+            sql += " AND ci.responder_type = ?"
+            params.append(responder_type)
+        if promise_id:
+            norm_ids = [promise_id, promise_id.replace("prom-", "promise-"), promise_id.replace("promise-", "prom-")]
+            placeholders = ",".join(["?"] * len(norm_ids))
+            sql += f" AND ci.linked_promise_id IN ({placeholders})"
+            params.extend(norm_ids)
+        if q:
+            sql += " AND (ci.interpellation_title LIKE ? OR ci.question_summary LIKE ? OR ci.official_response LIKE ? OR ci.responder_name LIKE ? OR ci.councilor_name LIKE ?)"
+            like_q = f"%{q}%"
+            params.extend([like_q, like_q, like_q, like_q, like_q])
+        sql += " ORDER BY ci.session_date DESC, ci.id ASC;"
+        cursor.execute(sql, tuple(params))
+        results = []
+        for r in cursor.fetchall():
+            audit = {}
+            if r["audit_metadata_json"]:
+                try:
+                    audit = json.loads(r["audit_metadata_json"])
+                except Exception:
+                    audit = {}
+            results.append({
+                "id": r["id"],
+                "mayor_id": r["mayor_politician_id"],
+                "mayor_politician_id": r["mayor_politician_id"],
+                "mayor_name": r["mayor_name"] or "",
+                "mayor_party": r["mayor_party"] or "",
+                "responder_type": r["responder_type"],
+                "responder_official_id": r["responder_official_id"],
+                "responder_name": r["responder_name"],
+                "responder_title": r["responder_title"],
+                "department_category": r["department_category"],
+                "department": r["department_category"],
+                "council_name": r["council_name"],
+                "session_date": r["session_date"],
+                "sitting_date": r["session_date"],
+                "councilor_name": r["councilor_name"],
+                "interpellation_member": r["councilor_name"],
+                "interpellation_title": r["interpellation_title"],
+                "subject": r["interpellation_title"],
+                "interpellation_type": "市政總質詢" if "總質詢" in r["department_category"] or "總質詢" in r["interpellation_title"] else "部門質詢",
+                "question_summary": r["question_summary"],
+                "official_response": r["official_response"],
+                "response_summary": r["official_response"],
+                "linked_promise_id": r["linked_promise_id"],
+                "promise_title": r["promise_title"] or "",
+                "gazette_url": r["gazette_url"],
+                "official_gazette_url": r["gazette_url"],
+                "vod_url": r["vod_url"],
+                "council_vod_url": r["vod_url"],
+                "start_time_sec": float(r["start_time_sec"] or 0.0),
+                "end_time_sec": float(r["end_time_sec"] or 300.0),
+                "audit_metadata": audit,
+            })
+        return results
+
     def get_overview_stats(self) -> Dict[str, Any]:
         cursor = self._conn.cursor()
         cursor.execute("SELECT COUNT(*) FROM politicians;")
@@ -917,6 +1223,12 @@ class DatabaseEngine:
         cursor.execute("SELECT COUNT(*) FROM citizen_petitions;")
         total_petitions = cursor.fetchone()[0]
 
+        cursor.execute("SELECT COUNT(*) FROM subordinate_officials;")
+        total_sub_officials = cursor.fetchone()[0]
+
+        cursor.execute("SELECT COUNT(*) FROM council_interpellations;")
+        total_council_interp = cursor.fetchone()[0]
+
         pols = self.get_politicians()
         cross_count = sum(1 for p in pols if p["stats"]["is_cross_phase"])
 
@@ -930,7 +1242,11 @@ class DatabaseEngine:
             "fulfilled_promises": fulfilled_promises,
             "total_exam_cards": total_exam_cards,
             "total_petitions": total_petitions,
+            "subordinate_officials_count": total_sub_officials,
+            "council_interpellations_count": total_council_interp,
         }
+
+    get_stats = get_overview_stats
 
     def get_sync_logs(self, limit: int = 10) -> List[Dict[str, Any]]:
         cursor = self._conn.cursor()

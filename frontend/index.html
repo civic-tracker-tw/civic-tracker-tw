@@ -365,6 +365,217 @@
         <!-- Rendered dynamically via JS -->
       </div>
 
+      <!-- ================================================================ -->
+      <!-- 六都議會市政質詢與副市長／一級局處首長備詢追蹤 (Strategy B + C) -->
+      <!-- ================================================================ -->
+      <div class="mt-12 pt-8 border-t border-slate-200 space-y-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded text-xs font-bold bg-indigo-100 text-indigo-800 border border-indigo-200">
+                🏛️ 市政監督與首長團隊問責
+              </span>
+              <h3 class="text-xl font-bold text-slate-900">
+                六都議會市政總質詢 × 市府首長團隊（副市長／秘書長／局處首長）備詢追蹤
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+              穿透「市長 ➔ 副市長/秘書長 ➔ 一級政務與事務局處首長」決策執行層級；串聯六都議會議事公報與隨選視訊 (VOD)，對齊競選政見推動進度與議會問答紀錄。
+            </p>
+          </div>
+          <!-- Realtime Metrics Badge -->
+          <div class="flex items-center gap-2 self-start lg:self-auto text-xs">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold shadow-2xs">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 badge-pulse"></span>
+              六都議會 VOD 逐字對齊
+            </span>
+            <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium">
+              15位市府關鍵官員列管
+            </span>
+          </div>
+        </div>
+
+        <!-- Filter Controllers: City Switcher, Level Switcher, Department Switcher & Search -->
+        <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-xs space-y-3.5">
+          <!-- City Switcher -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-bold text-slate-400 mr-1">選擇城市:</span>
+            <div class="flex flex-wrap gap-1.5" id="council-city-pills">
+              <button data-mayor="all" class="council-city-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white transition-colors">全部六都 (All 6 Cities)</button>
+              <button data-mayor="pol-001" class="council-city-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">臺北市 (蔣萬安)</button>
+              <button data-mayor="pol-002" class="council-city-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">新北市 (侯友宜)</button>
+              <button data-mayor="pol-003" class="council-city-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">桃園市 (張善政)</button>
+              <button data-mayor="pol-004" class="council-city-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">臺中市 (盧秀燕)</button>
+              <button data-mayor="pol-005" class="council-city-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">臺南市 (黃偉哲)</button>
+              <button data-mayor="pol-006" class="council-city-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">高雄市 (陳其邁)</button>
+            </div>
+          </div>
+
+          <!-- Level Switcher & Department Filter & Search -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-bold text-slate-400 mr-1">受質詢官員職級:</span>
+              <div class="flex flex-wrap gap-1.5" id="council-level-pills">
+                <button data-level="all" class="council-level-btn px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-600 text-white transition-colors">全部職級</button>
+                <button data-level="MAYOR" class="council-level-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">市長本人 (市政總質詢)</button>
+                <button data-level="DEPUTY_MAYOR" class="council-level-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">副市長 / 秘書長</button>
+                <button data-level="BUREAU_CHIEF" class="council-level-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">一級局處首長</button>
+              </div>
+
+              <span class="text-slate-300 mx-1 hidden sm:inline">|</span>
+
+              <span class="text-xs font-bold text-slate-400 mr-1">局處篩選:</span>
+              <select id="council-dept-select" class="text-xs border border-slate-300 rounded-md py-1 px-2.5 bg-white text-slate-700 focus:ring-2 focus:ring-brand-500">
+                <option value="all">全部局處業務 (ALL)</option>
+                <option value="工務局">工務局</option>
+                <option value="交通局">交通局</option>
+                <option value="捷運工程局">捷運工程局</option>
+                <option value="都市發展局">都市發展局</option>
+                <option value="環境保護局">環境保護局</option>
+                <option value="經濟發展局">經濟發展局</option>
+                <option value="地政局">地政局</option>
+                <option value="新聞局">新聞局</option>
+              </select>
+            </div>
+
+            <!-- Search input -->
+            <div class="w-full sm:w-64">
+              <div class="relative">
+                <input type="text" id="council-search-input" placeholder="搜尋議員、官員、質詢主題..."
+                  class="w-full text-xs border border-slate-300 rounded-lg py-1.5 pl-8 pr-3 focus:ring-2 focus:ring-brand-500">
+                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 1: Subordinate Officials Roster Grid -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+              <span>👥 六都市政團隊關鍵首長名冊 (Subordinate Officials Roster)</span>
+              <span id="officials-count-badge" class="text-xs font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">15 位</span>
+            </h4>
+            <span class="text-[11px] text-slate-400">點擊官員卡片可專屬篩選其質詢紀錄</span>
+          </div>
+          <div id="subordinate-officials-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <!-- Rendered dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- Section 2: Two-Column Council Interpellations Feed + Sticky VOD Synchronizer Widget -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pt-3">
+          <!-- Left Column: Interpellations Feed -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                <span>📋 六都議會議事公報與專案質詢摘要 (Council Interpellations)</span>
+                <span id="interpellations-count-badge" class="text-xs font-mono font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700">14 筆</span>
+              </h4>
+              <button id="clear-council-filter-btn" class="hidden text-xs text-brand-600 hover:text-brand-800 font-semibold underline">
+                清除官員篩選
+              </button>
+            </div>
+            <div class="space-y-4" id="council-interpellations-container">
+              <!-- Rendered dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Right Column: Sticky Council VOD Synchronizer Widget -->
+          <div class="lg:col-span-5 sticky top-20">
+            <div id="council-vod-widget" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 text-white shadow-xl space-y-4">
+              <!-- Widget Header -->
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse"></div>
+                  <h4 class="text-sm font-bold tracking-wide text-white">六都議會隨選視訊 (VOD) 同步器</h4>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/30 text-indigo-300 border border-indigo-500/40">
+                    Tier-1 影音
+                  </span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    零主機流量
+                  </span>
+                </div>
+              </div>
+
+              <!-- Video Simulated Container -->
+              <div class="relative bg-black rounded-xl overflow-hidden aspect-video border border-slate-800 flex flex-col justify-between p-4 group">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-slate-950/80 z-0"></div>
+
+                <!-- Top Badges -->
+                <div class="relative z-10 flex items-center justify-between">
+                  <span id="council-vod-meeting-badge" class="px-2.5 py-1 rounded bg-black/70 backdrop-blur text-[11px] font-mono text-emerald-400 border border-emerald-500/40">
+                    臺北市議會 VOD
+                  </span>
+                  <span id="council-vod-speaker-badge" class="px-2.5 py-1 rounded bg-black/70 backdrop-blur text-[11px] font-medium text-slate-200 border border-slate-700">
+                    李四川 副市長
+                  </span>
+                </div>
+
+                <!-- Center Play Button -->
+                <div class="relative z-10 flex flex-col items-center justify-center my-auto text-center">
+                  <button id="council-vod-play-btn" type="button" aria-label="播放議會質詢影音"
+                    class="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                    <svg class="w-7 h-7 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M4 4l12 6-12 6z"/>
+                    </svg>
+                  </button>
+                  <div id="council-vod-status" class="mt-2 text-xs text-slate-300 font-medium">點選左側質詢即時跳轉時間軸</div>
+                </div>
+
+                <!-- Bottom Progress Bar & Timestamps -->
+                <div class="relative z-10 space-y-2">
+                  <div class="flex justify-between text-[11px] font-mono text-slate-300">
+                    <span id="council-vod-current-time">14:20</span>
+                    <span id="council-vod-duration-time">45:00</span>
+                  </div>
+                  <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                    <div id="council-vod-progress-bar" class="bg-gradient-to-r from-emerald-500 to-indigo-500 h-1.5 rounded-full transition-all duration-300" style="width: 32%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Synchronized Info Box -->
+              <div class="space-y-3">
+                <div>
+                  <div id="council-vod-session" class="text-xs text-slate-400 truncate">臺北市議會第14屆第3次定期大會 工務部門質詢</div>
+                  <div id="council-vod-title" class="text-sm font-bold text-white mt-0.5 leading-snug">捷運信義線東延段與東環段開工與工期追蹤</div>
+                </div>
+
+                <div class="p-3 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs text-slate-300">
+                  <div class="text-[11px] text-emerald-400 font-semibold mb-1 flex items-center gap-1">
+                    <span>⚡ 備詢答覆要點逐字摘要</span>
+                  </div>
+                  <p id="council-vod-quote" class="italic text-slate-300 line-clamp-3 font-mono leading-relaxed">
+                    「廣慈博愛園區站地質極具挑戰，目前進度已逾78%，預計2025年底完工進行初履勘；東環段各標細部設計已全面加速推進。」
+                  </p>
+                </div>
+
+                <!-- Action Links -->
+                <div class="pt-1 flex flex-col sm:flex-row gap-2">
+                  <a id="council-vod-official-link" href="#" target="_blank" rel="noopener noreferrer"
+                    class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs transition-colors shadow-xs">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>
+                    <span>議會隨選視訊 (VOD) ↗</span>
+                  </a>
+                  <a id="council-vod-gazette-link" href="#" target="_blank" rel="noopener noreferrer"
+                    class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 font-semibold text-xs transition-colors">
+                    <span>📜 議事公報全文 ↗</span>
+                  </a>
+                </div>
+                <div class="text-[10px] text-slate-500 text-center pt-0.5">
+                  直接調用六都議會公有影音串流系統，零主機伺服器流量與頻寬負擔
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Citizen Petitions & Community Triage Section -->
       <div class="mt-12 pt-8 border-t border-slate-200">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
@@ -1545,7 +1756,618 @@
                         "evidence_tier": "TIER_1_OFFICIAL"
                   }
             }
-      ]
+      ],
+      "subordinate_officials": [
+            {
+                        "id": "off-tpe-01",
+                        "mayor_politician_id": "pol-001",
+                        "municipality": "臺北市政府",
+                        "name": "李四川",
+                        "title": "副市長",
+                        "level": "DEPUTY_MAYOR",
+                        "department": "市長室／跨局處工程專案督導",
+                        "portfolio_tags": [
+                                    "工務建設",
+                                    "大巨蛋",
+                                    "公辦都更",
+                                    "捷運東環段"
+                        ],
+                        "mayor_name": "蔣萬安",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-tpe-02",
+                        "mayor_politician_id": "pol-001",
+                        "municipality": "臺北市政府",
+                        "name": "謝銘鴻",
+                        "title": "交通局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "交通局",
+                        "portfolio_tags": [
+                                    "內科號誌",
+                                    "人本交通",
+                                    "公共自行車 YouBike 2.0"
+                        ],
+                        "mayor_name": "蔣萬安",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-tpe-03",
+                        "mayor_politician_id": "pol-001",
+                        "municipality": "臺北市政府",
+                        "name": "王玉芬",
+                        "title": "都市發展局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "都市發展局",
+                        "portfolio_tags": [
+                                    "社宅興辦",
+                                    "大都更時代",
+                                    "都市再生"
+                        ],
+                        "mayor_name": "蔣萬安",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-ntpc-01",
+                        "mayor_politician_id": "pol-002",
+                        "municipality": "新北市政府",
+                        "name": "劉和然",
+                        "title": "副市長",
+                        "level": "DEPUTY_MAYOR",
+                        "department": "市長室／重大建設協調",
+                        "portfolio_tags": [
+                                    "三環六線",
+                                    "捷運修復",
+                                    "公托托育",
+                                    "環境保護"
+                        ],
+                        "mayor_name": "侯友宜",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-ntpc-02",
+                        "mayor_politician_id": "pol-002",
+                        "municipality": "新北市政府",
+                        "name": "鄭智銘",
+                        "title": "捷運工程局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "捷運工程局",
+                        "portfolio_tags": [
+                                    "三鶯線",
+                                    "環狀線",
+                                    "新北捷運路網"
+                        ],
+                        "mayor_name": "侯友宜",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-ntpc-03",
+                        "mayor_politician_id": "pol-002",
+                        "municipality": "新北市政府",
+                        "name": "祝惠美",
+                        "title": "工務局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "工務局",
+                        "portfolio_tags": [
+                                    "市區道路",
+                                    "橋梁安全",
+                                    "公共工程"
+                        ],
+                        "mayor_name": "侯友宜",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-ty-01",
+                        "mayor_politician_id": "pol-003",
+                        "municipality": "桃園市政府",
+                        "name": "王明鉅",
+                        "title": "副市長",
+                        "level": "DEPUTY_MAYOR",
+                        "department": "市長室／教育醫療公衛",
+                        "portfolio_tags": [
+                                    "免費營養午餐",
+                                    "智慧醫療",
+                                    "托育建設"
+                        ],
+                        "mayor_name": "張善政",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-ty-02",
+                        "mayor_politician_id": "pol-003",
+                        "municipality": "桃園市政府",
+                        "name": "劉慶豐",
+                        "title": "捷運工程局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "捷運工程局",
+                        "portfolio_tags": [
+                                    "綠線捷運",
+                                    "地下化工程",
+                                    "航空城軌道"
+                        ],
+                        "mayor_name": "張善政",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-tc-01",
+                        "mayor_politician_id": "pol-004",
+                        "municipality": "臺中市政府",
+                        "name": "黃國榮",
+                        "title": "副市長",
+                        "level": "DEPUTY_MAYOR",
+                        "department": "市長室／行政整合與重大採購",
+                        "portfolio_tags": [
+                                    "空污治理",
+                                    "重大捷運採購",
+                                    "財政紀律"
+                        ],
+                        "mayor_name": "盧秀燕",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-tc-02",
+                        "mayor_politician_id": "pol-004",
+                        "municipality": "臺中市政府",
+                        "name": "葉昭甫",
+                        "title": "交通局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "交通局",
+                        "portfolio_tags": [
+                                    "捷運藍線",
+                                    "雙十公車",
+                                    "公車電動化"
+                        ],
+                        "mayor_name": "盧秀燕",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "off-tn-01",
+                        "mayor_politician_id": "pol-005",
+                        "municipality": "臺南市政府",
+                        "name": "葉澤山",
+                        "title": "副市長",
+                        "level": "DEPUTY_MAYOR",
+                        "department": "市長室／文化觀光與公共建設",
+                        "portfolio_tags": [
+                                    "南科發展",
+                                    "文化建設",
+                                    "治水工程"
+                        ],
+                        "mayor_name": "黃偉哲",
+                        "mayor_party": "民主進步黨"
+            },
+            {
+                        "id": "off-tn-02",
+                        "mayor_politician_id": "pol-005",
+                        "municipality": "臺南市政府",
+                        "name": "陳世仁",
+                        "title": "工務局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "工務局",
+                        "portfolio_tags": [
+                                    "再生水廠工程",
+                                    "南科聯外道路",
+                                    "下水道整建"
+                        ],
+                        "mayor_name": "黃偉哲",
+                        "mayor_party": "民主進步黨"
+            },
+            {
+                        "id": "off-kh-01",
+                        "mayor_politician_id": "pol-006",
+                        "municipality": "高雄市政府",
+                        "name": "林欽榮",
+                        "title": "副市長",
+                        "level": "DEPUTY_MAYOR",
+                        "department": "市長室／工務都發科技園區",
+                        "portfolio_tags": [
+                                    "半導體廊帶",
+                                    "台積電進駐",
+                                    "捷運黃線",
+                                    "輕軌成圓"
+                        ],
+                        "mayor_name": "陳其邁",
+                        "mayor_party": "民主進步黨"
+            },
+            {
+                        "id": "off-kh-02",
+                        "mayor_politician_id": "pol-006",
+                        "municipality": "高雄市政府",
+                        "name": "廖泰翔",
+                        "title": "經濟發展局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "經濟發展局",
+                        "portfolio_tags": [
+                                    "半導體招商",
+                                    "亞灣5G AIoT",
+                                    "產業轉型"
+                        ],
+                        "mayor_name": "陳其邁",
+                        "mayor_party": "民主進步黨"
+            },
+            {
+                        "id": "off-kh-03",
+                        "mayor_politician_id": "pol-006",
+                        "municipality": "高雄市政府",
+                        "name": "吳嘉昌",
+                        "title": "捷運工程局長",
+                        "level": "BUREAU_CHIEF",
+                        "department": "捷運工程局",
+                        "portfolio_tags": [
+                                    "高雄輕軌",
+                                    "捷運黃線",
+                                    "岡山路竹延伸線"
+                        ],
+                        "mayor_name": "陳其邁",
+                        "mayor_party": "民主進步黨"
+            }
+],
+      "council_interpellations": [
+            {
+                        "id": "ci-tpe-01",
+                        "mayor_politician_id": "pol-001",
+                        "responder_type": "MAYOR",
+                        "responder_official_id": null,
+                        "responder_name": "蔣萬安",
+                        "responder_title": "臺北市市長",
+                        "department_category": "市政總質詢",
+                        "council_name": "臺北市議會第14屆第4次定期大會市政總質詢",
+                        "session_date": "2024-10-15",
+                        "councilor_name": "臺北市議會市政總質詢跨黨派小組",
+                        "interpellation_title": "內湖交通壅塞動態號誌優化與捷運東環段工程推動進度",
+                        "question_summary": "質詢內科通勤瓶頸改善成效，動態智慧號誌感測器發包後停等時間縮短成效如何？捷運東環段綜合規劃招標進度何時定案？",
+                        "official_response": "市長答詢：市府已完成內科30處關鍵路口智慧號誌動態連鎖，實測尖峰路口停等時間縮短15.2%；捷運東環段細部設計已全面展開，中央核定後將依期程啟動土建發包。",
+                        "linked_promise_id": "promise-001",
+                        "gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-04-01",
+                        "vod_url": "https://vod.tcc.gov.tw/interpellation/140401-chiang",
+                        "start_time_sec": 180.0,
+                        "end_time_sec": 620.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "蔣萬安",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-tpe-02",
+                        "mayor_politician_id": "pol-001",
+                        "responder_type": "DEPUTY_MAYOR",
+                        "responder_official_id": "off-tpe-01",
+                        "responder_name": "李四川",
+                        "responder_title": "副市長",
+                        "department_category": "工務與都發部門",
+                        "council_name": "臺北市議會工務委員會專案質詢",
+                        "session_date": "2024-05-18",
+                        "councilor_name": "工務委員會委員",
+                        "interpellation_title": "大巨蛋消防安全與公辦都更7599專案辦理成果",
+                        "question_summary": "質詢大巨蛋逃生動線消檢嚴格度及市府推動公辦都更專案進展。",
+                        "official_response": "副市長答詢：市府專案督導大巨蛋各項避難動線演練；都更7599專案已受理超過40案，降低申請門檻至75%大幅加速整合流程。",
+                        "linked_promise_id": "promise-001",
+                        "gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-03-PW02",
+                        "vod_url": "https://vod.tcc.gov.tw/interpellation/140302-lee",
+                        "start_time_sec": 90.0,
+                        "end_time_sec": 450.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "蔣萬安",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-tpe-03",
+                        "mayor_politician_id": "pol-001",
+                        "responder_type": "BUREAU_CHIEF",
+                        "responder_official_id": "off-tpe-02",
+                        "responder_name": "謝銘鴻",
+                        "responder_title": "交通局長",
+                        "department_category": "交通與捷運部門",
+                        "council_name": "臺北市議會交通委員會業務質詢",
+                        "session_date": "2024-04-22",
+                        "councilor_name": "交通委員會議員",
+                        "interpellation_title": "好孕專車乘車補貼執行率與 YouBike 2.0 系統調度無車率改善",
+                        "question_summary": "質詢好孕專車發放乘車金達成率與 YouBike 2.0 前30分鐘免費後無車可借問題。",
+                        "official_response": "交通局長答詢：好孕專車核發率達100%，累計補助超過1.8萬名孕婦；YouBike 已補足6000輛新車並透過大數據精準調度，無車可借率下降至0.8%。",
+                        "linked_promise_id": "promise-002",
+                        "gazette_url": "https://www.tcc.gov.tw/CouncilGazette/Session14-03-TR01",
+                        "vod_url": "https://vod.tcc.gov.tw/interpellation/140301-hsieh",
+                        "start_time_sec": 120.0,
+                        "end_time_sec": 510.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "蔣萬安",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-ntpc-01",
+                        "mayor_politician_id": "pol-002",
+                        "responder_type": "MAYOR",
+                        "responder_official_id": null,
+                        "responder_name": "侯友宜",
+                        "responder_title": "新北市市長",
+                        "department_category": "市政總質詢",
+                        "council_name": "新北市議會第4屆第4次定期會市政總質詢",
+                        "session_date": "2024-11-05",
+                        "councilor_name": "新北市議會市政總質詢小組",
+                        "interpellation_title": "捷運三環六線三鶯線全線高架合龍進度與環狀線震災復原",
+                        "question_summary": "質詢三鶯線是否能如期2025年全線完工通車？環狀線鋼箱梁位移復原安全檢驗標準。",
+                        "official_response": "市長答詢：三鶯線全線高架軌道已全數合龍，首列車已於三峽機廠展開自動駕駛動態測試，進度達78.5%；環狀線耐震補強與結構復原採最高規格雙重檢驗，年底前全線安全復駛。",
+                        "linked_promise_id": "promise-003",
+                        "gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-04-01",
+                        "vod_url": "https://vod.ntp.gov.tw/interpellation/040401-hou",
+                        "start_time_sec": 150.0,
+                        "end_time_sec": 580.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "侯友宜",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-ntpc-02",
+                        "mayor_politician_id": "pol-002",
+                        "responder_type": "DEPUTY_MAYOR",
+                        "responder_official_id": "off-ntpc-01",
+                        "responder_name": "劉和然",
+                        "responder_title": "副市長",
+                        "department_category": "工務與都發部門",
+                        "council_name": "新北市議會重大公共建設專案報告",
+                        "session_date": "2024-06-12",
+                        "councilor_name": "新北市議會審查委員會",
+                        "interpellation_title": "公共托育中心倍增達成120處與幼托環境安全保障",
+                        "question_summary": "質詢市府公托中心目標達成進度，以及托育師資待遇與留任率提升機制。",
+                        "official_response": "副市長答詢：新北累計設置已達123處公托中心，收托量居全國第一；市府全面調高托育人員久任獎金與薪資待遇，兼顧平價與高品質托育環境。",
+                        "linked_promise_id": "promise-004",
+                        "gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-03-PR01",
+                        "vod_url": "https://vod.ntp.gov.tw/interpellation/040301-liu",
+                        "start_time_sec": 60.0,
+                        "end_time_sec": 390.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "侯友宜",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-ntpc-03",
+                        "mayor_politician_id": "pol-002",
+                        "responder_type": "BUREAU_CHIEF",
+                        "responder_official_id": "off-ntpc-02",
+                        "responder_name": "鄭智銘",
+                        "responder_title": "捷運工程局長",
+                        "department_category": "交通與捷運部門",
+                        "council_name": "新北市議會捷運與交通業務質詢",
+                        "session_date": "2024-05-02",
+                        "councilor_name": "新北市議會審查會議員",
+                        "interpellation_title": "三鶯線機電系統測試與延伸桃園八德段綜合規劃審查進度",
+                        "question_summary": "詢問三鶯線列車自動駕駛號誌測試進度，以及八德延伸線綜合規劃何時通過中央核定？",
+                        "official_response": "捷運局長答詢：三鶯線機廠動態測試正常無虞；八德延伸線已獲交通部審查通過，送行政院核定後即啟動用地取得及先期工程發包。",
+                        "linked_promise_id": "promise-003",
+                        "gazette_url": "https://www.ntp.gov.tw/CouncilGazette/Term04-03-MRT01",
+                        "vod_url": "https://vod.ntp.gov.tw/interpellation/040301-cheng",
+                        "start_time_sec": 100.0,
+                        "end_time_sec": 460.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "侯友宜",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-ty-01",
+                        "mayor_politician_id": "pol-003",
+                        "responder_type": "MAYOR",
+                        "responder_official_id": null,
+                        "responder_name": "張善政",
+                        "responder_title": "桃園市市長",
+                        "department_category": "市政總質詢",
+                        "council_name": "桃園市議會第3屆第4次定期會市政總質詢",
+                        "session_date": "2024-10-28",
+                        "councilor_name": "桃園市議會民意黨團議員",
+                        "interpellation_title": "國中小免費營養午餐三章一Q有機食材把關與公私立幼兒園大班免學費",
+                        "question_summary": "質詢營養午餐免費政策實施後，市府如何落實食安檢驗？公私立大班免學費發放狀況。",
+                        "official_response": "市長答詢：全市195所國中小全面落實天天安心有機蔬菜與溯源三章一Q；幼兒園大班免學費受惠幼童突破2.2萬人，補助款全數直接入帳。",
+                        "linked_promise_id": "promise-005",
+                        "gazette_url": "https://www.tycc.gov.tw/CouncilGazette/Term03-04-01",
+                        "vod_url": "https://vod.tycc.gov.tw/interpellation/030401-chang",
+                        "start_time_sec": 140.0,
+                        "end_time_sec": 530.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "張善政",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-ty-02",
+                        "mayor_politician_id": "pol-003",
+                        "responder_type": "BUREAU_CHIEF",
+                        "responder_official_id": "off-ty-02",
+                        "responder_name": "劉慶豐",
+                        "responder_title": "捷運工程局長",
+                        "department_category": "交通與捷運部門",
+                        "council_name": "桃園市議會交通委員會業務報告",
+                        "session_date": "2024-04-18",
+                        "councilor_name": "交通委員會委員",
+                        "interpellation_title": "捷運綠線高架段2026北段通車目標與潛盾地下段施工進展",
+                        "question_summary": "質詢捷運綠線G11至G32北段7站高架通車時間是否如期？中正路潛盾地下施工對交通衝擊。",
+                        "official_response": "捷運局長答詢：北段7站高架軌道工程與供電第三軌鋪設進度已達65.2%，2026通車目標不變；地下段潛盾機已貫通最困難路段。",
+                        "linked_promise_id": "promise-006",
+                        "gazette_url": "https://www.tycc.gov.tw/CouncilGazette/Term03-03-MRT01",
+                        "vod_url": "https://vod.tycc.gov.tw/interpellation/030301-liu",
+                        "start_time_sec": 110.0,
+                        "end_time_sec": 480.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "張善政",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-tc-01",
+                        "mayor_politician_id": "pol-004",
+                        "responder_type": "MAYOR",
+                        "responder_official_id": null,
+                        "responder_name": "盧秀燕",
+                        "responder_title": "臺中市市長",
+                        "department_category": "市政總質詢",
+                        "council_name": "臺中市議會第4屆第4次定期會市政總質詢",
+                        "session_date": "2024-11-12",
+                        "councilor_name": "臺中市議會全體議員質詢",
+                        "interpellation_title": "臺中捷運藍線行政院核定後主體工程發包時程與地方配合款籌編",
+                        "question_summary": "質詢捷運藍線政院核定後，綜合規劃細部設計與開工時間表，市府自籌款如何不排擠其他政見。",
+                        "official_response": "市長答詢：行政院已於2024年初正式核定捷運藍線，總經費1615億元；市府完成前置管線遷移發包，統包工程已公告招標，10年完工通車。",
+                        "linked_promise_id": "promise-007",
+                        "gazette_url": "https://www.tccc.gov.tw/CouncilGazette/Term04-04-01",
+                        "vod_url": "https://vod.tccc.gov.tw/interpellation/040401-lu",
+                        "start_time_sec": 160.0,
+                        "end_time_sec": 600.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "盧秀燕",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-tc-02",
+                        "mayor_politician_id": "pol-004",
+                        "responder_type": "BUREAU_CHIEF",
+                        "responder_official_id": "off-tc-02",
+                        "responder_name": "葉昭甫",
+                        "responder_title": "交通局長",
+                        "department_category": "交通與捷運部門",
+                        "council_name": "臺中市議會交通地政委員會業務質詢",
+                        "session_date": "2024-05-10",
+                        "councilor_name": "交通地政委員會",
+                        "interpellation_title": "市區公車全面電動化補助與雙十公車市民優先防弊機制",
+                        "question_summary": "質詢台中市電動公車汰換比例與充電椿設置進度，防止非市民冒用卡片補貼。",
+                        "official_response": "交通局長答詢：全市電動公車已突破400輛居全國第一；雙十公車市民綁卡驗證已全面結合數位市民卡，精準將公帑用於在地通勤族。",
+                        "linked_promise_id": "promise-008",
+                        "gazette_url": "https://www.tccc.gov.tw/CouncilGazette/Term04-03-TR01",
+                        "vod_url": "https://vod.tccc.gov.tw/interpellation/040301-yeh",
+                        "start_time_sec": 80.0,
+                        "end_time_sec": 430.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "盧秀燕",
+                        "mayor_party": "中國國民黨"
+            },
+            {
+                        "id": "ci-tn-01",
+                        "mayor_politician_id": "pol-005",
+                        "responder_type": "MAYOR",
+                        "responder_official_id": null,
+                        "responder_name": "黃偉哲",
+                        "responder_title": "臺南市市長",
+                        "department_category": "市政總質詢",
+                        "council_name": "臺南市議會第4屆第4次定期會市政總質詢",
+                        "session_date": "2024-11-08",
+                        "councilor_name": "臺南市議會市政總質詢小組",
+                        "interpellation_title": "南科安平及永康再生水廠全量供水穩定度與南部水資源調度",
+                        "question_summary": "質詢極端氣候下安平與永康再生水廠每日供水能否確保南科先進半導體製程無虞？",
+                        "official_response": "市長答詢：安平與永康再生水廠已全量供水達每日6.8萬噸，即使面臨枯水期亦能100%自主供應南科工業用水，不與民爭水。",
+                        "linked_promise_id": "promise-009",
+                        "gazette_url": "https://www.tncc.gov.tw/CouncilGazette/Term04-04-01",
+                        "vod_url": "https://vod.tncc.gov.tw/interpellation/040401-huang",
+                        "start_time_sec": 130.0,
+                        "end_time_sec": 540.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "黃偉哲",
+                        "mayor_party": "民主進步黨"
+            },
+            {
+                        "id": "ci-tn-02",
+                        "mayor_politician_id": "pol-005",
+                        "responder_type": "BUREAU_CHIEF",
+                        "responder_official_id": "off-tn-02",
+                        "responder_name": "陳世仁",
+                        "responder_title": "工務局長",
+                        "department_category": "工務與都發部門",
+                        "council_name": "臺南市議會工務委員會質詢",
+                        "session_date": "2024-05-15",
+                        "councilor_name": "工務委員會議員",
+                        "interpellation_title": "南科聯外道路北外環四期工程用地取得與施工進度",
+                        "question_summary": "詢問北外環四期高架道路延伸台南市區開工期程與用地補償發放。",
+                        "official_response": "工務局長答詢：北外環三期已通車，二期如期施工中；四期已獲中央核定納入生活圈道路計畫，用地徵收補償作業依法積極辦理中。",
+                        "linked_promise_id": "promise-009",
+                        "gazette_url": "https://www.tncc.gov.tw/CouncilGazette/Term04-03-PW01",
+                        "vod_url": "https://vod.tncc.gov.tw/interpellation/040301-chen",
+                        "start_time_sec": 95.0,
+                        "end_time_sec": 410.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "黃偉哲",
+                        "mayor_party": "民主進步黨"
+            },
+            {
+                        "id": "ci-kh-01",
+                        "mayor_politician_id": "pol-006",
+                        "responder_type": "MAYOR",
+                        "responder_official_id": null,
+                        "responder_name": "陳其邁",
+                        "responder_title": "高雄市市長",
+                        "department_category": "市政總質詢",
+                        "council_name": "高雄市議會第4屆第4次定期大會市政總質詢",
+                        "session_date": "2024-11-01",
+                        "councilor_name": "高雄市議會跨黨派議員總質詢",
+                        "interpellation_title": "台積電楠梓園區擴廠供電供水與半導體S廊帶產業聚落串聯",
+                        "question_summary": "議員質詢台積電 2 奈米廠建廠進度、楠梓園區供電水資源穩定度及中油煉油廠舊址生態綠化。",
+                        "official_response": "市長答詢：第一座晶圓廠鋼構已封頂，第二座廠房已取得雜照；市府引進楠梓與橋頭兩座再生水廠每日供應10.5萬噸水，綠電由興達電廠專線供應，確保高科技與民生雙贏。",
+                        "linked_promise_id": "promise-010",
+                        "gazette_url": "https://www.kcc.gov.tw/CouncilGazette/Term04-04-01",
+                        "vod_url": "https://vod.kcc.gov.tw/interpellation/040401-chen",
+                        "start_time_sec": 180.0,
+                        "end_time_sec": 650.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "陳其邁",
+                        "mayor_party": "民主進步黨"
+            },
+            {
+                        "id": "ci-kh-02",
+                        "mayor_politician_id": "pol-006",
+                        "responder_type": "DEPUTY_MAYOR",
+                        "responder_official_id": "off-kh-01",
+                        "responder_name": "林欽榮",
+                        "responder_title": "副市長",
+                        "department_category": "交通與捷運部門",
+                        "council_name": "高雄市議會重大交通建設專案報告",
+                        "session_date": "2024-04-25",
+                        "councilor_name": "高雄市議會交通委員會",
+                        "interpellation_title": "輕軌全線成圓通車後營運調度優化與捷運黃線土建工程發包",
+                        "question_summary": "質詢輕軌成圓後沿線大順路段綠巨人號誌連鎖運作、捷運黃線地下潛盾段招標進度。",
+                        "official_response": "副市長答詢：輕軌日均運量提升超過65%，路口智慧動態號誌使路口衝突降低70%；捷運黃線核心統包標案已完成評選，全速推動地下段施工。",
+                        "linked_promise_id": "promise-011",
+                        "gazette_url": "https://www.kcc.gov.tw/CouncilGazette/Term04-03-TR01",
+                        "vod_url": "https://vod.kcc.gov.tw/interpellation/040301-lin",
+                        "start_time_sec": 120.0,
+                        "end_time_sec": 520.0,
+                        "audit_metadata": {
+                                    "evidence_tier": "TIER_1_OFFICIAL",
+                                    "audited_by": "argon"
+                        },
+                        "mayor_name": "陳其邁",
+                        "mayor_party": "民主進步黨"
+            }
+]
 };
 
 
@@ -1557,6 +2379,12 @@
       promises: [],
       exam_cards: [],
       petitions: [],
+      subordinate_officials: [],
+      council_interpellations: [],
+      selectedCouncilMayor: "all",
+      selectedCouncilLevel: "all",
+      selectedCouncilDept: "all",
+      selectedOfficialId: null,
       selectedTab: "tab-politicians",
       activeSubTab: "speeches",
       activeSpeechTag: null
@@ -1727,6 +2555,17 @@
       const petData = await apiFetch("/api/petitions", "petitions");
       state.petitions = petData.petitions || FALLBACK_DATA.petitions || [];
       renderPetitions(state.petitions);
+
+      // Fetch Council Interpellations & Subordinate Officials
+      const councilData = await apiFetch("/api/council-interpellations", "council_interpellations");
+      state.subordinate_officials = councilData.officials || FALLBACK_DATA.subordinate_officials || [];
+      state.council_interpellations = councilData.interpellations || FALLBACK_DATA.council_interpellations || [];
+      renderCouncilOfficials(state.subordinate_officials);
+      renderCouncilInterpellations(state.council_interpellations);
+      if (state.council_interpellations.length > 0) {
+        syncCouncilVodWidget(state.council_interpellations[0]);
+      }
+      initCouncilListeners();
     }
 
     function renderPoliticians(list) {
@@ -2021,6 +2860,13 @@
 
         const score = pr.audit_metadata?.fulfillment_score || (pr.status === "FULFILLED" ? 100 : 50);
 
+        // Strategy A: Match council interpellation for this promise
+        const linkedInterpellations = (state.council_interpellations || []).filter(ci =>
+          ci.linked_promise_id === pr.id ||
+          (pr.id.replace('promise-', 'prom-') === ci.linked_promise_id) ||
+          (pr.id.replace('prom-', 'promise-') === ci.linked_promise_id)
+        );
+
         return `
           <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
@@ -2056,6 +2902,42 @@
                 <div class="${statusConfig.color} h-2.5 rounded-full transition-all duration-500" style="width: ${score}%"></div>
               </div>
             </div>
+
+            ${linkedInterpellations.length > 0 ? `
+              <div class="pt-2 border-t border-indigo-100/80 space-y-2">
+                <div class="text-xs font-bold text-indigo-950 flex items-center justify-between">
+                  <span class="flex items-center gap-1.5">
+                    <span>🏛️ 六都議會專案質詢／市府官員備詢答覆紀錄 (${linkedInterpellations.length} 次備詢)：</span>
+                  </span>
+                  <span class="text-[11px] font-normal text-indigo-600">市長 ➔ 副市長／局處首長問責連帶</span>
+                </div>
+                ${linkedInterpellations.map(ci => `
+                  <div class="p-3 rounded-lg bg-indigo-50/60 border border-indigo-100 text-xs space-y-1.5">
+                    <div class="flex flex-wrap items-center justify-between gap-1 text-slate-600">
+                      <div class="flex items-center gap-2">
+                        <span class="font-bold text-indigo-950">${ci.responder_name} (${ci.responder_title})</span>
+                        <span class="text-[11px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 font-semibold">${ci.department}</span>
+                      </div>
+                      <span class="text-slate-500 font-mono text-[11px]">${ci.sitting_date} (${ci.council_name})</span>
+                    </div>
+                    <div class="text-slate-700 text-xs">
+                      <span class="font-semibold text-slate-900">質詢議員：</span>${ci.interpellation_member} (${ci.interpellation_type})
+                    </div>
+                    <div class="text-slate-800 text-xs font-medium leading-relaxed bg-white/80 p-2 rounded border border-indigo-100/60">
+                      <span class="text-indigo-900 font-bold">備詢答覆要點：</span>${ci.response_summary}
+                    </div>
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px]">
+                      <a href="${ci.official_gazette_url}" target="_blank" rel="noopener noreferrer" class="text-brand-600 hover:text-brand-800 underline font-medium">
+                        議會議事公報逐字紀錄 ↗
+                      </a>
+                      <a href="${ci.council_vod_url}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-800 font-semibold inline-flex items-center gap-1">
+                        🎥 議會影音隨選 (VOD) ↗
+                      </a>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
 
             <div class="pt-2 border-t border-slate-100 space-y-2">
               <div class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
@@ -2401,6 +3283,315 @@ ${JSON.stringify(res.final_payload, null, 2)}
         }
       });
     }
+
+    // ========================================================================
+    // Council Interpellations & Subordinate Officials (Strategy B + C)
+    // ========================================================================
+    let currentSyncedCouncilId = null;
+
+    function renderCouncilOfficials(list) {
+      const grid = document.getElementById("subordinate-officials-grid");
+      if (!grid) return;
+
+      const filtered = list.filter(o => {
+        if (state.selectedCouncilMayor !== "all" && o.mayor_id !== state.selectedCouncilMayor) return false;
+        if (state.selectedCouncilLevel !== "all" && state.selectedCouncilLevel !== "MAYOR" && o.role_level !== state.selectedCouncilLevel) return false;
+        if (state.selectedCouncilDept !== "all" && !o.department.includes(state.selectedCouncilDept)) return false;
+        return true;
+      });
+
+      const countBadge = document.getElementById("officials-count-badge");
+      if (countBadge) countBadge.textContent = `${filtered.length} 位`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-3 bg-white p-6 rounded-xl border border-slate-200 text-center text-slate-400 text-xs">無符合條件之市府首長名冊</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(o => {
+        const isSelected = state.selectedOfficialId === o.id;
+        const levelBadgeClass = o.role_level === "DEPUTY_MAYOR" ? "bg-purple-100 text-purple-800 border-purple-200" : "bg-blue-100 text-blue-800 border-blue-200";
+        const levelText = o.role_level === "DEPUTY_MAYOR" ? "副市長/秘書長" : "一級局處長";
+        const activeClass = isSelected ? "ring-2 ring-indigo-500 border-indigo-500 bg-indigo-50/20" : "border-slate-200 hover:border-indigo-300";
+
+        return `
+          <div data-official-id="${o.id}" class="official-card bg-white rounded-xl border p-4 shadow-xs transition-all cursor-pointer flex flex-col justify-between ${activeClass}">
+            <div>
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h5 class="text-base font-bold text-slate-900">${o.name}</h5>
+                    <span class="text-[10px] px-2 py-0.5 rounded font-bold border ${levelBadgeClass}">${levelText}</span>
+                  </div>
+                  <div class="text-xs text-indigo-700 font-semibold mt-0.5">${o.title}</div>
+                </div>
+                <span class="text-[11px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                  ${o.municipality}
+                </span>
+              </div>
+
+              <div class="mt-3 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100 space-y-1">
+                <div><span class="text-slate-400">督導局處：</span><span class="font-medium text-slate-800">${o.department}</span></div>
+                <div class="line-clamp-2"><span class="text-slate-400">專責職掌：</span><span class="font-medium text-slate-700">${o.responsibilities}</span></div>
+              </div>
+            </div>
+
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-mono">任期: ${o.start_date.slice(0,4)} ~ 現任</span>
+              <span class="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center gap-1">
+                ${isSelected ? '✓ 篩選中' : '查看備詢紀錄 ➔'}
+              </span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Bind click on official cards
+      grid.querySelectorAll(".official-card").forEach(el => {
+        el.addEventListener("click", () => {
+          const offId = el.dataset.officialId;
+          if (state.selectedOfficialId === offId) {
+            state.selectedOfficialId = null;
+          } else {
+            state.selectedOfficialId = offId;
+          }
+          renderCouncilOfficials(state.subordinate_officials);
+          filterCouncilInterpellations();
+        });
+      });
+    }
+
+    function renderCouncilInterpellations(list) {
+      const container = document.getElementById("council-interpellations-container");
+      if (!container) return;
+
+      const countBadge = document.getElementById("interpellations-count-badge");
+      if (countBadge) countBadge.textContent = `${list.length} 筆`;
+
+      const clearBtn = document.getElementById("clear-council-filter-btn");
+      if (clearBtn) {
+        if (state.selectedOfficialId) {
+          clearBtn.classList.remove("hidden");
+        } else {
+          clearBtn.classList.add("hidden");
+        }
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="bg-white p-8 rounded-xl border border-slate-200 text-center text-slate-400 text-sm">無符合條件之議會質詢與備詢紀錄</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(item => {
+        const isCurrent = item.id === currentSyncedCouncilId;
+        const activeCardClass = isCurrent ? "ring-2 ring-indigo-500 border-indigo-500 bg-indigo-50/10" : "border-slate-200 hover:border-indigo-300";
+        const levelBadgeClass = item.responder_type === "DEPUTY_MAYOR" ? "bg-purple-50 text-purple-700 border-purple-200" :
+                                item.responder_type === "BUREAU_CHIEF" ? "bg-blue-50 text-blue-700 border-blue-200" :
+                                "bg-teal-50 text-teal-700 border-teal-200";
+
+        return `
+          <div data-council-id="${item.id}" class="council-card bg-white rounded-xl border p-5 shadow-xs transition-all space-y-3.5 ${activeCardClass}">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-slate-100 pb-3">
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-xs px-2.5 py-0.5 rounded-full font-bold border ${levelBadgeClass}">
+                    ${item.responder_title}: ${item.responder_name}
+                  </span>
+                  <span class="text-xs font-semibold text-slate-600">${item.department}</span>
+                  <span class="text-[11px] font-mono text-slate-400">${item.sitting_date}</span>
+                </div>
+                <h4 class="text-base font-bold text-slate-900 mt-1 leading-snug">${item.subject}</h4>
+              </div>
+              <div class="text-right self-start sm:self-auto">
+                <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                  ${item.council_name}
+                </span>
+              </div>
+            </div>
+
+            <div class="text-xs text-slate-700 space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-slate-900">質詢議員：</span>
+                <span class="font-medium text-slate-800">${item.interpellation_member}</span>
+                <span class="text-slate-400">|</span>
+                <span class="text-slate-500">質詢性質：${item.interpellation_type}</span>
+              </div>
+
+              ${item.linked_promise_id ? `
+                <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px] font-semibold">
+                  <span>🎯 關聯市長政見：${item.linked_promise_id}</span>
+                </div>
+              ` : ''}
+
+              <div class="bg-slate-50 p-3 rounded-lg border border-slate-200/80 leading-relaxed text-slate-800">
+                <span class="font-bold text-slate-900 block mb-0.5">備詢答覆要點：</span>
+                <p class="font-medium">${item.response_summary}</p>
+              </div>
+            </div>
+
+            <div class="pt-1 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div class="flex items-center gap-3">
+                <a href="${item.official_gazette_url}" target="_blank" rel="noopener noreferrer" class="text-brand-600 hover:text-brand-800 underline font-medium">
+                  議會公報逐字全文 ↗
+                </a>
+                <a href="${item.council_vod_url}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-800 font-semibold inline-flex items-center gap-1">
+                  🎥 議會 VOD 影音 ↗
+                </a>
+              </div>
+              <button onclick="syncCouncilVodWidgetById('${item.id}')"
+                class="px-2.5 py-1 rounded bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs border border-indigo-200 transition-colors flex items-center gap-1">
+                <span>📺 同步至 VOD 播放器</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function syncCouncilVodWidget(item) {
+      if (!item) return;
+      currentSyncedCouncilId = item.id;
+
+      const meetingBadge = document.getElementById("council-vod-meeting-badge");
+      const speakerBadge = document.getElementById("council-vod-speaker-badge");
+      const sessionEl = document.getElementById("council-vod-session");
+      const titleEl = document.getElementById("council-vod-title");
+      const quoteEl = document.getElementById("council-vod-quote");
+      const officialLink = document.getElementById("council-vod-official-link");
+      const gazetteLink = document.getElementById("council-vod-gazette-link");
+      const statusEl = document.getElementById("council-vod-status");
+
+      if (meetingBadge) meetingBadge.textContent = `${item.council_name.slice(0, 5)} VOD`;
+      if (speakerBadge) speakerBadge.textContent = `${item.responder_name} ${item.responder_title}`;
+      if (sessionEl) sessionEl.textContent = `${item.council_name}（${item.sitting_date}）`;
+      if (titleEl) titleEl.textContent = item.subject;
+      if (quoteEl) quoteEl.textContent = `「${item.response_summary}」`;
+      if (officialLink) officialLink.href = item.council_vod_url;
+      if (gazetteLink) gazetteLink.href = item.official_gazette_url;
+      if (statusEl) statusEl.textContent = `已鎖定時間軸：${item.interpellation_member} 質詢 ${item.responder_name}`;
+
+      // Update card highlighting
+      document.querySelectorAll(".council-card").forEach(el => {
+        if (el.dataset.councilId === item.id) {
+          el.classList.add("ring-2", "ring-indigo-500", "border-indigo-500", "bg-indigo-50/10");
+          el.classList.remove("border-slate-200");
+        } else {
+          el.classList.remove("ring-2", "ring-indigo-500", "border-indigo-500", "bg-indigo-50/10");
+          el.classList.add("border-slate-200");
+        }
+      });
+    }
+
+    function syncCouncilVodWidgetById(id) {
+      const item = state.council_interpellations.find(ci => ci.id === id);
+      if (item) {
+        syncCouncilVodWidget(item);
+      }
+    }
+
+    function filterCouncilInterpellations() {
+      const q = (document.getElementById("council-search-input")?.value || "").trim().toLowerCase();
+      const selectedOfficial = state.selectedOfficialId ? state.subordinate_officials.find(o => o.id === state.selectedOfficialId) : null;
+
+      const filtered = state.council_interpellations.filter(item => {
+        // Mayor filter
+        if (state.selectedCouncilMayor !== "all" && item.mayor_id !== state.selectedCouncilMayor) return false;
+
+        // Level filter
+        if (state.selectedCouncilLevel !== "all" && item.responder_type !== state.selectedCouncilLevel) return false;
+
+        // Department filter
+        if (state.selectedCouncilDept !== "all" && !item.department.includes(state.selectedCouncilDept)) return false;
+
+        // Official specific filter
+        if (selectedOfficial && item.responder_name !== selectedOfficial.name) return false;
+
+        // Text search
+        if (q) {
+          const haystack = `${item.subject} ${item.responder_name} ${item.interpellation_member} ${item.response_summary} ${item.department} ${item.council_name}`.toLowerCase();
+          if (!haystack.includes(q)) return false;
+        }
+
+        return true;
+      });
+
+      renderCouncilInterpellations(filtered);
+    }
+
+    function initCouncilListeners() {
+      // City Switcher
+      document.querySelectorAll(".council-city-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".council-city-btn").forEach(b => {
+            b.classList.remove("bg-slate-900", "text-white", "font-bold");
+            b.classList.add("bg-slate-100", "text-slate-700", "font-medium");
+          });
+          btn.classList.add("bg-slate-900", "text-white", "font-bold");
+          btn.classList.remove("bg-slate-100", "text-slate-700", "font-medium");
+
+          state.selectedCouncilMayor = btn.dataset.mayor;
+          state.selectedOfficialId = null;
+          renderCouncilOfficials(state.subordinate_officials);
+          filterCouncilInterpellations();
+        });
+      });
+
+      // Level Switcher
+      document.querySelectorAll(".council-level-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".council-level-btn").forEach(b => {
+            b.classList.remove("bg-indigo-600", "text-white", "font-bold");
+            b.classList.add("bg-slate-100", "text-slate-700", "font-medium");
+          });
+          btn.classList.add("bg-indigo-600", "text-white", "font-bold");
+          btn.classList.remove("bg-slate-100", "text-slate-700", "font-medium");
+
+          state.selectedCouncilLevel = btn.dataset.level;
+          renderCouncilOfficials(state.subordinate_officials);
+          filterCouncilInterpellations();
+        });
+      });
+
+      // Department Select
+      const deptSelect = document.getElementById("council-dept-select");
+      if (deptSelect) {
+        deptSelect.addEventListener("change", (e) => {
+          state.selectedCouncilDept = e.target.value;
+          renderCouncilOfficials(state.subordinate_officials);
+          filterCouncilInterpellations();
+        });
+      }
+
+      // Search input
+      const searchInput = document.getElementById("council-search-input");
+      if (searchInput) {
+        searchInput.addEventListener("input", () => {
+          filterCouncilInterpellations();
+        });
+      }
+
+      // Clear filter button
+      const clearBtn = document.getElementById("clear-council-filter-btn");
+      if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+          state.selectedOfficialId = null;
+          renderCouncilOfficials(state.subordinate_officials);
+          filterCouncilInterpellations();
+        });
+      }
+
+      // Council VOD Play button
+      const playBtn = document.getElementById("council-vod-play-btn");
+      if (playBtn) {
+        playBtn.addEventListener("click", () => {
+          const item = state.council_interpellations.find(ci => ci.id === currentSyncedCouncilId) || state.council_interpellations[0];
+          if (item && item.council_vod_url) {
+            window.open(item.council_vod_url, "_blank");
+          }
+        });
+      }
+    }
+
   </script>
 </body>
 </html>

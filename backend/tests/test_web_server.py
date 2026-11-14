@@ -173,6 +173,43 @@ class TestWebServerHandlers(unittest.TestCase):
         for pr in res_f["promises"]:
             self.assertEqual(pr["status"], "FULFILLED")
 
+    def test_get_council_interpellations(self):
+        # 1. Fetch all
+        handler = MockHttpHandler("GET", "/api/council-interpellations")
+        handler.do_GET()
+        self.assertEqual(handler.response_status, HTTPStatus.OK)
+        res = handler.get_json_response()
+        self.assertIn("officials", res)
+        self.assertIn("interpellations", res)
+        self.assertGreaterEqual(res["total_officials"], 15)
+        self.assertGreaterEqual(res["total_interpellations"], 14)
+
+        # 2. Filter by mayor_id
+        h_mayor = MockHttpHandler("GET", "/api/council-interpellations?mayor_id=pol-001")
+        h_mayor.do_GET()
+        self.assertEqual(h_mayor.response_status, HTTPStatus.OK)
+        res_mayor = h_mayor.get_json_response()
+        self.assertGreaterEqual(len(res_mayor["officials"]), 2)
+        for o in res_mayor["officials"]:
+            self.assertEqual(o["mayor_id"], "pol-001")
+        for ci in res_mayor["interpellations"]:
+            self.assertEqual(ci["mayor_id"], "pol-001")
+
+        # 3. Filter by responder_type
+        h_resp = MockHttpHandler("GET", "/api/council-interpellations?responder_type=DEPUTY_MAYOR")
+        h_resp.do_GET()
+        self.assertEqual(h_resp.response_status, HTTPStatus.OK)
+        res_resp = h_resp.get_json_response()
+        for ci in res_resp["interpellations"]:
+            self.assertEqual(ci["responder_type"], "DEPUTY_MAYOR")
+
+        # 4. Filter by promise_id
+        h_prom = MockHttpHandler("GET", "/api/council-interpellations?promise_id=promise-001")
+        h_prom.do_GET()
+        self.assertEqual(h_prom.response_status, HTTPStatus.OK)
+        res_prom = h_prom.get_json_response()
+        self.assertGreaterEqual(len(res_prom["interpellations"]), 1)
+
     def test_pipeline_simulate_speaker_swap_correction(self):
         payload = {
             "task_code": "TASK_SPEECH_PARSE",

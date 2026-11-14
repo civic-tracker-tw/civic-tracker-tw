@@ -47,6 +47,7 @@ class TestStaticExporter(unittest.TestCase):
             "promises.json",
             "exam_cards.json",
             "petitions.json",
+            "council_interpellations.json",
             "security_status.json",
         ):
             file_path = api_dir / json_file
@@ -114,6 +115,26 @@ class TestStaticExporter(unittest.TestCase):
         self.assertTrue(protections["parameterized_queries"])
         self.assertTrue(protections["owasp_headers_enforced"])
         self.assertIn("latest_sync_logs", sec)
+
+    def test_exported_council_interpellations_and_officials(self):
+        dist_path = Path(self.temp_dir)
+        with open(dist_path / "api" / "council_interpellations.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        officials = data["officials"]
+        interpellations = data["interpellations"]
+        self.assertGreaterEqual(len(officials), 15)
+        self.assertGreaterEqual(len(interpellations), 14)
+
+        with open(dist_path / "index.html", "r", encoding="utf-8") as f:
+            html = f.read()
+
+        self.assertIn("subordinate-officials-grid", html)
+        self.assertIn("council-vod-widget", html)
+        self.assertIn("李四川", html)
+        self.assertIn("祝惠美", html)
+        self.assertIn("葉昭甫", html)
+        self.assertIn("林欽榮", html)
 
 
 if __name__ == "__main__":
