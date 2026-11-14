@@ -1,0 +1,13 @@
+# Python byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Local environment secrets
+.env
+.env.local
+
+# Local runtime SQLite WAL temporary files (keep main seed/exporter clean)
+data/*.db-shm
+data/*.db-wal
