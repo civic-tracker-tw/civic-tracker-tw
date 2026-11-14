@@ -1,0 +1,119 @@
+# ==============================================================================
+# CivicTracker TW — AI 雙模型協作與資料管線設定檔 (人類維護版 Human-Readable Config)
+# ------------------------------------------------------------------------------
+# 說明：
+# 1. 本檔案為人類開發者與領域專家維護的唯一真實來源 (Single Source of Truth)。
+# 2. 執行 `python -m backend.core.config_compiler` 後，系統會自動驗證型別並將本檔編譯為
+#    高密度、零歧義的 `config/generated/agent_protocol.json` 供 Hydrogen 與 Argon 溝通。
+# ==============================================================================
+
+version: "1.0.0"
+project_name: "CivicTracker-TW"
+
+# ------------------------------------------------------------------------------
+# 1. 雙模型角色設定 (Hydrogen 執行者 × Argon 決策與錯誤評估者)
+# ------------------------------------------------------------------------------
+models:
+  executor:
+    agent_alias: "hydrogen"
+    provider_model: "gemini-2.5-flash"
+    temperature: 0.1
+    max_retries_on_reject: 2
+    description: "負責高吞吐量之立法院公報逐字稿清理、時間軸對齊、議題標籤抽取與政見初步結構化"
+
+  evaluator:
+    agent_alias: "argon"
+    provider_model: "gemini-4-argon"
+    temperature: 0.0
+    strict_evidence_check: true
+    description: "負責決策路由、審查 Hydrogen 產出是否有幻覺或語者錯置，並對首長政見兌現度進行最終裁決"
+
+# ------------------------------------------------------------------------------
+# 2. 任務品質門檻與審查規則 (Quality Gates & Routing Rules)
+# ------------------------------------------------------------------------------
+quality_gates:
+  # [Phase 1] 國會/議會質詢逐字稿摘要與語者分離
+  interpellation_transcript:
+    task_code: "TASK_SPEECH_PARSE"
+    min_executor_confidence: 0.85   # Hydrogen 自評信心低於 0.85 時，強制升級由 Argon 審查
+    sample_audit_rate: 0.20         # 即使信心達標，Argon 仍隨機抽檢 20% 樣本確保品質
+    require_timestamp_bounds: true  # 必須具備合法的 IVOD 影片起訖秒數 (start_sec <= end_sec)
+    check_speaker_attribution: true # 嚴格檢查是否混淆「質詢立委/議員」與「備詢官員/市長」
+
+  # [Phase 1] 法案記名表決與立場分析
+  roll_call_vote_analysis:
+    task_code: "TASK_VOTE_ANALYZE"
+    min_executor_confidence: 0.90
+    sample_audit_rate: 0.15
+    allowed_vote_decisions:
+      - "APPROVE"     # 贊成
+      - "REJECT"      # 反對
+      - "ABSTAIN"     # 棄權
+      - "ABSENT"      # 缺席/請假
+
+  # [Phase 2] 縣市長/執政者政見承諾與執行成果評估
+  executive_policy_fulfillment:
+    task_code: "TASK_POLICY_EVAL"
+    min_executor_confidence: 0.95
+    always_require_argon_verdict: true  # 政見兌現評估一律由 Hydrogen 彙整證據、Argon 最終裁決
+    require_verifiable_citation: true   # 必須附帶預算書、政府採購標案或公報之原始連結
+    allowed_fulfillment_statuses:
+      - "NOT_STARTED" # 未啟動
+      - "IN_PLANNING" # 規劃中/編列預算中
+      - "IN_PROGRESS" # 執行中/工程發包中
+      - "FULFILLED"   # 已兌現
+      - "STALLED"     # 卡關/進度落後
+      - "BROKEN"      # 跳票或政策變更
+
+# ------------------------------------------------------------------------------
+# 3. Argon 標準錯誤評估碼 (Standard Error Codes for Model-to-Model Rejection)
+# 當 Argon 退回 Hydrogen 的執行結果時，使用以下標準錯誤碼與修正指令，避免自然語言歧義
+# ------------------------------------------------------------------------------
+error_catalog:
+  - code: "E01_HALLUCINATION"
+    severity: "CRITICAL"
+    human_label: "事實幻覺或超譯"
+    model_directive: "Output contains claims not grounded in raw transcript or official document. Strip unsupported claims."
+
+  - code: "E02_SPEAKER_SWAP"
+    severity: "CRITICAL"
+    human_label: "質詢者與備詢官員語者錯置"
+    model_directive: "Confused statements made by the questioning legislator with responses from the executive official. Re-attribute speaker turns."
+
+  - code: "E03_MISSING_CITATION"
+    severity: "HIGH"
+    human_label: "缺乏可驗證之原始資料出處"
+    model_directive: "Policy milestone or vote record lacks a valid source_url or gazette reference. Attach exact provenance."
+
+  - code: "E04_TIMESTAMP_DRIFT"
+    severity: "MEDIUM"
+    human_label: "影音時間軸秒數異常"
+    model_directive: "Video start_time_sec/end_time_sec is inverted or out of session bounds. Recalculate timestamps."
+
+  - code: "E05_SCHEMA_VIOLATION"
+    severity: "HIGH"
+    human_label: "結構化欄位或枚舉值不符規範"
+    model_directive: "Payload violates enum constraints or required fields in agent_protocol.json. Conform strictly to schema."
+
+# ------------------------------------------------------------------------------
+# 4. 資料源配置 (Data Sources — 支援台灣立法院與後續縣市擴充)
+# ------------------------------------------------------------------------------
+data_sources:
+  phase1_legislative:
+    - id: "ly_open_data"
+      name: "立法院開放資料服務平臺 (委員、法案、表決、公報)"
+      base_url: "https://data.ly.gov.tw"
+      enabled: true
+    - id: "ly_ivod"
+      name: "立法院議事轉播網際網路多媒體隨選視訊系統 (IVOD)"
+      base_url: "https://ivod.ly.gov.tw"
+      enabled: true
+  phase2_executive:
+    - id: "cec_bulletin"
+      name: "中央選舉委員會選舉公報 (首長政見原文)"
+      base_url: "https://bulletin.cec.gov.tw"
+      enabled: true
+    - id: "pcc_tenders"
+      name: "政府電子採購網 (工程與標案執行進度)"
+      base_url: "https://web.pcc.gov.tw"
+      enabled: true
