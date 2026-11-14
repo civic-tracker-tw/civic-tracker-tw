@@ -13,6 +13,10 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+_ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+if str(_ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(_ROOT_DIR))
+
 from backend.core.database import DatabaseEngine, get_database_engine
 from backend.core.model_router import DualModelPipeline
 from backend.models.domain import (
@@ -126,6 +130,24 @@ OFFICIAL_INTERPELLATIONS_FIXTURE: List[Dict[str, Any]] = [
 ]
 
 
+def _safe_int(val: Any, default: int = 1) -> int:
+    try:
+        if val is None or str(val).strip() == "":
+            return default
+        return int(float(str(val).strip()))
+    except (ValueError, TypeError):
+        return default
+
+
+def _safe_float(val: Any, default: float = 60.0) -> float:
+    try:
+        if val is None or str(val).strip() == "":
+            return default
+        return float(str(val).strip())
+    except (ValueError, TypeError):
+        return default
+
+
 class LegislativeYuanCrawler:
     """
     Crawls and synchronizes official Legislative Yuan data.
@@ -145,12 +167,23 @@ class LegislativeYuanCrawler:
                     LY_LEGISLATORS_API,
                     headers={"User-Agent": "CivicTracker-TW-Crawler/1.0"},
                 )
-                with urllib.request.urlopen(req, timeout=5, context=ctx) as resp:
+                with urllib.request.urlopen(req, timeout=8, context=ctx) as resp:
                     if resp.status == 200:
-                        raw = json.loads(resp.read().decode("utf-8"))
+                        raw = json.loads(resp.read().decode("utf-8", errors="replace"))
                         data = raw.get("jsonList", raw) if isinstance(raw, dict) else raw
                         if data and isinstance(data, list):
-                            return data, "LIVE_API"
+                            term11 = [
+                                item for item in data
+                                if isinstance(item, dict)
+                                and str(item.get("term", "11")).strip() in ("11", "011", "")
+                                and str(item.get("name", "")).strip()
+                            ][:15]
+                            if term11:
+                                seen_names = {x["name"] for x in OFFICIAL_LEGISLATORS_FIXTURE}
+                                merged = list(OFFICIAL_LEGISLATORS_FIXTURE) + [
+                                    x for x in term11 if x.get("name") not in seen_names
+                                ]
+                                return merged, "LIVE_API"
             except Exception as exc:
                 print(f"[LYCrawler] Live legislators API connection failed ({exc}). Using official fixture fallback.")
 
@@ -165,12 +198,19 @@ class LegislativeYuanCrawler:
                     LY_INTERPELLATIONS_API,
                     headers={"User-Agent": "CivicTracker-TW-Crawler/1.0"},
                 )
-                with urllib.request.urlopen(req, timeout=5, context=ctx) as resp:
+                with urllib.request.urlopen(req, timeout=8, context=ctx) as resp:
                     if resp.status == 200:
-                        raw = json.loads(resp.read().decode("utf-8"))
+                        raw = json.loads(resp.read().decode("utf-8", errors="replace"))
                         data = raw.get("jsonList", raw) if isinstance(raw, dict) else raw
                         if data and isinstance(data, list):
-                            return data, "LIVE_API"
+                            valid_live = [
+                                item for item in data
+                                if isinstance(item, dict)
+                                and str(item.get("speaker", "")).strip()
+                                and str(item.get("content", "")).strip()
+                                and str(item.get("summary", "")).strip()
+                            ][:10]
+                            return OFFICIAL_INTERPELLATIONS_FIXTURE + valid_live, "LIVE_API"
             except Exception as exc:
                 print(f"[LYCrawler] Live interpellations API connection failed ({exc}). Using official fixture fallback.")
 
@@ -195,15 +235,15 @@ class LegislativeYuanCrawler:
         # Step 1: Process and upsert legislators
         name_to_term_id = {}
         for idx, leg in enumerate(raw_legislators):
-            name = leg.get("name", "").strip()
+            name = str(leg.get("name", "")).strip()
             if not name:
                 continue
             pol_id = f"pol-ly11-{idx+1:03d}"
             term_id = f"term-ly11-{idx+1:03d}"
-            party = leg.get("party") or leg.get("partyGroup") or "無黨籍"
-            area = leg.get("areaName") or "全國不分區"
-            term_num = str(leg.get("term", "11"))
-            committee = leg.get("committee") or f"第{term_num}屆立法委員"
+            party = str(leg.get("party") or leg.get("partyGroup") or "無黨籍").strip()
+            area = str(leg.get("areaName") or "全國不分區").strip()
+            term_num = str(leg.get("term") or "11").strip()
+            committee = str(leg.get("committee") or f"第{term_num}屆立法委員").strip()
 
             politician = Politician(id=pol_id, name=name, party=party)
             term = Term(
@@ -213,7 +253,7 @@ class LegislativeYuanCrawler:
                 constituency=area,
                 start_date="2024-02-01",
                 end_date=None,
-                title=f"第{term_num}屆立法委員（{committee.split('：')[-1]}）",
+                title=f"第{term_num}屆立法委員（{committee.split('：')[-1][:30]}）",
             )
             politician.add_term(term)
 
@@ -223,10 +263,14 @@ class LegislativeYuanCrawler:
 
         # Step 2: Process and validate speeches through DualModelPipeline
         for s_idx, sp in enumerate(raw_interpellations):
-            speaker_name = sp.get("speaker", "").strip()
+            speaker_name = str(sp.get("speaker") or "").strip()
+            content_text = str(sp.get("content") or "").strip()
+            summary_text = str(sp.get("summary") or "").strip()
+            if not speaker_name or not content_text or not summary_text:
+                continue
+
             speaker_term_id = name_to_term_id.get(speaker_name)
             if not speaker_term_id:
-                # If speaker wasn't in legislators list, create a temporary term
                 pol_id = f"pol-ly-spk-{s_idx+1:03d}"
                 speaker_term_id = f"term-ly-spk-{s_idx+1:03d}"
                 pol = Politician(id=pol_id, name=speaker_name, party="未提供")
@@ -242,14 +286,16 @@ class LegislativeYuanCrawler:
                 self.db.upsert_politician(pol)
                 name_to_term_id[speaker_name] = speaker_term_id
 
-            session_id = f"session-ly11-{sp.get('sessionPeriod', '01')}-{sp.get('meetingNo', '01')}"
+            session_period_num = _safe_int(sp.get("sessionPeriod"), 1)
+            meeting_no_num = _safe_int(sp.get("meetingNo"), 1)
+            session_id = f"session-ly11-{session_period_num:02d}-{meeting_no_num:02d}"
             session = LegislativeSession(
                 id=session_id,
-                term_number=int(sp.get("term", 11)),
-                session_number=int(sp.get("sessionPeriod", 1)),
-                date=sp.get("meetingDate", "2024-03-01"),
-                meeting_type=sp.get("meetingType", "COMMITTEE"),
-                title=sp.get("meetingTitle", f"第11屆第1會期會議"),
+                term_number=_safe_int(sp.get("term"), 11),
+                session_number=session_period_num,
+                date=str(sp.get("meetingDate") or "2024-03-01"),
+                meeting_type=str(sp.get("meetingType") or "COMMITTEE"),
+                title=str(sp.get("meetingTitle") or "第11屆第1會期會議"),
             )
             cursor = self.db._conn.cursor()
             cursor.execute(
@@ -266,10 +312,10 @@ class LegislativeYuanCrawler:
                 "session_id": session_id,
                 "speaker_term_id": speaker_term_id,
                 "target_official_id": f"official-{sp.get('targetOfficial', 'minister')}",
-                "start_time_sec": float(sp.get("startTimeSec", 60.0)),
-                "end_time_sec": float(sp.get("endTimeSec", 300.0)),
-                "transcript_raw": sp.get("content", ""),
-                "ai_summary": sp.get("summary", ""),
+                "start_time_sec": _safe_float(sp.get("startTimeSec"), 60.0),
+                "end_time_sec": _safe_float(sp.get("endTimeSec"), 300.0),
+                "transcript_raw": content_text,
+                "ai_summary": summary_text,
                 "topic_tags": sp.get("tags", ["國會監督"]),
                 "confidence": 0.95,
             }
