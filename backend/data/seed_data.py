@@ -368,7 +368,7 @@ class SeedDatabase:
             title="智慧交通號誌連鎖優化與內科通勤綠色運輸計畫",
             category="交通建設",
             status=FulfillmentStatus.IN_PROGRESS.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E8%87%BA%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2026-12-31",
             audit_metadata={
                 "fulfillment_score": 72.0,
@@ -382,7 +382,7 @@ class SeedDatabase:
             promise_id="promise-001",
             milestone_date="2024-03-15",
             evidence_summary="內科 30 處關鍵路口智慧動態號誌感測器決標建置完成，契約金額 5,200 萬元，尖峰路口停等時間縮短 15.2% (已決標金額: NT$ 52,000,000)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=52000000.0,
             audit_metadata={"evidence_type": "TENDER_AWARD", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -391,7 +391,7 @@ class SeedDatabase:
             promise_id="promise-001",
             milestone_date="2024-08-20",
             evidence_summary="內湖通勤跳蛙公車增闢3條路線，累計載客量達 18.5 萬人次 (工程與營運進度: 68%)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=28000000.0,
             audit_metadata={"evidence_type": "DELIVERY_ACCEPTANCE", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -405,7 +405,7 @@ class SeedDatabase:
             title="生育獎勵金加碼（首胎4萬）與好孕專車乘車補貼",
             category="托育社福",
             status=FulfillmentStatus.FULFILLED.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E8%87%BA%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2024-01-01",
             audit_metadata={
                 "fulfillment_score": 100.0,
@@ -419,7 +419,7 @@ class SeedDatabase:
             promise_id="promise-002",
             milestone_date="2023-12-15",
             evidence_summary="首胎補助調高至4萬元全數撥付，好孕專車累計核發 18,200 人次，執行率 100% (實支金額: NT$ 210,000,000)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=210000000.0,
             audit_metadata={"evidence_type": "COMPLETION_REPORT", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -433,7 +433,7 @@ class SeedDatabase:
             title="新北捷運三環六線（三鶯線全線軌道合龍）推進計畫",
             category="軌道交通",
             status=FulfillmentStatus.IN_PROGRESS.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E6%96%B0%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2026-12-31",
             audit_metadata={
                 "fulfillment_score": 78.5,
@@ -447,7 +447,7 @@ class SeedDatabase:
             promise_id="promise-003",
             milestone_date="2024-04-10",
             evidence_summary="三鶯線全線高架軌道合龍，首列車進駐三峽機廠進行自動化駕駛動態測試 (工程進度: 78.5%, 累計決標: NT$ 50,200,000,000)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=502000000.0,
             audit_metadata={"evidence_type": "TENDER_AWARD", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -460,7 +460,7 @@ class SeedDatabase:
             title="公共托老中心倍增計畫（目標完成100家）",
             category="高齡長照",
             status=FulfillmentStatus.FULFILLED.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E6%96%B0%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2025-12-31",
             audit_metadata={
                 "fulfillment_score": 100.0,
@@ -474,7 +474,7 @@ class SeedDatabase:
             promise_id="promise-004",
             milestone_date="2024-09-30",
             evidence_summary="三重與鶯歌第101、102家公共托老中心完工啟用，提早達成百家目標，累計服務長者達 4,500 人/日 (達成率: 102%)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=85000000.0,
             audit_metadata={"evidence_type": "COMPLETION_REPORT", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -488,7 +488,7 @@ class SeedDatabase:
             title="國中小營養午餐全額免費與產銷履歷三章一Q食材計畫",
             category="教育福利",
             status=FulfillmentStatus.FULFILLED.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E6%A1%83%E5%9C%92%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2023-02-13",
             audit_metadata={
                 "fulfillment_score": 100.0,
@@ -502,7 +502,7 @@ class SeedDatabase:
             promise_id="promise-005",
             milestone_date="2023-02-13",
             evidence_summary="桃園市國中小學 111 學年度第二學期起全區免費營養午餐正式上路，三章一Q在地食材覆蓋率達 95% (實支金額: NT$ 1,500,000,000)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=1500000000.0,
             audit_metadata={"evidence_type": "COMPLETION_REPORT", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -515,7 +515,7 @@ class SeedDatabase:
             title="桃園捷運綠線主線高架段鋼樑架設完成與力拚2026北段通車",
             category="軌道交通",
             status=FulfillmentStatus.IN_PROGRESS.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E6%A1%83%E5%9C%92%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2026-12-31",
             audit_metadata={
                 "fulfillment_score": 65.0,
@@ -529,7 +529,7 @@ class SeedDatabase:
             promise_id="promise-006",
             milestone_date="2024-07-15",
             evidence_summary="捷運綠線北段高架車站結構體全數封頂，潛盾機鑽掘隧道進度達 65% (累計決標金額: NT$ 32,800,000,000)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=328000000.0,
             audit_metadata={"evidence_type": "TENDER_NOTICE", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -543,7 +543,7 @@ class SeedDatabase:
             title="台中捷運藍線綜合規劃行政院核定與工程統包招標",
             category="軌道交通",
             status=FulfillmentStatus.IN_PROGRESS.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E8%87%BA%E4%B8%AD%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2034-12-31",
             audit_metadata={
                 "fulfillment_score": 58.0,
@@ -557,7 +557,7 @@ class SeedDatabase:
             promise_id="promise-007",
             milestone_date="2024-01-29",
             evidence_summary="行政院正式核定台中捷運藍線綜合規劃報告書，總經費 1,615.14 億元，專案管理決標金額 9.8 億元 (前置規劃完成度: 58%)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=980000000.0,
             audit_metadata={"evidence_type": "OFFICIAL_DECREE", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -570,7 +570,7 @@ class SeedDatabase:
             title="市區主要幹線公車全面電動化與空污清淨行動方案",
             category="環境保護",
             status=FulfillmentStatus.FULFILLED.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E8%87%BA%E4%B8%AD%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2025-10-31",
             audit_metadata={
                 "fulfillment_score": 96.5,
@@ -584,7 +584,7 @@ class SeedDatabase:
             promise_id="promise-008",
             milestone_date="2025-09-30",
             evidence_summary="市區主要幹線電動公車累計掛牌達 425 輛，達成年度超額汰換目標 (驗收合格率: 100%)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=1800000000.0,
             audit_metadata={"evidence_type": "COMPLETION_REPORT", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -598,7 +598,7 @@ class SeedDatabase:
             title="南部科學園區安南與永康再生水廠全量供水（每日 6.8 萬噸）",
             category="水資源環境",
             status=FulfillmentStatus.FULFILLED.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E8%87%BA%E5%8D%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2024-06-30",
             audit_metadata={
                 "fulfillment_score": 100.0,
@@ -612,7 +612,7 @@ class SeedDatabase:
             promise_id="promise-009",
             milestone_date="2024-05-15",
             evidence_summary="安平再生水廠二期工程完工通水，累計供水量突破每日 6.8 萬噸，大幅減輕民生水庫負擔 (完工驗收率: 100%, 標案結算金額: NT$ 3,600,000,000)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=3600000000.0,
             audit_metadata={"evidence_type": "COMPLETION_REPORT", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -626,7 +626,7 @@ class SeedDatabase:
             title="台積電高雄 2 奈米先進製程建廠（楠梓園區公共設施與配水電）",
             category="產業經濟",
             status=FulfillmentStatus.IN_PROGRESS.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E9%AB%98%E9%9B%84%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2025-12-31",
             audit_metadata={
                 "fulfillment_score": 82.0,
@@ -640,7 +640,7 @@ class SeedDatabase:
             promise_id="promise-010",
             milestone_date="2024-04-20",
             evidence_summary="楠梓園區公共管線與配電變電所土建工程完工交付，P1晶圓廠鋼樑吊裝完成 (工程進度: 82%, 累計採購金額: NT$ 2,850,000,000)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=2850000000.0,
             audit_metadata={"evidence_type": "TENDER_AWARD", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -653,7 +653,7 @@ class SeedDatabase:
             title="高雄輕軌成圓全線通車營運（大順路段綠巨人綠廊完工）",
             category="軌道交通",
             status=FulfillmentStatus.FULFILLED.value,
-            source_url="https://bulletin.cec.gov.tw/",
+            source_url="https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E9%AB%98%E9%9B%84%E5%B8%82%E5%B8%82%E9%95%B7.pdf",
             target_completion_date="2024-01-01",
             audit_metadata={
                 "fulfillment_score": 100.0,
@@ -667,7 +667,7 @@ class SeedDatabase:
             promise_id="promise-011",
             milestone_date="2024-01-01",
             evidence_summary="高雄輕軌最後一哩路大順路段履勘合格，正式取得交通部營運許可全線成圓通車 (工程結算率: 100%)。",
-            source_url="https://web.pcc.gov.tw/pis/",
+            source_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             budget_spent=4200000000.0,
             audit_metadata={"evidence_type": "COMPLETION_REPORT", "evidence_tier": "TIER_1_OFFICIAL"},
         )
@@ -763,7 +763,7 @@ class SeedDatabase:
             author_name="內湖通勤族自救會",
             title="建請加速內湖交通瓶頸改善與捷運東環段細部設計",
             content="內科尖峰通勤時間仍嚴重壅塞，盼市府落實捷運東環段發包時程，並在通車前增開跳蛙公車與共享運具優惠。",
-            evidence_url="https://web.pcc.gov.tw/pis/",
+            evidence_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             citizen_score=5,
             status="APPROVED",
             created_at="2024-11-01",
@@ -777,7 +777,7 @@ class SeedDatabase:
             author_name="楠梓在地青年聯盟",
             title="建請公開台積電楠梓園區環境監測與再生水用量月報",
             content="肯定半導體產業進駐帶動高雄發展，建議市府於專區官網定期公布放流水質與空氣品質監控數據，兼顧環境永續。",
-            evidence_url="https://web.pcc.gov.tw/pis/",
+            evidence_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             citizen_score=4,
             status="APPROVED",
             created_at="2024-11-05",
@@ -791,7 +791,7 @@ class SeedDatabase:
             author_name="台中爭氣好生活協會",
             title="督促中火無煤轉型與公車全面電動化期程",
             content="要求市府嚴格落實自治條例，加速中火燃煤機組除役轉備用，並擴大公車電動化補助路網至海線各區。",
-            evidence_url="https://web.pcc.gov.tw/pis/",
+            evidence_url="https://web.pcc.gov.tw/tps/QueryTender/query/searchTenderDetail?pkPmsMain=NzEzNTE1MTY=",
             citizen_score=5,
             status="APPROVED",
             created_at="2024-11-10",
