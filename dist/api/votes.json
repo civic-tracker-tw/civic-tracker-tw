@@ -3,7 +3,7 @@
     {
       "id": "vote-001",
       "bill_id": "bill-10-08-01",
-      "politician_id": "pol-lin-01",
+      "politician_id": "pol-001",
       "decision": "APPROVE",
       "source_url": "https://data.ly.gov.tw/vote/ly-10-08-01",
       "audit_metadata": {
@@ -11,18 +11,22 @@
         "audited_by": "argon",
         "verdict": "APPROVE"
       },
-      "politician_name": "林宏遠",
-      "politician_party": "台灣進步陣線",
+      "politician_name": "蔣萬安",
+      "politician_party": "中國國民黨",
       "bill": {
         "id": "bill-10-08-01",
         "title": "道路交通安全基本法草案",
-        "description": "確立以人為本之交通安全政策方針，明定中央每年度公布道安改善白皮書與各縣市零死亡願景目標。"
+        "description": "確立以人為本之交通安全政策方針，明定中央每年度公布道安改善白皮書與各縣市零死亡願景目標。",
+        "proposer_term_ids": [
+          "term-leg-001",
+          "term-leg-002"
+        ]
       }
     },
     {
       "id": "vote-002",
       "bill_id": "bill-10-08-01",
-      "politician_id": "pol-chang-02",
+      "politician_id": "pol-002",
       "decision": "APPROVE",
       "source_url": "https://data.ly.gov.tw/vote/ly-10-08-01",
       "audit_metadata": {
@@ -30,18 +34,22 @@
         "audited_by": "argon",
         "verdict": "APPROVE"
       },
-      "politician_name": "張靜雅",
-      "politician_party": "民主社會黨",
+      "politician_name": "陳其邁",
+      "politician_party": "民主進步黨",
       "bill": {
         "id": "bill-10-08-01",
         "title": "道路交通安全基本法草案",
-        "description": "確立以人為本之交通安全政策方針，明定中央每年度公布道安改善白皮書與各縣市零死亡願景目標。"
+        "description": "確立以人為本之交通安全政策方針，明定中央每年度公布道安改善白皮書與各縣市零死亡願景目標。",
+        "proposer_term_ids": [
+          "term-leg-001",
+          "term-leg-002"
+        ]
       }
     },
     {
       "id": "vote-003",
       "bill_id": "bill-10-08-02",
-      "politician_id": "pol-chang-02",
+      "politician_id": "pol-002",
       "decision": "APPROVE",
       "source_url": "https://data.ly.gov.tw/vote/ly-10-08-02",
       "audit_metadata": {
@@ -49,18 +57,21 @@
         "audited_by": "argon",
         "verdict": "APPROVE"
       },
-      "politician_name": "張靜雅",
-      "politician_party": "民主社會黨",
+      "politician_name": "陳其邁",
+      "politician_party": "民主進步黨",
       "bill": {
         "id": "bill-10-08-02",
         "title": "詐欺犯罪危害防制條例（打詐專法）草案",
-        "description": "加重組織詐欺刑責，規範網路廣告平台實名制與第三方支付金融阻詐聯防機制。"
+        "description": "加重組織詐欺刑責，規範網路廣告平台實名制與第三方支付金融阻詐聯防機制。",
+        "proposer_term_ids": [
+          "term-leg-002"
+        ]
       }
     },
     {
       "id": "vote-004",
       "bill_id": "bill-10-08-03",
-      "politician_id": "pol-lin-01",
+      "politician_id": "pol-001",
       "decision": "ABSTAIN",
       "source_url": "https://data.ly.gov.tw/vote/ly-10-08-03",
       "audit_metadata": {
@@ -69,18 +80,21 @@
         "verdict": "APPROVE",
         "note": "跨黨派協商棄權"
       },
-      "politician_name": "林宏遠",
-      "politician_party": "台灣進步陣線",
+      "politician_name": "蔣萬安",
+      "politician_party": "中國國民黨",
       "bill": {
         "id": "bill-10-08-03",
         "title": "預算法第八十三條修正草案（嚴格限縮特別預算編列要件）",
-        "description": "刪除『不定期或數年一次之重大政事』得編列特別預算之概括條款，強化國會財政監督。"
+        "description": "刪除『不定期或數年一次之重大政事』得編列特別預算之概括條款，強化國會財政監督。",
+        "proposer_term_ids": [
+          "term-leg-003"
+        ]
       }
     },
     {
       "id": "vote-005",
       "bill_id": "bill-10-08-03",
-      "politician_id": "pol-chang-02",
+      "politician_id": "pol-002",
       "decision": "APPROVE",
       "source_url": "https://data.ly.gov.tw/vote/ly-10-08-03",
       "audit_metadata": {
@@ -88,12 +102,15 @@
         "audited_by": "argon",
         "verdict": "APPROVE"
       },
-      "politician_name": "張靜雅",
-      "politician_party": "民主社會黨",
+      "politician_name": "陳其邁",
+      "politician_party": "民主進步黨",
       "bill": {
         "id": "bill-10-08-03",
         "title": "預算法第八十三條修正草案（嚴格限縮特別預算編列要件）",
-        "description": "刪除『不定期或數年一次之重大政事』得編列特別預算之概括條款，強化國會財政監督。"
+        "description": "刪除『不定期或數年一次之重大政事』得編列特別預算之概括條款，強化國會財政監督。",
+        "proposer_term_ids": [
+          "term-leg-003"
+        ]
       }
     }
   ],

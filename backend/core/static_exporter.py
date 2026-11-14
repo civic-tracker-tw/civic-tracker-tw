@@ -62,6 +62,8 @@ def export_static_site(
     speeches_data = engine.get_speeches()
     votes_data = engine.get_votes()
     promises_data = engine.get_promises()
+    exam_cards_data = engine.get_exam_cards()
+    petitions_data = engine.get_petitions()
     stats_data = engine.get_overview_stats()
     sec_meta = engine.get_security_metadata()
     sync_logs = engine.get_sync_logs(limit=10)
@@ -98,6 +100,8 @@ def export_static_site(
         "speeches.json": {"speeches": speeches_data, "total": len(speeches_data)},
         "votes.json": {"votes": votes_data, "total": len(votes_data)},
         "promises.json": {"promises": promises_data, "total": len(promises_data)},
+        "exam_cards.json": {"exam_cards": exam_cards_data, "total": len(exam_cards_data)},
+        "petitions.json": {"petitions": petitions_data, "total": len(petitions_data)},
         "security_status.json": security_export,
     }
 
@@ -115,6 +119,8 @@ def export_static_site(
         "speeches": speeches_data,
         "votes": votes_data,
         "promises": promises_data,
+        "exam_cards": exam_cards_data,
+        "petitions": petitions_data,
     }
 
     embedded_json_str = json.dumps(embedded_fallback, ensure_ascii=False, indent=6)
@@ -171,6 +177,8 @@ def export_static_site(
             "api/speeches.json",
             "api/votes.json",
             "api/promises.json",
+            "api/exam_cards.json",
+            "api/petitions.json",
             "api/security_status.json",
         ],
         "dataset_metrics": {
@@ -178,6 +186,8 @@ def export_static_site(
             "speeches_count": len(speeches_data),
             "votes_count": len(votes_data),
             "promises_count": len(promises_data),
+            "exam_cards_count": len(exam_cards_data),
+            "petitions_count": len(petitions_data),
         },
     }
     return manifest

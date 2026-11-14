@@ -264,7 +264,10 @@ def compile_protocol(human_cfg: Dict[str, Any], source_hash: str) -> Dict[str, A
     protocol = {
         "protocol_version": str(human_cfg.get("version", "1.0.0")),
         "project_name": str(human_cfg.get("project_name", "CivicTracker-TW")),
+        "evaluation_mode": str(human_cfg.get("evaluation_mode", "QUANTITATIVE_ONLY")),
         "source_hash": source_hash,
+        "feature_flags": human_cfg.get("feature_flags", {}),
+        "external_endpoints": human_cfg.get("external_endpoints", {}),
         "routing": routing,
         "gates": task_gates,
         "err_directives": err_directives,

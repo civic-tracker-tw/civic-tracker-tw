@@ -1,6 +1,6 @@
 """
 CivicTracker TW - Domain Models
-Unified Phase 1 (Legislative) & Phase 2 (Executive) Domain Dataclasses & Validators.
+Unified Phase 1 (Legislative), Phase 2 (Executive) & Extensibility Domain Dataclasses.
 """
 
 from dataclasses import asdict, dataclass, field
@@ -127,6 +127,9 @@ class InterpellationSpeech:
     ai_summary: str
     topic_tags: List[str] = field(default_factory=list)
     audit_metadata: Dict[str, Any] = field(default_factory=dict)
+    ivod_clip_id: Optional[str] = None
+    video_stream_url: Optional[str] = None
+    billy3321_url: Optional[str] = None
 
     def validate(self, protocol: Optional[Dict[str, Any]] = None) -> List[Tuple[str, str]]:
         errors: List[Tuple[str, str]] = []
@@ -270,6 +273,70 @@ class PolicyPromise:
             m_errs = m.validate(protocol)
             errors.extend(m_errs)
 
+        return errors
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+# -----------------------------------------------------------------------------
+# Phase 3 & Extensibility: Midterm/Final Exam Report Cards & Citizen Petitions
+# -----------------------------------------------------------------------------
+
+@dataclass
+class ExamReportCard:
+    id: str
+    politician_id: str
+    term_id: str
+    exam_stage: str  # "MIDTERM" | "FINAL"
+    attendance_rate: float
+    objective_score: float
+    argon_summary_comment: str
+    citizen_rating_avg: float
+    citizen_reviews_count: int
+    audit_metadata: Dict[str, Any] = field(default_factory=dict)
+
+    def validate(self, protocol: Optional[Dict[str, Any]] = None) -> List[Tuple[str, str]]:
+        errors: List[Tuple[str, str]] = []
+        if self.exam_stage not in ("MIDTERM", "FINAL"):
+            errors.append(("E05_SCHEMA_VIOLATION", f"exam_stage must be 'MIDTERM' or 'FINAL', got: {self.exam_stage}"))
+        if not (0.0 <= self.attendance_rate <= 100.0):
+            errors.append(("E05_SCHEMA_VIOLATION", f"attendance_rate must be 0-100, got: {self.attendance_rate}"))
+        if not (0.0 <= self.objective_score <= 100.0):
+            errors.append(("E05_SCHEMA_VIOLATION", f"objective_score must be 0-100, got: {self.objective_score}"))
+        if not self.politician_id:
+            errors.append(("E05_SCHEMA_VIOLATION", "politician_id cannot be empty"))
+        return errors
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
+class CitizenPetition:
+    id: str
+    politician_id: str
+    category: str
+    author_name: str
+    title: str
+    content: str
+    citizen_score: int  # 1 to 5
+    status: str  # "PENDING" | "APPROVED" | "QUARANTINED"
+    created_at: str
+    target_promise_id: Optional[str] = None
+    evidence_url: Optional[str] = None
+    audit_metadata: Dict[str, Any] = field(default_factory=dict)
+
+    def validate(self, protocol: Optional[Dict[str, Any]] = None) -> List[Tuple[str, str]]:
+        errors: List[Tuple[str, str]] = []
+        if self.status not in ("PENDING", "APPROVED", "QUARANTINED"):
+            errors.append(("E05_SCHEMA_VIOLATION", f"status must be PENDING/APPROVED/QUARANTINED, got: {self.status}"))
+        if not (1 <= self.citizen_score <= 5):
+            errors.append(("E05_SCHEMA_VIOLATION", f"citizen_score must be between 1 and 5, got: {self.citizen_score}"))
+        if not self.title.strip():
+            errors.append(("E05_SCHEMA_VIOLATION", "title cannot be empty"))
+        if not self.content.strip():
+            errors.append(("E05_SCHEMA_VIOLATION", "content cannot be empty"))
         return errors
 
     def to_dict(self) -> Dict[str, Any]:

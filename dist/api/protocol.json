@@ -2,7 +2,23 @@
   "protocol": {
     "protocol_version": "1.0.0",
     "project_name": "CivicTracker-TW",
-    "source_hash": "sha256:e61fa7fedd14496acb745987a2d4b96e52413193031428d8e2d9564eaf85f651",
+    "evaluation_mode": "QUANTITATIVE_ONLY",
+    "source_hash": "sha256:9939d87b1d12e29d4f79b2025dbdb59e66a5634dbd7144a7309eb0fc3403e6ac",
+    "feature_flags": {
+      "enable_ly_govapi_live_sync": true,
+      "enable_ivod_video_embed": true,
+      "enable_billy3321_integration": true,
+      "enable_exam_report_cards": true,
+      "enable_citizen_petitions": true,
+      "enable_llm_deep_evaluation": false
+    },
+    "external_endpoints": {
+      "ly_govapi_v2_url": "https://v2.ly.govapi.tw",
+      "ly_open_data_url": "https://data.ly.gov.tw",
+      "ivod_official_base_url": "https://ivod.ly.gov.tw",
+      "billy3321_ivod_base_url": "https://ivod.billy3321.tw",
+      "github_discussions_repo": "civic-tracker-tw/civic-tracker-tw"
+    },
     "routing": {
       "exec_agent": "hydrogen",
       "exec_model": "gemini-2.5-flash",
@@ -43,6 +59,12 @@
           "STALLED",
           "BROKEN"
         ]
+      },
+      "TASK_PETITION_TRIAGE": {
+        "min_executor_confidence": 0.85,
+        "sample_audit_rate": 0.0,
+        "always_require_argon_verdict": true,
+        "require_verifiable_citation": false
       }
     },
     "err_directives": {
@@ -65,6 +87,10 @@
       "E05_SCHEMA_VIOLATION": {
         "severity": "HIGH",
         "model_directive": "Payload violates enum constraints or required fields in agent_protocol.json. Conform strictly to schema."
+      },
+      "E06_UNSUBSTANTIATED_ABUSE": {
+        "severity": "HIGH",
+        "model_directive": "Petition contains unsubstantiated defamation, abusive language, or zero public interest evidence. Quarantine and reject payload."
       }
     },
     "wire_schemas": {
@@ -85,7 +111,8 @@
             "enum": [
               "TASK_SPEECH_PARSE",
               "TASK_VOTE_ANALYZE",
-              "TASK_POLICY_EVAL"
+              "TASK_POLICY_EVAL",
+              "TASK_PETITION_TRIAGE"
             ]
           },
           "submission_id": {
@@ -114,6 +141,7 @@
               "E03_MISSING_CITATION",
               "E04_TIMESTAMP_DRIFT",
               "E05_SCHEMA_VIOLATION",
+              "E06_UNSUBSTANTIATED_ABUSE",
               null
             ]
           }
@@ -142,7 +170,8 @@
             "enum": [
               "TASK_SPEECH_PARSE",
               "TASK_VOTE_ANALYZE",
-              "TASK_POLICY_EVAL"
+              "TASK_POLICY_EVAL",
+              "TASK_PETITION_TRIAGE"
             ]
           },
           "submission_id": {
@@ -159,6 +188,7 @@
               "E03_MISSING_CITATION",
               "E04_TIMESTAMP_DRIFT",
               "E05_SCHEMA_VIOLATION",
+              "E06_UNSUBSTANTIATED_ABUSE",
               null
             ]
           },

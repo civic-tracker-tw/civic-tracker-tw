@@ -217,6 +217,20 @@ class CivicTrackerApiHandler(BaseHTTPRequestHandler):
             self._send_json_response({"promises": promises, "total": len(promises)}, remaining_limit=remaining)
             return
 
+        elif path == "/api/exam-cards":
+            pol_id = InputSanitizer.sanitize_query_string(query.get("politician_id", [None])[0])
+            stage = InputSanitizer.sanitize_query_string(query.get("exam_stage", [None])[0])
+            cards = db.get_exam_cards(politician_id=pol_id or None, exam_stage=stage or None)
+            self._send_json_response({"exam_cards": cards, "total": len(cards)}, remaining_limit=remaining)
+            return
+
+        elif path == "/api/petitions":
+            pol_id = InputSanitizer.sanitize_query_string(query.get("politician_id", [None])[0])
+            status = InputSanitizer.sanitize_query_string(query.get("status", [None])[0])
+            petitions = db.get_petitions(politician_id=pol_id or None, status=status or None)
+            self._send_json_response({"petitions": petitions, "total": len(petitions)}, remaining_limit=remaining)
+            return
+
         else:
             self._send_error_json(f"API endpoint '{path}' not found", status=HTTPStatus.NOT_FOUND)
 

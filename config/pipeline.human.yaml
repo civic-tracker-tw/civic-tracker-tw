@@ -10,6 +10,31 @@
 version: "1.0.0"
 project_name: "CivicTracker-TW"
 
+# 系統評估運作模式 (預設採用 0 Token 中立客觀數據量化模式)
+# 可選值: "QUANTITATIVE_ONLY" (預設 0 Token 規則與公式量化) | "HYBRID_ON_DEMAND" | "FULL_DUAL_MODEL" (未來量能充足再開啟)
+evaluation_mode: "QUANTITATIVE_ONLY"
+
+# ------------------------------------------------------------------------------
+# 功能開關 (Feature Flags — 控制立法院 API、影音串流、期中考評與公民連署功能)
+# ------------------------------------------------------------------------------
+feature_flags:
+  enable_ly_govapi_live_sync: true
+  enable_ivod_video_embed: true
+  enable_billy3321_integration: true
+  enable_exam_report_cards: true
+  enable_citizen_petitions: true
+  enable_llm_deep_evaluation: false   # 預設關閉外部大模型推論(0 Token 消耗)，未來量能充足再改為 true
+
+# ------------------------------------------------------------------------------
+# 外部整合端點 (External Service Endpoints)
+# ------------------------------------------------------------------------------
+external_endpoints:
+  ly_govapi_v2_url: "https://v2.ly.govapi.tw"
+  ly_open_data_url: "https://data.ly.gov.tw"
+  ivod_official_base_url: "https://ivod.ly.gov.tw"
+  billy3321_ivod_base_url: "https://ivod.billy3321.tw"
+  github_discussions_repo: "civic-tracker-tw/civic-tracker-tw"
+
 # ------------------------------------------------------------------------------
 # 1. 雙模型角色設定 (Hydrogen 執行者 × Argon 決策與錯誤評估者)
 # ------------------------------------------------------------------------------
@@ -65,6 +90,13 @@ quality_gates:
       - "STALLED"     # 卡關/進度落後
       - "BROKEN"      # 跳票或政策變更
 
+  # [Phase 2] 公民檢舉、連署與即時通報分流審查
+  citizen_petition_triage:
+    task_code: "TASK_PETITION_TRIAGE"
+    min_executor_confidence: 0.85
+    always_require_argon_verdict: true  # 公民通報一律由 Argon 進行人身攻擊與不實謾罵防護裁決
+    require_verifiable_citation: false
+
 # ------------------------------------------------------------------------------
 # 3. Argon 標準錯誤評估碼 (Standard Error Codes for Model-to-Model Rejection)
 # 當 Argon 退回 Hydrogen 的執行結果時，使用以下標準錯誤碼與修正指令，避免自然語言歧義
@@ -94,6 +126,11 @@ error_catalog:
     severity: "HIGH"
     human_label: "結構化欄位或枚舉值不符規範"
     model_directive: "Payload violates enum constraints or required fields in agent_protocol.json. Conform strictly to schema."
+
+  - code: "E06_UNSUBSTANTIATED_ABUSE"
+    severity: "HIGH"
+    human_label: "無實證之不當檢舉或人身攻擊謾罵"
+    model_directive: "Petition contains unsubstantiated defamation, abusive language, or zero public interest evidence. Quarantine and reject payload."
 
 # ------------------------------------------------------------------------------
 # 4. 資料源配置 (Data Sources — 支援台灣立法院與後續縣市擴充)

@@ -1,0 +1,65 @@
+{
+  "exam_cards": [
+    {
+      "id": "card-001",
+      "politician_id": "pol-001",
+      "politician_name": "蔣萬安",
+      "politician_party": "中國國民黨",
+      "term_id": "term-leg-001",
+      "term_title": "第九、十屆立法委員（社會福利及衛生環境委員會）",
+      "exam_stage": "MIDTERM",
+      "attendance_rate": 98.5,
+      "objective_score": 92.0,
+      "argon_summary_comment": "第10屆立院全院委員會與院會出席率達 98.5%，質詢法案聚焦勞工權益與公共衛生，公督盟評鑑列為優秀立委。",
+      "citizen_rating_avg": 4.6,
+      "citizen_reviews_count": 128,
+      "audit_metadata": {
+        "audit_verdict": "APPROVE",
+        "audited_by": "argon",
+        "confidence": 0.98
+      },
+      "created_at": "2026-11-14 20:38:36"
+    },
+    {
+      "id": "card-002",
+      "politician_id": "pol-002",
+      "politician_name": "陳其邁",
+      "politician_party": "民主進步黨",
+      "term_id": "term-leg-002",
+      "term_title": "第八、九屆立法委員（內政委員會、經濟委員會）",
+      "exam_stage": "FINAL",
+      "attendance_rate": 96.0,
+      "objective_score": 89.5,
+      "argon_summary_comment": "主責內政與前瞻經濟建設法規審查，發言精準切中政府採購弊端，質詢量能充沛。",
+      "citizen_rating_avg": 4.4,
+      "citizen_reviews_count": 95,
+      "audit_metadata": {
+        "audit_verdict": "APPROVE",
+        "audited_by": "argon",
+        "confidence": 0.95
+      },
+      "created_at": "2026-11-14 20:38:36"
+    },
+    {
+      "id": "card-003",
+      "politician_id": "pol-003",
+      "politician_name": "盧秀燕",
+      "politician_party": "中國國民黨",
+      "term_id": "term-leg-003",
+      "term_title": "第九屆立法委員（財政委員會召集委員）",
+      "exam_stage": "FINAL",
+      "attendance_rate": 97.2,
+      "objective_score": 91.0,
+      "argon_summary_comment": "長期深耕財政委員會召集人，嚴審中央總預算與地方統籌分配稅款，專業問政表現亮眼。",
+      "citizen_rating_avg": 4.5,
+      "citizen_reviews_count": 112,
+      "audit_metadata": {
+        "audit_verdict": "APPROVE",
+        "audited_by": "argon",
+        "confidence": 0.96
+      },
+      "created_at": "2026-11-14 20:38:36"
+    }
+  ],
+  "total": 3
+}

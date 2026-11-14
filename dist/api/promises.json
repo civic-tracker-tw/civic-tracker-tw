@@ -1,27 +1,136 @@
 {
   "promises": [
     {
-      "id": "promise-huang-01",
-      "politician_id": "pol-huang-03",
-      "term_id": "term-huang-exec-04",
-      "title": "台中捷運藍線綜合規劃核定與全線工程動工發包",
-      "category": "軌道交通",
+      "id": "promise-001",
+      "politician_id": "pol-001",
+      "term_id": "term-exec-001",
+      "title": "智慧交通路網與全區號誌連鎖優化計畫（內湖交通紓解）",
+      "category": "交通建設",
       "status": "IN_PROGRESS",
-      "source_url": "https://bulletin.cec.gov.tw/mayoral/taichung-2022/huang-01",
-      "target_completion_date": "2030-12-31",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/taipei-2022/chiang-01",
+      "target_completion_date": "2026-12-31",
       "audit_metadata": {
-        "fulfillment_score": 52.0,
+        "fulfillment_score": 72.0,
         "audited_by": "argon",
         "verdict": "APPROVE"
       },
-      "politician_name": "黃紹華",
-      "politician_party": "繁榮公民黨",
+      "politician_name": "蔣萬安",
+      "politician_party": "中國國民黨",
       "milestones": [
         {
-          "id": "ms-huang-1a",
-          "promise_id": "promise-huang-01",
+          "id": "ms-001a",
+          "promise_id": "promise-001",
+          "milestone_date": "2024-03-15",
+          "evidence_summary": "內湖科技園區 30 處關鍵路口智慧動態號誌感測器建置完成，尖峰時段車流停等時間減少 15%。",
+          "source_url": "https://web.pcc.gov.tw/tenders/taipei-traffic-2024-01",
+          "budget_spent": 52000000.0,
+          "audit_metadata": {
+            "evidence_type": "TENDER_AWARD",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        },
+        {
+          "id": "ms-001b",
+          "promise_id": "promise-001",
+          "milestone_date": "2024-08-20",
+          "evidence_summary": "內湖通勤跳蛙公車增班與預約制上路，運量提升 22%。",
+          "source_url": "https://web.pcc.gov.tw/tenders/taipei-shuttle-2024-02",
+          "budget_spent": 28000000.0,
+          "audit_metadata": {
+            "evidence_type": "DELIVERY_ACCEPTANCE",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "promise-002",
+      "politician_id": "pol-001",
+      "term_id": "term-exec-001",
+      "title": "生育獎勵金加碼與好孕專車乘車補助專案",
+      "category": "托育社福",
+      "status": "FULFILLED",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/taipei-2022/chiang-02",
+      "target_completion_date": "2024-01-01",
+      "audit_metadata": {
+        "fulfillment_score": 100.0,
+        "audited_by": "argon",
+        "verdict": "APPROVE"
+      },
+      "politician_name": "蔣萬安",
+      "politician_party": "中國國民黨",
+      "milestones": [
+        {
+          "id": "ms-002a",
+          "promise_id": "promise-002",
+          "milestone_date": "2023-12-15",
+          "evidence_summary": "第一胎生育補助調高至4萬元、第二胎4.5萬元，好孕專車乘車券累計發放達 18,200 人次。",
+          "source_url": "https://web.pcc.gov.tw/tenders/taipei-childcare-2023-03",
+          "budget_spent": 210000000.0,
+          "audit_metadata": {
+            "evidence_type": "COMPLETION_REPORT",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "promise-003",
+      "politician_id": "pol-001",
+      "term_id": "term-exec-001",
+      "title": "捷運東環段細部設計與全線動工招標",
+      "category": "軌道交通",
+      "status": "IN_PROGRESS",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/taipei-2022/chiang-03",
+      "target_completion_date": "2028-12-31",
+      "audit_metadata": {
+        "fulfillment_score": 48.0,
+        "audited_by": "argon",
+        "verdict": "APPROVE"
+      },
+      "politician_name": "蔣萬安",
+      "politician_party": "中國國民黨",
+      "milestones": [
+        {
+          "id": "ms-003a",
+          "promise_id": "promise-003",
+          "milestone_date": "2024-06-28",
+          "evidence_summary": "捷運東環段 CF710 標土建工程招標公告上網，預計年底前完成決標程序。",
+          "source_url": "https://web.pcc.gov.tw/tenders/taipei-mrt-east-2024-04",
+          "budget_spent": 125000000.0,
+          "audit_metadata": {
+            "evidence_type": "TENDER_NOTICE",
+            "audited_by": "argon",
+            "verdict": "APPROVE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "promise-004",
+      "politician_id": "pol-003",
+      "term_id": "term-exec-003",
+      "title": "台中捷運藍線綜合規劃核定與全線工程動工發包",
+      "category": "軌道交通",
+      "status": "IN_PROGRESS",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/taichung-2022/lu-01",
+      "target_completion_date": "2030-12-31",
+      "audit_metadata": {
+        "fulfillment_score": 55.0,
+        "audited_by": "argon",
+        "verdict": "APPROVE"
+      },
+      "politician_name": "盧秀燕",
+      "politician_party": "中國國民黨",
+      "milestones": [
+        {
+          "id": "ms-004a",
+          "promise_id": "promise-004",
           "milestone_date": "2024-01-29",
-          "evidence_summary": "行政院核定台中捷運藍線綜合規劃報告書，總經費 1,615 億元由中央與地方分攤。",
+          "evidence_summary": "行政院正式核定台中捷運藍線綜合規劃報告書，總經費 1,615 億元由中央與地方分攤。",
           "source_url": "https://web.pcc.gov.tw/tenders/tc-mrt-blue-2024-01",
           "budget_spent": 350000000.0,
           "audit_metadata": {
@@ -33,141 +142,31 @@
       ]
     },
     {
-      "id": "promise-huang-02",
-      "politician_id": "pol-huang-03",
-      "term_id": "term-huang-exec-04",
+      "id": "promise-005",
+      "politician_id": "pol-003",
+      "term_id": "term-exec-003",
       "title": "市區公車全面電動化與空污清淨行動方案",
       "category": "環境保護",
       "status": "FULFILLED",
-      "source_url": "https://bulletin.cec.gov.tw/mayoral/taichung-2022/huang-02",
+      "source_url": "https://bulletin.cec.gov.tw/mayoral/taichung-2022/lu-02",
       "target_completion_date": "2025-10-31",
       "audit_metadata": {
         "fulfillment_score": 96.0,
         "audited_by": "argon",
         "verdict": "APPROVE"
       },
-      "politician_name": "黃紹華",
-      "politician_party": "繁榮公民黨",
+      "politician_name": "盧秀燕",
+      "politician_party": "中國國民黨",
       "milestones": [
         {
-          "id": "ms-huang-2a",
-          "promise_id": "promise-huang-02",
+          "id": "ms-005a",
+          "promise_id": "promise-005",
           "milestone_date": "2025-09-30",
           "evidence_summary": "市區主要幹線電動公車累計達 420 輛，電動公車普及率突破 52% 居全國前列。",
           "source_url": "https://web.pcc.gov.tw/tenders/tc-ev-bus-2025-01",
           "budget_spent": 1800000000.0,
           "audit_metadata": {
             "evidence_type": "COMPLETION_REPORT",
-            "audited_by": "argon",
-            "verdict": "APPROVE"
-          }
-        }
-      ]
-    },
-    {
-      "id": "promise-lin-01",
-      "politician_id": "pol-lin-01",
-      "term_id": "term-lin-exec-11",
-      "title": "智慧交通路網與全區號誌連鎖優化計畫",
-      "category": "交通建設",
-      "status": "IN_PROGRESS",
-      "source_url": "https://bulletin.cec.gov.tw/mayoral/hsinchu-2024/lin-01",
-      "target_completion_date": "2026-12-31",
-      "audit_metadata": {
-        "fulfillment_score": 68.5,
-        "audited_by": "argon",
-        "verdict": "APPROVE"
-      },
-      "politician_name": "林宏遠",
-      "politician_party": "台灣進步陣線",
-      "milestones": [
-        {
-          "id": "ms-lin-1a",
-          "promise_id": "promise-lin-01",
-          "milestone_date": "2025-03-15",
-          "evidence_summary": "慈雲路與光復路 25 處關鍵路口智慧動態號誌感測器發包完成，預估尖峰時段車流停等時間減少 18%。",
-          "source_url": "https://web.pcc.gov.tw/tenders/hsinchu-traffic-2025-01",
-          "budget_spent": 45000000.0,
-          "audit_metadata": {
-            "evidence_type": "TENDER_AWARD",
-            "audited_by": "argon",
-            "verdict": "APPROVE"
-          }
-        },
-        {
-          "id": "ms-lin-1b",
-          "promise_id": "promise-lin-01",
-          "milestone_date": "2025-08-20",
-          "evidence_summary": "竹科通勤專車全電動化第一期（共 15 輛低底盤電動公車）正式上路營運。",
-          "source_url": "https://web.pcc.gov.tw/tenders/hsinchu-shuttle-2025-02",
-          "budget_spent": 32000000.0,
-          "audit_metadata": {
-            "evidence_type": "DELIVERY_ACCEPTANCE",
-            "audited_by": "argon",
-            "verdict": "APPROVE"
-          }
-        }
-      ]
-    },
-    {
-      "id": "promise-lin-02",
-      "politician_id": "pol-lin-01",
-      "term_id": "term-lin-exec-11",
-      "title": "0至6歲公立托育設施倍增與第二胎育兒津貼加碼",
-      "category": "托育社福",
-      "status": "FULFILLED",
-      "source_url": "https://bulletin.cec.gov.tw/mayoral/hsinchu-2024/lin-02",
-      "target_completion_date": "2025-09-01",
-      "audit_metadata": {
-        "fulfillment_score": 100.0,
-        "audited_by": "argon",
-        "verdict": "APPROVE"
-      },
-      "politician_name": "林宏遠",
-      "politician_party": "台灣進步陣線",
-      "milestones": [
-        {
-          "id": "ms-lin-2a",
-          "promise_id": "promise-lin-02",
-          "milestone_date": "2025-08-10",
-          "evidence_summary": "新設東區與北區 12 處社區公共托育家園驗收完畢，第二胎加碼補助全面撥款發放達 3,850 戶。",
-          "source_url": "https://web.pcc.gov.tw/tenders/hsinchu-childcare-2025-03",
-          "budget_spent": 88000000.0,
-          "audit_metadata": {
-            "evidence_type": "COMPLETION_REPORT",
-            "audited_by": "argon",
-            "verdict": "APPROVE"
-          }
-        }
-      ]
-    },
-    {
-      "id": "promise-lin-03",
-      "politician_id": "pol-lin-01",
-      "term_id": "term-lin-exec-11",
-      "title": "竹科新創產學孵化專區二期擴建案",
-      "category": "產業經濟",
-      "status": "STALLED",
-      "source_url": "https://bulletin.cec.gov.tw/mayoral/hsinchu-2024/lin-03",
-      "target_completion_date": "2027-06-30",
-      "audit_metadata": {
-        "fulfillment_score": 15.0,
-        "audited_by": "argon",
-        "verdict": "APPROVE",
-        "delay_reason": "土地徵收公聽會地主爭議暫緩"
-      },
-      "politician_name": "林宏遠",
-      "politician_party": "台灣進步陣線",
-      "milestones": [
-        {
-          "id": "ms-lin-3a",
-          "promise_id": "promise-lin-03",
-          "milestone_date": "2025-05-18",
-          "evidence_summary": "可行性評估案完成，但都市計畫土地變更作業因周邊農地業主陳情，市府議會審查暫予保留。",
-          "source_url": "https://web.pcc.gov.tw/tenders/hsinchu-incubator-2025-04",
-          "budget_spent": 15000000.0,
-          "audit_metadata": {
-            "evidence_type": "AUDIT_WARNING",
             "audited_by": "argon",
             "verdict": "APPROVE"
           }

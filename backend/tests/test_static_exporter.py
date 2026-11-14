@@ -45,6 +45,8 @@ class TestStaticExporter(unittest.TestCase):
             "speeches.json",
             "votes.json",
             "promises.json",
+            "exam_cards.json",
+            "petitions.json",
             "security_status.json",
         ):
             file_path = api_dir / json_file
@@ -66,10 +68,10 @@ class TestStaticExporter(unittest.TestCase):
         self.assertIn("陳昭姿", names)
 
         # Verify cross-phase politician
-        lin = next((p for p in pols if p["name"] == "林宏遠"), None)
-        self.assertIsNotNone(lin)
-        self.assertTrue(lin["stats"]["is_cross_phase"])
-        self.assertEqual(len(lin["terms"]), 2)
+        target = next((p for p in pols if p["name"] in ("蔣萬安", "林宏遠")), None)
+        self.assertIsNotNone(target)
+        self.assertTrue(target["stats"]["is_cross_phase"])
+        self.assertEqual(len(target["terms"]), 2)
 
     def test_exported_speeches_contain_argon_audit(self):
         dist_path = Path(self.temp_dir)
@@ -95,7 +97,7 @@ class TestStaticExporter(unittest.TestCase):
         self.assertIn("洪申翰", html)
         self.assertIn("李彥秀", html)
         self.assertIn("陳昭姿", html)
-        self.assertIn("林宏遠", html)
+        self.assertTrue("蔣萬安" in html or "林宏遠" in html)
         self.assertIn("sim-run-btn", html)
         self.assertIn("E02_SPEAKER_SWAP", html)
 

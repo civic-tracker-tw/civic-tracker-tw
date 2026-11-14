@@ -156,6 +156,13 @@ class RuleChecker:
                             ("E03_MISSING_CITATION", f"Milestone [{idx}] missing verifiable source_url: '{m_src}'")
                         )
 
+        elif task_code == "TASK_PETITION_TRIAGE":
+            if payload.get("_simulate_abuse") or payload.get("is_abusive"):
+                errors.append(("E06_UNSUBSTANTIATED_ABUSE", "Petition contains abusive language, defamation, or unsubstantiated attacks."))
+            content = payload.get("content", "")
+            if not isinstance(content, str) or not content.strip():
+                errors.append(("E05_SCHEMA_VIOLATION", "Citizen petition content cannot be empty."))
+
         return errors
 
 

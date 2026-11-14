@@ -101,35 +101,59 @@ def publish_to_github(
         else:
             raise
 
-    # Upload files via Contents API
+    # Upload files via Atomic Git Tree & Commit API (1 single commit for all files!)
     files = collect_project_files(BASE_DIR)
     if only_files:
         only_set = set(only_files)
         files = [f for f in files if f.relative_to(BASE_DIR).as_posix() in only_set]
-    uploaded_count = 0
-    for fpath in files:
+
+    ref_info = _github_api_request("GET", f"/repos/{owner}/{repo_name}/git/ref/heads/main", token)
+    latest_commit_sha = ref_info["object"]["sha"]
+    commit_info = _github_api_request("GET", f"/repos/{owner}/{repo_name}/git/commits/{latest_commit_sha}", token)
+    base_tree_sha = commit_info["tree"]["sha"]
+
+    tree_items: List[Dict[str, Any]] = []
+    for idx, fpath in enumerate(files, 1):
         rel_posix = fpath.relative_to(BASE_DIR).as_posix()
         content_b64 = base64.b64encode(fpath.read_bytes()).decode("ascii")
+        blob = _github_api_request(
+            "POST",
+            f"/repos/{owner}/{repo_name}/git/blobs",
+            token,
+            {"content": content_b64, "encoding": "base64"},
+        )
+        tree_items.append({
+            "path": rel_posix,
+            "mode": "100644",
+            "type": "blob",
+            "sha": blob["sha"],
+        })
+        print(f"  [{idx}/{len(files)}] Staged blob: {rel_posix}")
 
-        # Check if file exists to get sha
-        existing_sha = None
-        try:
-            existing = _github_api_request("GET", f"/repos/{owner}/{repo_name}/contents/{rel_posix}", token)
-            existing_sha = existing.get("sha")
-        except urllib.error.HTTPError:
-            pass
-
-        body: Dict[str, Any] = {
-            "message": f"Sync {rel_posix} via CivicTracker Publisher",
-            "content": content_b64,
-            "branch": "main",
-        }
-        if existing_sha:
-            body["sha"] = existing_sha
-
-        _github_api_request("PUT", f"/repos/{owner}/{repo_name}/contents/{rel_posix}", token, body)
-        uploaded_count += 1
-        print(f"  [{uploaded_count}/{len(files)}] Uploaded: {rel_posix}")
+    new_tree = _github_api_request(
+        "POST",
+        f"/repos/{owner}/{repo_name}/git/trees",
+        token,
+        {"base_tree": base_tree_sha, "tree": tree_items},
+    )
+    new_commit = _github_api_request(
+        "POST",
+        f"/repos/{owner}/{repo_name}/git/commits",
+        token,
+        {
+            "message": "Upgrade CivicTracker TW: Quantitative 0-Token Mode, Real Politicians, IVOD Embeds & Exam/Petition Slots",
+            "tree": new_tree["sha"],
+            "parents": [latest_commit_sha],
+        },
+    )
+    _github_api_request(
+        "PATCH",
+        f"/repos/{owner}/{repo_name}/git/refs/heads/main",
+        token,
+        {"sha": new_commit["sha"], "force": False},
+    )
+    uploaded_count = len(files)
+    print(f"[GitHubPublisher] Pushed 1 atomic commit ({new_commit['sha'][:7]}) with {uploaded_count} files.")
 
     # Configure GitHub Pages to use GitHub Actions workflow
     pages_url = f"https://{owner}.github.io/{repo_name}/"

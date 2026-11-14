@@ -99,10 +99,10 @@ class TestWebServerHandlers(unittest.TestCase):
         self.assertGreaterEqual(len(pols), 3)
 
         # Cross-role verification (Legislator -> Mayor)
-        lin = next((p for p in pols if p["name"] == "林宏遠"), None)
-        self.assertIsNotNone(lin)
-        self.assertTrue(lin["stats"]["is_cross_phase"])
-        self.assertEqual(len(lin["terms"]), 2)
+        target = next((p for p in pols if p["name"] in ("蔣萬安", "林宏遠")), None)
+        self.assertIsNotNone(target)
+        self.assertTrue(target["stats"]["is_cross_phase"])
+        self.assertEqual(len(target["terms"]), 2)
 
     def test_get_speeches_with_query_and_tag(self):
         # 1. All speeches
@@ -126,7 +126,25 @@ class TestWebServerHandlers(unittest.TestCase):
         self.assertEqual(handler_q.response_status, HTTPStatus.OK)
         res_q = handler_q.get_json_response()
         self.assertEqual(res_q["total"], 1)
-        self.assertEqual(res_q["speeches"][0]["speaker_name"], "張靜雅")
+        self.assertIn(res_q["speeches"][0]["speaker_name"], ("陳其邁", "張靜雅"))
+
+    def test_get_exam_cards(self):
+        handler = MockHttpHandler("GET", "/api/exam-cards")
+        handler.do_GET()
+        self.assertEqual(handler.response_status, HTTPStatus.OK)
+        res = handler.get_json_response()
+        self.assertIn("exam_cards", res)
+        self.assertGreaterEqual(res["total"], 1)
+        self.assertIn("attendance_rate", res["exam_cards"][0])
+
+    def test_get_petitions(self):
+        handler = MockHttpHandler("GET", "/api/petitions")
+        handler.do_GET()
+        self.assertEqual(handler.response_status, HTTPStatus.OK)
+        res = handler.get_json_response()
+        self.assertIn("petitions", res)
+        self.assertGreaterEqual(res["total"], 1)
+        self.assertEqual(res["petitions"][0]["status"], "APPROVED")
 
     def test_get_votes(self):
         handler = MockHttpHandler("GET", "/api/votes")

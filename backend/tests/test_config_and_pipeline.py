@@ -27,6 +27,8 @@ from backend.core.model_router import (
 )
 from backend.core.yaml_parser import load_yaml
 from backend.models.domain import (
+    CitizenPetition,
+    ExamReportCard,
     ExecutionMilestone,
     FulfillmentStatus,
     InterpellationSpeech,
@@ -56,11 +58,17 @@ class TestConfigCompilerAndDrift(unittest.TestCase):
         self.assertIn("TASK_SPEECH_PARSE", result["gates"])
         self.assertIn("TASK_VOTE_ANALYZE", result["gates"])
         self.assertIn("TASK_POLICY_EVAL", result["gates"])
+        self.assertIn("TASK_PETITION_TRIAGE", result["gates"])
         self.assertIn("E01_HALLUCINATION", result["err_directives"])
         self.assertIn("E02_SPEAKER_SWAP", result["err_directives"])
         self.assertIn("E03_MISSING_CITATION", result["err_directives"])
         self.assertIn("E04_TIMESTAMP_DRIFT", result["err_directives"])
         self.assertIn("E05_SCHEMA_VIOLATION", result["err_directives"])
+        self.assertIn("E06_UNSUBSTANTIATED_ABUSE", result["err_directives"])
+        self.assertIn("feature_flags", result)
+        self.assertTrue(result["feature_flags"]["enable_ivod_video_embed"])
+        self.assertIn("external_endpoints", result)
+        self.assertIn("v2.ly.govapi.tw", result["external_endpoints"]["ly_govapi_v2_url"])
         self.assertIn("HydrogenSubmissionEnvelope", result["wire_schemas"])
         self.assertIn("ArgonVerdictEnvelope", result["wire_schemas"])
 
@@ -229,6 +237,46 @@ class TestDomainModels(unittest.TestCase):
         bad_promise.milestones = [bad_milestone]
         errs = bad_promise.validate()
         self.assertTrue(any(code == "E03_MISSING_CITATION" for code, _ in errs))
+
+    def test_exam_report_card_validation(self):
+        card = ExamReportCard(
+            id="card-001",
+            politician_id="pol-001",
+            term_id="term-001",
+            exam_stage="MIDTERM",
+            attendance_rate=98.5,
+            objective_score=92.0,
+            argon_summary_comment="問政質詢專業，委員會全勤",
+            citizen_rating_avg=4.6,
+            citizen_reviews_count=128,
+        )
+        self.assertEqual(card.validate(), [])
+
+        # Invalid stage -> E05_SCHEMA_VIOLATION
+        bad_card = copy.deepcopy(card)
+        bad_card.exam_stage = "INVALID_STAGE"
+        errs = bad_card.validate()
+        self.assertTrue(any(code == "E05_SCHEMA_VIOLATION" for code, _ in errs))
+
+    def test_citizen_petition_validation(self):
+        pet = CitizenPetition(
+            id="petition-001",
+            politician_id="pol-001",
+            category="交通建設",
+            author_name="內湖通勤族",
+            title="建請加速內湖捷運東環段",
+            content="內科交通急需改善，盼加速捷運施工進度",
+            citizen_score=5,
+            status="APPROVED",
+            created_at="2024-11-01",
+        )
+        self.assertEqual(pet.validate(), [])
+
+        # Bad score (> 5) -> E05_SCHEMA_VIOLATION
+        bad_pet = copy.deepcopy(pet)
+        bad_pet.citizen_score = 10
+        errs = bad_pet.validate()
+        self.assertTrue(any(code == "E05_SCHEMA_VIOLATION" for code, _ in errs))
 
 
 class TestPhase1SpeechParsePipeline(unittest.TestCase):

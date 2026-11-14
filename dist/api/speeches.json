@@ -3,14 +3,14 @@
     {
       "id": "speech-003",
       "session_id": "session-ly-10-06-01",
-      "speaker_term_id": "term-lin-leg-10",
+      "speaker_term_id": "term-leg-001",
       "target_official_id": "official-ndc-minister",
       "start_time_sec": 70.0,
       "end_time_sec": 390.0,
-      "transcript_raw": "【林宏遠委員】：國發會主委，大新竹地區每日通勤國道一號竹科段嚴重壅塞，竹科輕軌藍線案送中央審查已超過一年，中央與地方補助比例遲未定案。國發會能否承諾年底前召集跨部會定案？\n【國發會主委】：委員指教切中要害。國發會已協調交通部鐵道局與新竹縣市政府，預計下個月召開第一次大新竹軌道建設協調會，加速環評與綜合規劃審議。",
-      "ai_summary": "林宏遠委員督促中央加速新竹輕軌藍線審議，要求國發會成立跨縣市軌道平台解決竹科交通壅塞瓶頸。",
+      "transcript_raw": "【蔣萬安委員】：國發會主委，台北捷運東環段與基隆捷運規劃案送中央審查，中央與地方補助比例遲未定案。國發會能否承諾年底前召集跨部會定案加速核定？\n【國發會主委】：委員指教切中要害。國發會已協調交通部鐵道局與台北市、新北市府，預計下個月召開協調會，加速環評與綜合規劃審議並啟動前置工程。",
+      "ai_summary": "蔣萬安委員督促中央加速台北捷運東環段與大眾運輸軌道審議，要求國發會協調交通部加速前置發包作業。",
       "topic_tags": [
-        "竹科交通",
+        "捷運東環段",
         "軌道建設",
         "跨區整合"
       ],
@@ -20,9 +20,12 @@
         "confidence": 0.94,
         "notes": "Verified speech transcript attribution."
       },
-      "speaker_name": "林宏遠",
-      "speaker_party": "台灣進步陣線",
-      "speaker_title": "第十屆立法委員（交通委員會召集委員）",
+      "ivod_clip_id": "110826",
+      "video_stream_url": "https://media.ly.gov.tw/ivod/110826.mp4",
+      "billy3321_url": "https://ivod.billy3321.tw/ivod/110826",
+      "speaker_name": "蔣萬安",
+      "speaker_party": "中國國民黨",
+      "speaker_title": "第九、十屆立法委員（社會福利及衛生環境委員會）",
       "session": {
         "id": "session-ly-10-06-01",
         "title": "立法院第10屆第6會期交通委員會第4次全體委員會議",
@@ -50,6 +53,9 @@
         "attempt": 1,
         "notes": "All acceptance gates and evidence citations verified."
       },
+      "ivod_clip_id": "111103",
+      "video_stream_url": "https://media.ly.gov.tw/ivod/111103.mp4",
+      "billy3321_url": "https://ivod.billy3321.tw/ivod/111103",
       "speaker_name": "陳昭姿",
       "speaker_party": "台灣民眾黨",
       "speaker_title": "第11屆立法委員（社會福利及衛生環境委員會）",
@@ -62,12 +68,12 @@
     {
       "id": "speech-002",
       "session_id": "session-ly-10-07-02",
-      "speaker_term_id": "term-chang-leg-10",
+      "speaker_term_id": "term-leg-002",
       "target_official_id": "official-moj-minister",
       "start_time_sec": 120.0,
       "end_time_sec": 555.0,
-      "transcript_raw": "【張靜雅委員】：部長，詐騙案件已成民怨之首。人頭帳戶與虛擬資產洗錢管道層出不窮，金管會與數發部互相推諉，第三方支付登錄查核機制如同虛設。法務部在打詐專法中，到底有沒有將大型網路社群廣告實名制納入連帶處罰？\n【法務部部長】：跟委員報告，打詐專法草案已增訂『網路廣告平台防詐義務』，若平台未下架詐騙廣告或未落實實名驗證，最高可處以2500萬元連續罰鍰，情節重大得封阻網域。",
-      "ai_summary": "張靜雅委員嚴厲質詢打詐專法與第三方支付虛擬洗錢防制，直指部會監管漏洞；法務部說明已將社群廣告平台實名制與重罰條款納入專法草案。",
+      "transcript_raw": "【陳其邁委員】：部長，詐騙案件已成民怨之首。人頭帳戶與虛擬資產洗錢管道層出不窮，金管會與數發部互相推諉，第三方支付登錄查核機制如同虛設。法務部在打詐專法中，到底有沒有將大型網路社群廣告實名制納入連帶處罰？\n【法務部部長】：跟委員報告，打詐專法草案已增訂『網路廣告平台防詐義務』，若平台未下架詐騙廣告或未落實實名驗證，最高可處以2500萬元連續罰鍰，情節重大得封阻網域。",
+      "ai_summary": "陳其邁委員嚴厲質詢打詐專法與第三方支付虛擬洗錢防制，直指部會監管漏洞；法務部說明已將社群廣告平台實名制與重罰條款納入專法草案。",
       "topic_tags": [
         "打詐專法",
         "洗錢防制",
@@ -79,9 +85,12 @@
         "confidence": 0.98,
         "notes": "Evidence verified against Ministry of Justice draft legislation."
       },
-      "speaker_name": "張靜雅",
-      "speaker_party": "民主社會黨",
-      "speaker_title": "第十、十一屆立法委員（司法及法制委員會、財政委員會）",
+      "ivod_clip_id": "110912",
+      "video_stream_url": "https://media.ly.gov.tw/ivod/110912.mp4",
+      "billy3321_url": "https://ivod.billy3321.tw/ivod/110912",
+      "speaker_name": "陳其邁",
+      "speaker_party": "民主進步黨",
+      "speaker_title": "第八、九屆立法委員（內政委員會、經濟委員會）",
       "session": {
         "id": "session-ly-10-07-02",
         "title": "立法院第10屆第7會期司法及法制委員會第8次全體委員會議",
@@ -109,6 +118,9 @@
         "attempt": 1,
         "notes": "All acceptance gates and evidence citations verified."
       },
+      "ivod_clip_id": "110501",
+      "video_stream_url": "https://media.ly.gov.tw/ivod/110501.mp4",
+      "billy3321_url": "https://ivod.billy3321.tw/ivod/110501",
       "speaker_name": "洪申翰",
       "speaker_party": "民主進步黨",
       "speaker_title": "第11屆立法委員（社會福利及衛生環境委員會）",
@@ -139,6 +151,9 @@
         "attempt": 1,
         "notes": "All acceptance gates and evidence citations verified."
       },
+      "ivod_clip_id": "110802",
+      "video_stream_url": "https://media.ly.gov.tw/ivod/110802.mp4",
+      "billy3321_url": "https://ivod.billy3321.tw/ivod/110802",
       "speaker_name": "李彥秀",
       "speaker_party": "中國國民黨",
       "speaker_title": "第11屆立法委員（社會福利及衛生環境委員會）",
@@ -151,12 +166,12 @@
     {
       "id": "speech-001",
       "session_id": "session-ly-10-06-01",
-      "speaker_term_id": "term-lin-leg-10",
+      "speaker_term_id": "term-leg-001",
       "target_official_id": "official-motc-minister",
       "start_time_sec": 200.0,
       "end_time_sec": 525.0,
-      "transcript_raw": "【林宏遠委員】：部長請就座。外媒稱台灣為『行人地獄』，今年前八個月行人死傷依然居高不下。交通部提出的道安基本法草案，到底何時能落實『人行道退縮行穿線』與學區周邊全面科技執法？\n【交通部部長】：謝謝林委員關心。我們已跟內政部國土署召開跨部會會議，核定400億元『永續提升人行安全計畫』，優先補助各縣市改善600處高風險路口與學區通學步道，預計在年底前完成第一階段工程盤點。",
-      "ai_summary": "林宏遠委員針對『行人路權與道安基本法』質詢交通部，要求半年內全面盤點學區人行安全工程並嚴格考核進度；交通部承諾編列400億專款優先改善600處危險路口。",
+      "transcript_raw": "【蔣萬安委員】：部長請就座。外媒稱台灣為『行人地獄』，今年前八個月行人死傷依然居高不下。交通部提出的道安基本法草案，到底何時能落實『人行道退縮行穿線』與學區周邊全面科技執法？\n【交通部部長】：謝謝蔣委員關心。我們已跟內政部國土署召開跨部會會議，核定400億元『永續提升人行安全計畫』，優先補助各縣市改善600處高風險路口與學區通學步道，預計在年底前完成第一階段工程盤點。",
+      "ai_summary": "蔣萬安委員針對『行人路權與道安基本法』質詢交通部，要求半年內全面盤點學區人行安全工程並嚴格考核進度；交通部承諾編列400億專款優先改善600處危險路口。",
       "topic_tags": [
         "行人路權",
         "交通罰則",
@@ -168,9 +183,12 @@
         "confidence": 0.96,
         "notes": "Verified against IVOD video timestamps and official gazette."
       },
-      "speaker_name": "林宏遠",
-      "speaker_party": "台灣進步陣線",
-      "speaker_title": "第十屆立法委員（交通委員會召集委員）",
+      "ivod_clip_id": "110825",
+      "video_stream_url": "https://media.ly.gov.tw/ivod/110825.mp4",
+      "billy3321_url": "https://ivod.billy3321.tw/ivod/110825",
+      "speaker_name": "蔣萬安",
+      "speaker_party": "中國國民黨",
+      "speaker_title": "第九、十屆立法委員（社會福利及衛生環境委員會）",
       "session": {
         "id": "session-ly-10-06-01",
         "title": "立法院第10屆第6會期交通委員會第4次全體委員會議",

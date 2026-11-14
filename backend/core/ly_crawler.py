@@ -1,7 +1,8 @@
 """
-CivicTracker TW - Taiwan Legislative Yuan Open Data (data.ly.gov.tw) Crawler & Sync Pipeline
+CivicTracker TW - Taiwan Legislative Yuan Open Data & GovAPI Crawler & Sync Pipeline
 Extracts, transforms, validates through DualModelPipeline (Hydrogen/Argon),
 and loads real 11th-term parliamentary records into persistent SQLite database.
+Supports live fetching from https://v2.ly.govapi.tw/legislators?屆=11&limit=30.
 """
 
 import argparse
@@ -28,12 +29,13 @@ from backend.models.domain import (
 )
 
 # -----------------------------------------------------------------------------
-# Official Open Data Endpoints & Fixtures
+# Official Open Data & GovAPI Endpoints & Fixtures
 # -----------------------------------------------------------------------------
+LY_GOVAPI_V2_LEGISLATORS = "https://v2.ly.govapi.tw/legislators?屆=11&limit=30"
 LY_LEGISLATORS_API = "https://data.ly.gov.tw/odw/ID16Action.action?fileType=json"
 LY_INTERPELLATIONS_API = "https://data.ly.gov.tw/odw/ID6Action.action?fileType=json"
 
-# Built-in official fixtures reflecting real schema of data.ly.gov.tw
+# Built-in official fixtures reflecting real schema of data.ly.gov.tw & v2.ly.govapi.tw
 OFFICIAL_LEGISLATORS_FIXTURE: List[Dict[str, Any]] = [
     {
         "name": "洪申翰",
@@ -77,6 +79,9 @@ OFFICIAL_INTERPELLATIONS_FIXTURE: List[Dict[str, Any]] = [
         "topic": "碳費徵收進度與自主減量優惠配套",
         "startTimeSec": 150.0,
         "endTimeSec": 450.0,
+        "ivodClipId": "110501",
+        "videoStreamUrl": "https://media.ly.gov.tw/ivod/110501.mp4",
+        "billy3321Url": "https://ivod.billy3321.tw/ivod/110501",
         "content": (
             "【洪申翰委員】：部長請就座。氣候變遷因應法已公布施行，碳費審議會進度攸關產業公平與減碳目標，"
             "環境部到底何時能訂出費率？高碳排產業之自主減量計畫審查指引何時出爐？\n"
@@ -98,6 +103,9 @@ OFFICIAL_INTERPELLATIONS_FIXTURE: List[Dict[str, Any]] = [
         "topic": "蘇丹紅辣椒粉邊境查驗漏洞與食安源頭管控",
         "startTimeSec": 180.0,
         "endTimeSec": 510.0,
+        "ivodClipId": "110802",
+        "videoStreamUrl": "https://media.ly.gov.tw/ivod/110802.mp4",
+        "billy3321Url": "https://ivod.billy3321.tw/ivod/110802",
         "content": (
             "【李彥秀委員】：部長請就座。蘇丹紅等違法色素引發全台食安風暴，邊境查驗人力與實驗室抽驗比率嚴重不足，"
             "過去半年海關抽檢率甚至不到 10%。衛福部如何杜絕洗產地與空殼貿易商進口黑心原料？\n"
@@ -119,6 +127,9 @@ OFFICIAL_INTERPELLATIONS_FIXTURE: List[Dict[str, Any]] = [
         "topic": "罕見疾病藥物健保給付與多元支持基金",
         "startTimeSec": 100.0,
         "endTimeSec": 420.0,
+        "ivodClipId": "111103",
+        "videoStreamUrl": "https://media.ly.gov.tw/ivod/111103.mp4",
+        "billy3321Url": "https://ivod.billy3321.tw/ivod/111103",
         "content": (
             "【陳昭姿委員】：部長，罕病病友等待新藥納入健保給付平均需等候超過三年，許多病友在等待中過世。"
             "健保署承諾設立的罕病與新藥多元支持基金，具體預算財源與法源依據何時落實？\n"
@@ -159,15 +170,47 @@ class LegislativeYuanCrawler:
         self.pipeline = pipeline or DualModelPipeline(verify_drift=False)
 
     def fetch_legislators_data(self, live: bool = False) -> Tuple[List[Dict[str, Any]], str]:
-        """Fetches legislators data from data.ly.gov.tw or falls back to built-in fixture."""
+        """Fetches legislators data from v2.ly.govapi.tw or data.ly.gov.tw or falls back to fixture."""
         if live:
+            # 1. Primary Live Endpoint: v2.ly.govapi.tw
+            try:
+                ctx = ssl.create_default_context()
+                req = urllib.request.Request(
+                    LY_GOVAPI_V2_LEGISLATORS,
+                    headers={"User-Agent": "CivicTracker-TW-Crawler/1.0"},
+                )
+                with urllib.request.urlopen(req, timeout=6, context=ctx) as resp:
+                    if resp.status == 200:
+                        raw = json.loads(resp.read().decode("utf-8", errors="replace"))
+                        items = raw.get("legislators", raw.get("data", raw)) if isinstance(raw, dict) else raw
+                        if items and isinstance(items, list):
+                            extracted = []
+                            for it in items[:25]:
+                                if isinstance(it, dict) and it.get("name"):
+                                    extracted.append({
+                                        "name": str(it.get("name", "")).strip(),
+                                        "party": str(it.get("party") or it.get("partyGroup") or "無黨籍").strip(),
+                                        "areaName": str(it.get("areaName") or it.get("constituency") or "全國不分區").strip(),
+                                        "term": str(it.get("term") or it.get("屆") or "11").strip(),
+                                        "committee": str(it.get("committee") or "第11屆立法委員").strip(),
+                                    })
+                            if extracted:
+                                seen_names = {x["name"] for x in OFFICIAL_LEGISLATORS_FIXTURE}
+                                merged = list(OFFICIAL_LEGISLATORS_FIXTURE) + [
+                                    x for x in extracted if x.get("name") not in seen_names
+                                ]
+                                return merged, "GOVAPI_V2_LIVE"
+            except Exception as exc:
+                print(f"[LYCrawler] Live GovAPI v2 failed ({exc}). Trying data.ly.gov.tw...")
+
+            # 2. Secondary Live Endpoint: data.ly.gov.tw
             try:
                 ctx = ssl.create_default_context()
                 req = urllib.request.Request(
                     LY_LEGISLATORS_API,
                     headers={"User-Agent": "CivicTracker-TW-Crawler/1.0"},
                 )
-                with urllib.request.urlopen(req, timeout=8, context=ctx) as resp:
+                with urllib.request.urlopen(req, timeout=6, context=ctx) as resp:
                     if resp.status == 200:
                         raw = json.loads(resp.read().decode("utf-8", errors="replace"))
                         data = raw.get("jsonList", raw) if isinstance(raw, dict) else raw
@@ -183,7 +226,7 @@ class LegislativeYuanCrawler:
                                 merged = list(OFFICIAL_LEGISLATORS_FIXTURE) + [
                                     x for x in term11 if x.get("name") not in seen_names
                                 ]
-                                return merged, "LIVE_API"
+                                return merged, "DATA_LY_LIVE"
             except Exception as exc:
                 print(f"[LYCrawler] Live legislators API connection failed ({exc}). Using official fixture fallback.")
 
@@ -345,6 +388,9 @@ class LegislativeYuanCrawler:
                         "audited_by": "argon",
                         "confidence": 1.0,
                     }),
+                    ivod_clip_id=sp.get("ivodClipId") or sp.get("ivod_clip_id"),
+                    video_stream_url=sp.get("videoStreamUrl") or sp.get("video_stream_url"),
+                    billy3321_url=sp.get("billy3321Url") or sp.get("billy3321_url"),
                 )
                 self.db.upsert_speech(speech_obj)
                 synced_speeches_count += 1
@@ -383,7 +429,7 @@ class LegislativeYuanCrawler:
 
 def main():
     parser = argparse.ArgumentParser(description="Legislative Yuan Open Data Synchronization Tool")
-    parser.add_argument("--live", action="store_true", help="Attempt live network fetch from data.ly.gov.tw")
+    parser.add_argument("--live", action="store_true", help="Attempt live network fetch from v2.ly.govapi.tw or data.ly.gov.tw")
     args = parser.parse_args()
 
     print("[LYCrawler] Starting Taiwan Legislative Yuan Open Data Synchronization...")
